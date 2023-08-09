@@ -9,12 +9,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
-int _putchar(char c);
-int _puts(char *s);
-char *_strcat(char *dest, char *src);
-char *_strncat(char *dest, char *src, int n);
-int _strlen(char *s);
+/* strung_funtions_1 */
+int _putchar(char);
+int _puts(char *);
+char *_strcat(char *, char *);
+char *_strncat(char *, char *, int );
+int _strlen(char *);
 
 
 #endif

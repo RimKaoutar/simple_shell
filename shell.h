@@ -9,7 +9,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-/* strung_funtions_1 */
+/* string_funtions_1 */
 int _putchar(char);
 int _puts(char *);
 char *_strcat(char *, char *);

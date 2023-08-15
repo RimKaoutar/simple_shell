@@ -1,45 +1,49 @@
 #include "shell.h"
 /**
- * is_interactive - checks the interactivity, still needs work!!
- * @ac: the num of args
- * Return: if there is no args executes with the program, return 0
+ * check_interactivity - checks if the stdin was redirected by the terminal
+ * or it is flushed
+ * Return: 0 if it was redirected , not 0 if else
 */
-int is_interactive(int ac)
+int check_interactivity(void)
 {
-	return ((ac > 1) ? 1 : 0);
+	return (isatty(STDIN_FILENO));
 }
+
 /**
- * main - execute hsh
- * @ac: the num of args
- * @av: the args
- * Return: 0 as exit_success
+ * main - the main function to sh
+ * Return: 0 on exit_success
 */
-int main(int ac, char *av[])
+int main()
 {
-	getline_return *gr = malloc(sizeof(getline_return));	
-	pid_t pid;
-	int stat;
-	char **array;
-	if (is_interactive(ac) == 0)
+	int is_interactive = 1;
+	char *line_buffer = NULL;
+	ssize_t chars_nbr;
+	size_t n = 0, task_id = 1;
+	pid_t weldi;
+
+	while (is_interactive)
 	{
-		while(1)
+		is_interactive = check_interactivity();
+		write (STDOUT_FILENO, "$ ", 2);
+		chars_nbr = getline(&line_buffer, &n, stdin);
+		if (chars_nbr == -1)
 		{
-			gr = putline(gr);
-			array = get_args(gr->line_buff);
-			if (!*array)
-				continue;
-			pid = fork();
-			if (pid == 0)
-			{
-				execve(array[0], array, NULL);
-				perror(av[0]);
-			}
-			else
-			{
-				wait(&stat);
-			}
-			free(array);
+			free(line_buffer);
+			perror("getline");
+			exit(EXIT_FAILURE);
 		}
+		weldi = fork();
+		if (weldi == -1)
+		{
+			free(line_buffer);
+			perror("weldi mat");
+			exit(EXIT_FAILURE);
+		}
+		if (weldi == 0)
+			executionner(chars_nbr, line_buffer, task_id);
+		else
+			wait(NULL);
 	}
+	free(line_buffer);
 	return (0);
 }

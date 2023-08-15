@@ -3,7 +3,7 @@
  * check_interactivity - checks if the stdin was redirected by the terminal
  * or it is flushed
  * Return: 0 if it was redirected , not 0 if else
-*/
+ */
 int check_interactivity(void)
 {
 	return (isatty(STDIN_FILENO));
@@ -12,7 +12,7 @@ int check_interactivity(void)
 /**
  * main - the main function to sh
  * Return: 0 on exit_success
-*/
+ */
 int main()
 {
 	int is_interactive = 1;
@@ -32,17 +32,20 @@ int main()
 			perror("getline");
 			exit(EXIT_FAILURE);
 		}
-		weldi = fork();
-		if (weldi == -1)
+		if (chars_nbr != EOF)
 		{
-			free(line_buffer);
-			perror("weldi mat");
-			exit(EXIT_FAILURE);
+			weldi = fork();
+			if (weldi == -1)
+			{
+				free(line_buffer);
+				perror("weldi mat");
+				exit(EXIT_FAILURE);
+			}
+			if (weldi == 0)
+				executionner(chars_nbr, line_buffer, task_id);
+			else
+				wait(NULL);
 		}
-		if (weldi == 0)
-			executionner(chars_nbr, line_buffer, task_id);
-		else
-			wait(NULL);
 	}
 	free(line_buffer);
 	return (0);

@@ -24,9 +24,10 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
 */
 void exec1(ssize_t chars_nbr, char * line_buff)
 {
-	(void) chars_nbr;
 	char *one_token, *two_token;
 	char *args[] = {NULL};
+
+	(void) chars_nbr;
 	one_token = strtok(line_buff, " \n\t");
 	while (1)
 	{

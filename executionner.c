@@ -67,11 +67,12 @@ void exec2(ssize_t chars_nbr, char *line_buff)
 		i++;
 	}
 	args[i] = NULL;
+	/*remove bellow line seems useless*/
 	i = 0;
 	if (args[0])
 	{
 		execve(args[0], args, NULL);
 		/* we need to add envp instead of NULL*/
 		perror("execve");
-	}
+	}	
 }

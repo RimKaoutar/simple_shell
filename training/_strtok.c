@@ -23,8 +23,8 @@ char **splitstr(char *str)
 		tokens[count - 1] = token;
 		token = strtok(NULL, " \t\n");
 	}
-	for (i = 0; i < count; i++)
-		printf("%s\n", tokens[i]);
+	/*for (i = 0; i < count; i++)
+		printf("%s\n", tokens[i]);*/
 	return (tokens);
 }
 
@@ -33,6 +33,7 @@ int main(int ac, char **av)
 	char *line = NULL, **tokens;
 	size_t len = 0;
 	ssize_t nread;
+	int i;
 
 	(void)ac;
 	(void)av;
@@ -42,5 +43,7 @@ int main(int ac, char **av)
 		perror("getline has reached end of file!\n");
 
 	tokens = splitstr(line);
+	for (i = 0; i < 3; i++)
+		printf("%s\n", tokens[i]);
 	return (0);
 }

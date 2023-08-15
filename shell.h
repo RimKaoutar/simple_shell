@@ -17,9 +17,11 @@ char *_strncat(char *, char *, int );
 int _strlen(char *);
 /* string_funtions_2 */
 int _strcmp(char *, char *);
+char **splitstr(char *str);
 
 /* executionners */
 void executionner(ssize_t, char *, int);
 void exec1(ssize_t, char *);
+void exec2(ssize_t, char *);
 
 #endif

@@ -24,4 +24,6 @@ void executionner(ssize_t, char *, int);
 void exec1(ssize_t, char *);
 void exec2(ssize_t, char *);
 
+/* _realloc */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 #endif

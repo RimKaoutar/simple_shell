@@ -11,9 +11,11 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
 	switch(task_id)
 	{
 		case 1:
-		{
 			exec1(chars_nbr, line_buff);
-		}
+			break;
+		case 2:
+			exec2(chars_nbr, line_buff);
+			break;
 	}	
 }
 
@@ -22,7 +24,7 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
 */
-void exec1(ssize_t chars_nbr, char * line_buff)
+void exec1(ssize_t chars_nbr, char *line_buff)
 {
 	char *one_token, *two_token;
 	char *args[] = {NULL};
@@ -40,6 +42,36 @@ void exec1(ssize_t chars_nbr, char * line_buff)
 	if (one_token)
 	{
 		execve(one_token, args, NULL);
+		perror("execve");
+	}
+}
+
+/**
+ * exec2 - task 2 funciton (the arguments array will be of size 1024,
+ * we can reallocate it each time we need more but we still don't have realloc)
+ * @chars_nbr: the number of chars printed to getline
+ * @line_buff: the line buffer
+*/
+void exec2(ssize_t chars_nbr, char *line_buff)
+{
+	char *token, *args[1024];
+	/* we need _realloc so the size of args can be dynamic*/
+	int i = 0;
+
+	(void) chars_nbr;
+	token = strtok(line_buff, " \n\t");
+	while (token)
+	{
+		args[i] = token;
+		token = strtok(NULL, " \t\n");
+		i++;
+	}
+	args[i] = NULL;
+	i = 0;
+	if (args[0])
+	{
+		execve(args[0], args, NULL);
+		/* we need to add envp instead of NULL*/
 		perror("execve");
 	}
 }

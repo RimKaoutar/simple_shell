@@ -21,5 +21,6 @@ int _strcmp(char *, char *);
 /* executionners */
 void executionner(ssize_t, char *, int);
 void exec1(ssize_t, char *);
+void exec2(ssize_t, char *);
 
 #endif

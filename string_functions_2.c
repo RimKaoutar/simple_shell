@@ -14,8 +14,8 @@ char **splitstr(char *str)
 	token = strtok(str, " \t\n");
 	while (token)
 	{
+		tokens = _realloc(tokens,count * sizeof(char *),(count + 1) * sizeof(char *));
 		count++;
-		tokens = realloc(tokens, count * sizeof(char *));
 		if (!tokens)
 		{
 			perror("realloc couldn't alloc :(");
@@ -24,6 +24,7 @@ char **splitstr(char *str)
 		tokens[count - 1] = token;
 		token = strtok(NULL, " \t\n");
 	}
+	tokens[count] = NULL;
 	return (tokens);
 }
 

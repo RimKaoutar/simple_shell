@@ -54,25 +54,18 @@ void exec1(ssize_t chars_nbr, char *line_buff)
 */
 void exec2(ssize_t chars_nbr, char *line_buff)
 {
-	char *token, *args[1024];
-	/* we need _realloc so the size of args can be dynamic*/
+	(void) chars_nbr;
+	char **args = splitstr(line_buff);
 	int i = 0;
 
-	(void) chars_nbr;
-	token = strtok(line_buff, " \n\t");
-	while (token)
+	while (args[i])
 	{
-		args[i] = token;
-		token = strtok(NULL, " \t\n");
+		printf("%s\n", args[i]);
 		i++;
 	}
-	args[i] = NULL;
-	/*remove bellow line seems useless*/
-	i = 0;
-	if (args[0])
+	if (args)
 	{
 		execve(args[0], args, NULL);
-		/* we need to add envp instead of NULL*/
 		perror("execve");
-	}	
+	}
 }

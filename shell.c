@@ -33,17 +33,17 @@ int main()
 		}
 		if (chars_nbr != EOF)
 		{
-			weldi = fork();
-			if (weldi == -1)
-			{
-				free(line_buffer);
-				perror("weldi mat");
-				return(EXIT_FAILURE);
-			}
-			if (weldi == 0)
-				executionner(chars_nbr, line_buffer, task_id);
-			else
-				wait(NULL);
+				weldi = fork();
+				if (weldi == -1)
+				{
+					free(line_buffer);
+					perror("weldi mat");
+					return(EXIT_FAILURE);
+				}
+				if (weldi == 0)
+					executionner(chars_nbr, line_buffer, task_id);
+				else
+					wait(NULL);
 		}
 	}
 	free(line_buffer);

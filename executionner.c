@@ -4,7 +4,7 @@
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line_buffer
  * @task_id: the task id to execute the right function for the right task
-*/
+ */
 void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
 {
 	(void) chars_nbr;
@@ -17,8 +17,8 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
 			exec2(chars_nbr, line_buff);
 			break;
 		case 3:
-                        exec3(chars_nbr, line_buff);
-                        break;
+			exec3(chars_nbr, line_buff);
+			break;
 	}	
 }
 
@@ -26,7 +26,7 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
  * exec1 - this function is specifically made for task 1
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
-*/
+ */
 void exec1(ssize_t chars_nbr, char *line_buff)
 {
 	char *one_token, *two_token;
@@ -54,7 +54,7 @@ void exec1(ssize_t chars_nbr, char *line_buff)
  * we can reallocate it each time we need more but we still don't have realloc)
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
-*/
+ */
 void exec2(ssize_t chars_nbr, char *line_buff)
 {
 	char **args = splitstr(line_buff);
@@ -78,14 +78,14 @@ void exec2(ssize_t chars_nbr, char *line_buff)
  * exec3 - this function is specifically made for task 3
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
-*/
+ */
 void exec3(ssize_t chars_nbr, char *line_buff)
 {
 	char **args = splitstr(line_buff);
-        char *cmd;
+	char *cmd;
 	extern char **environ;
 
-        (void) chars_nbr;
+	(void) chars_nbr;
 	if (strcmp(args[0], "exit") == 0)
 		exit(EXIT_SUCCESS);
 	cmd = get_command(args[0]);
@@ -98,6 +98,4 @@ void exec3(ssize_t chars_nbr, char *line_buff)
 		execve(args[0], args, NULL);
 	}
 	exit(0);
-
-	
 }

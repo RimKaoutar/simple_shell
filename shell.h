@@ -19,7 +19,7 @@ int _strlen(char *);
 
 /* string_funtions_2 */
 int _strcmp(char *, char *);
-char **splitstr(char *str);
+char **splitstr(char *);
 
 /* executionners */
 void executionner(ssize_t, char *, int);
@@ -28,10 +28,10 @@ void exec2(ssize_t, char *);
 void exec3(ssize_t, char *);
 
 /* _realloc */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+void *_realloc(void *, unsigned int, unsigned int);
 
 /* path_handling_functions */
-char *_getenv(const char *env_var);
-char *get_command(char *command);
+char *_getenv(const char *);
+char *get_command(char *);
 
 #endif

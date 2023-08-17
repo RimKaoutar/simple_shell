@@ -93,6 +93,10 @@ void exec3(ssize_t chars_nbr, char *line_buff)
 	{
 		execve(cmd, args, environ);
 	}
+	else
+	{
+                execve(cmd, args, environ);
+	}
 	exit(0);
 
 	

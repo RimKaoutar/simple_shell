@@ -81,5 +81,19 @@ void exec2(ssize_t chars_nbr, char *line_buff)
 */
 void exec3(ssize_t chars_nbr, char *line_buff)
 {
+	char **args = splitstr(line_buff);
+        char *cmd;
+	extern char **environ;
 
+        (void) chars_nbr;
+	if (strcmp(args[0], "exit") == 0)
+		exit(EXIT_SUCCESS);
+	cmd = get_command(args[0]);
+	if (cmd)
+	{
+		execve(cmd, args, environ);
+	}
+	exit(0);
+
+	
 }

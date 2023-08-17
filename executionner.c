@@ -16,6 +16,9 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
 		case 2:
 			exec2(chars_nbr, line_buff);
 			break;
+		case 3:
+                        exec3(chars_nbr, line_buff);
+                        break;
 	}	
 }
 
@@ -69,4 +72,14 @@ void exec2(ssize_t chars_nbr, char *line_buff)
 	{
 		execve(args[0], args, NULL);
 	}
+}
+
+/**
+ * exec3 - this function is specifically made for task 3
+ * @chars_nbr: the number of chars printed to getline
+ * @line_buff: the line buffer
+*/
+void exec3(ssize_t chars_nbr, char *line_buff)
+{
+
 }

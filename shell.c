@@ -30,7 +30,7 @@ int main()
 		{
 			free(line_buffer);
 			perror("getline");
-			exit(EXIT_FAILURE);
+			return(EXIT_FAILURE);
 		}
 		if (chars_nbr != EOF)
 		{
@@ -39,7 +39,7 @@ int main()
 			{
 				free(line_buffer);
 				perror("weldi mat");
-				exit(EXIT_FAILURE);
+				return(EXIT_FAILURE);
 			}
 			if (weldi == 0)
 				executionner(chars_nbr, line_buffer, task_id);

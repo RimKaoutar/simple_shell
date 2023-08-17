@@ -45,10 +45,6 @@ int main()
 			else
 				wait(NULL);
 		}
-		if (feof(stdin))
-		{
-			exit(0);
-		}
 	}
 	free(line_buffer);
 	exit(0);

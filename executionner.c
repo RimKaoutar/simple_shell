@@ -54,9 +54,10 @@ void exec1(ssize_t chars_nbr, char *line_buff)
 */
 void exec2(ssize_t chars_nbr, char *line_buff)
 {
-	(void) chars_nbr;
 	char **args = splitstr(line_buff);
 	int i = 0;
+
+	(void) chars_nbr;
 
 	while (args[i])
 	{

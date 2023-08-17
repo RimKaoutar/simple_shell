@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 /* string_funtions_1 */
 int _putchar(char);
 int _puts(char *);
@@ -23,6 +24,7 @@ char **splitstr(char *str);
 void executionner(ssize_t, char *, int);
 void exec1(ssize_t, char *);
 void exec2(ssize_t, char *);
+void exec3(ssize_t, char *);
 
 /* _realloc */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);

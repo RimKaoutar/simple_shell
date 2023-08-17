@@ -18,7 +18,7 @@ int main()
 	int is_interactive = 1;
 	char *line_buffer = NULL;
 	ssize_t chars_nbr;
-	size_t n = 0, task_id = 2;
+	size_t n = 0, task_id = 3;
 	pid_t weldi;
 
 	while (is_interactive)

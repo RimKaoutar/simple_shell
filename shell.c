@@ -29,7 +29,6 @@ int main()
 		if (chars_nbr == -1)
 		{
 			free(line_buffer);
-			perror("getline");
 			return(EXIT_FAILURE);
 		}
 		if (chars_nbr != EOF)
@@ -46,7 +45,11 @@ int main()
 			else
 				wait(NULL);
 		}
+		if (feof(stdin))
+		{
+			exit(0);
+		}
 	}
 	free(line_buffer);
-	return (0);
+	exit(0);
 }

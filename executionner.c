@@ -59,6 +59,7 @@ void exec2(ssize_t chars_nbr, char *line_buff)
 
 	(void) chars_nbr;
 
+	/*this loop is for debuging purpose only, will be omited when done*/
 	while (args[i])
 	{
 		printf("%s\n", args[i]);
@@ -67,6 +68,5 @@ void exec2(ssize_t chars_nbr, char *line_buff)
 	if (args)
 	{
 		execve(args[0], args, NULL);
-		perror("execve");
 	}
 }

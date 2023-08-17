@@ -16,6 +16,7 @@ int _puts(char *);
 char *_strcat(char *, char *);
 char *_strncat(char *, char *, int );
 int _strlen(char *);
+
 /* string_funtions_2 */
 int _strcmp(char *, char *);
 char **splitstr(char *str);
@@ -28,5 +29,9 @@ void exec3(ssize_t, char *);
 
 /* _realloc */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
+/* path_handling_functions */
+char *_getenv(const char *env_var);
+char *get_command(char *command);
 
 #endif

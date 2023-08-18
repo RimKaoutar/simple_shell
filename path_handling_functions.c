@@ -50,3 +50,20 @@ char *get_command(char *command, char **envp)
 	free(full_cmd);
 	return (NULL);
 }
+
+/**
+ * print_env - prints the environ of the current program
+ * @envp: the environ pointer
+*/
+
+void print_env(char **envp)
+{
+	int i = 0;
+
+	while (envp[i])
+	{
+		write(1,envp[i], _strlen(envp[i]));
+		write(1, "\n", 1);
+		i++;
+	}
+}

@@ -15,8 +15,8 @@ int check_interactivity(void)
  */
 int main(int ac, char **av, char **envp)
 {
-	int is_interactive = 1, status;
-	char *line_buffer = NULL, *temp;
+	int is_interactive = 1, status, i;
+	char *line_buffer = NULL;
 	ssize_t chars_nbr;
 	size_t n = 0, task_id = 3;
 	pid_t weldi;
@@ -34,10 +34,12 @@ int main(int ac, char **av, char **envp)
 		}
 		if (chars_nbr != EOF)
 		{
-				if (_strcmp(strtok(temp = _strdup(line_buffer), "\t\n "), "exit") == 0)
+				if ((i = checker(line_buffer, envp)) != 0)
 				{
-					free(temp);
-					break;
+					if (i == 1)
+						break;
+					if (i == 2)
+						continue;
 				}
 				/* we need to check if the command exists here*/
 				weldi = fork();

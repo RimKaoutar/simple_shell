@@ -39,7 +39,7 @@ char *get_command(char *command, char **envp)
 	token = strtok(path, ":");
 	while (token)
 	{
-		full_cmd = malloc(strlen(token) + strlen(command) + 2);
+		full_cmd = malloc(sizeof(char) * (strlen(token) + strlen(command) + 2));
 		_strcpy(full_cmd, token);
 		_strcat(full_cmd, "/");
 		_strcat(full_cmd, command);

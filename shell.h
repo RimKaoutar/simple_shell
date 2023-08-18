@@ -20,6 +20,8 @@ int _strlen(char *);
 /* string_funtions_2 */
 int _strcmp(char *, char *);
 char **splitstr(char *);
+char *_strcpy(char *, char *);
+char *_strdup(char *);
 
 /* executionners */
 void executionner(ssize_t, char *, int, char **);

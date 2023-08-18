@@ -50,24 +50,25 @@ int _strlen(char *s)
  * @str2: the str to concate
  * Return: the result str 
 */
-char *_strcat(char *str1, char *str2)
+char *_strcat(char *dest, char *src)
 {
-	char *p, *q;
+	int i_dest, i_src;
 
-	p = str1;
-	q = str2;
-	while (*p)
+	i_dest = 0;
+	while (dest[i_dest] != '\0')
 	{
-		p++;
+		i_dest++;
 	}
-	while (*q)
+	i_src = 0;
+	while (src[i_src] != '\0')
 	{
-		*p = *q;
-		p++;
-		q++;
+		dest[i_dest] = src[i_src];
+		i_dest++;
+		i_src++;
 	}
-	*p = '\0';
-	return (str1);
+
+	dest[i_dest] = '\0';
+	return (dest);
 }
 /**
  * _strncat - concatenates the first n chars of src

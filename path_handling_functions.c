@@ -40,11 +40,11 @@ char *get_command(char *command, char **envp)
 	while (token)
 	{
 		full_cmd = malloc(strlen(token) + strlen(command) + 2);
-		strcpy(full_cmd, token);
-		strcat(full_cmd, "/");
-		strcat(full_cmd, command);
+		_strcpy(full_cmd, token);
+		_strcat(full_cmd, "/");
+		_strcat(full_cmd, command);
 		if (stat(full_cmd, &st) == 0)
-			return (full_cmd);	
+			return (full_cmd);
 		token = strtok(NULL, ":");
 	}
 	free(full_cmd);

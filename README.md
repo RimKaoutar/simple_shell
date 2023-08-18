@@ -18,4 +18,7 @@ Users can also use the pipe operator (`|`) to feed the output of one command as 
 echo "command" | program_name
 ```
 ### supported tasks : 
-task 1
+- task 1
+- task 2
+- task 3
+- task 4

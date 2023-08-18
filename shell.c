@@ -34,11 +34,12 @@ int main(int ac, char **av, char **envp)
 		}
 		if (chars_nbr != EOF)
 		{
-				if (strcmp(strtok(temp = strdup(line_buffer), "\t\n "), "exit") == 0)
+				if (_strcmp(strtok(temp = _strdup(line_buffer), "\t\n "), "exit") == 0)
 				{
 					free(temp);
 					break;
 				}
+				/* we need to check if the command exists here*/
 				weldi = fork();
 				if (weldi == -1)
 				{

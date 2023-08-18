@@ -22,16 +22,16 @@ int _strcmp(char *, char *);
 char **splitstr(char *);
 
 /* executionners */
-void executionner(ssize_t, char *, int);
+void executionner(ssize_t, char *, int, char **);
 void exec1(ssize_t, char *);
 void exec2(ssize_t, char *);
-void exec3(ssize_t, char *);
+void exec3(ssize_t, char *, char **);
 
 /* _realloc */
 void *_realloc(void *, unsigned int, unsigned int);
 
 /* path_handling_functions */
-char *_getenv(const char *);
-char *get_command(char *);
+char *_getenv(const char *, char **);
+char *get_command(char *, char **);
 
 #endif

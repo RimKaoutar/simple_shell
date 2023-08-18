@@ -13,14 +13,15 @@ int check_interactivity(void)
  * main - the main function to sh
  * Return: 0 on exit_success
  */
-int main()
+int main(int ac, char **av, char **envp)
 {
-	int is_interactive = 1;
+	int is_interactive = 1, status;
 	char *line_buffer = NULL;
 	ssize_t chars_nbr;
 	size_t n = 0, task_id = 3;
 	pid_t weldi;
 
+	(void) ac, (void) av;
 	while (is_interactive)
 	{
 		is_interactive = check_interactivity();
@@ -33,6 +34,10 @@ int main()
 		}
 		if (chars_nbr != EOF)
 		{
+				if (strcmp(line_buffer, "exit\n") == 0)
+				{
+					break;
+				}
 				weldi = fork();
 				if (weldi == -1)
 				{
@@ -41,9 +46,9 @@ int main()
 					return(EXIT_FAILURE);
 				}
 				if (weldi == 0)
-					executionner(chars_nbr, line_buffer, task_id);
+					executionner(chars_nbr, line_buffer, task_id, envp);
 				else
-					wait(NULL);
+					waitpid(weldi, &status, WUNTRACED);
 		}
 	}
 	free(line_buffer);

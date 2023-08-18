@@ -5,7 +5,7 @@
  * @line_buff: the line_buffer
  * @task_id: the task id to execute the right function for the right task
  */
-void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
+void executionner(ssize_t chars_nbr, char *line_buff, int task_id, char **envp)
 {
 	(void) chars_nbr;
 	switch(task_id)
@@ -17,7 +17,7 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id)
 			exec2(chars_nbr, line_buff);
 			break;
 		case 3:
-			exec3(chars_nbr, line_buff);
+			exec3(chars_nbr, line_buff, envp);
 			break;
 	}	
 }
@@ -79,19 +79,18 @@ void exec2(ssize_t chars_nbr, char *line_buff)
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
  */
-void exec3(ssize_t chars_nbr, char *line_buff)
+void exec3(ssize_t chars_nbr, char *line_buff, char **envp)
 {
 	char **args = splitstr(line_buff);
 	char *cmd;
-	extern char **environ;
 
 	(void) chars_nbr;
 	if (strcmp(args[0], "exit") == 0)
 		exit(EXIT_SUCCESS);
-	cmd = get_command(args[0]);
+	cmd = get_command(args[0], envp);
 	if (cmd)
 	{
-		execve(cmd, args, environ);
+		execve(cmd, args, envp);
 	}
 	else
 	{

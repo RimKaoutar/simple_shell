@@ -6,15 +6,14 @@
  *
  * Return: the value of the environment variable, or NULL if it does not exist
  */
-char *_getenv(const char *env_var)
+char *_getenv(const char *env_var, char **envp)
 {
-	extern char **environ;
 	int i = 0;
 	char *token;
 
-	while (environ[i])
+	while (envp[i])
 	{
-		token = strtok(environ[i], "=");
+		token = strtok(envp[i], "=");
 		if (strcmp(token, env_var) == 0)
 		{
 			return (strtok(NULL, "\n"));
@@ -30,9 +29,9 @@ char *_getenv(const char *env_var)
  *
  * Return: the full path of the command, or NULL if it does not exist
  */
-char *get_command(char *command)
+char *get_command(char *command, char **envp)
 {
-	char *path = _getenv("PATH");
+	char *path = _getenv("PATH", envp);
 	char *token;
 	char *full_cmd;
 	struct stat st;
@@ -45,9 +44,9 @@ char *get_command(char *command)
 		strcat(full_cmd, "/");
 		strcat(full_cmd, command);
 		if (stat(full_cmd, &st) == 0)
-			return (full_cmd);
-		free(full_cmd);
+			return (full_cmd);	
 		token = strtok(NULL, ":");
 	}
+	free(full_cmd);
 	return (NULL);
 }

@@ -22,6 +22,7 @@ int _setenv(char *env_name, char *env_value, bool modify)
 				_strcat(new_env, "=");
 				_strcat(new_env, env_value);
 				environ[i] = new_env;
+				free(new_env);
 				return(0);
 			}
 			return (0);
@@ -34,5 +35,6 @@ int _setenv(char *env_name, char *env_value, bool modify)
 	_strcat(new_env, env_value);
 	environ[i] = new_env;
 	environ[i + 1] = NULL;
+	free(new_env);
 	return(0);
 }

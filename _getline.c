@@ -8,22 +8,24 @@
  * Returns:
  *   A pointer to the buffer that contains the input line.
  */
-// char *_getline(char *str, int n)
-// {
-// 	int i = 0;
-// 	int c = getchar();
 
-// 	while (c != EOF && c != '\n')
-// 	{
-// 		str[i] = c;
-// 		i++;
-// 		c = getchar();
-// 	}
-// 	if (c == '\n')
-// 	{
-// 		str[i] = c;
-// 		i++;
-// 	}
-// 	str[i] = '\0';
-// 	return str;
-// }
+char *_getline(char *str, int n)
+{
+  int i = 0;
+  int c = getchar();
+
+ (void)n;
+  while (c != EOF && c != '\n')
+  {
+    str[i] = c;
+    i++;
+    c = getchar();
+  }
+  if (c == '\n')
+  {
+    str[i] = c;
+    i++;
+  }
+  str[i] = '\0';
+  return str;
+}

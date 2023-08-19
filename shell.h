@@ -36,7 +36,9 @@ void *_realloc(void *, unsigned int, unsigned int);
 char *_getenv(const char *, char **);
 char *get_command(char *, char **);
 void print_env(char **);
+/* checker */
 int checker(char *, char **);
+/* _strtok */
 char *_strtok(char *, char *);
 /* _getline*/
 char *_getline(char*, int);

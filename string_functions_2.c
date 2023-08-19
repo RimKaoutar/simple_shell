@@ -62,6 +62,10 @@ int _strcmp(char *s1, char *s2)
 {
 	int index;
 
+	if (!s1 || !s2)
+	{
+		return (-15);
+	}	
 	index = 0;
 	while (s1[index] != '\0' && s2[index] != '\0')
 	{

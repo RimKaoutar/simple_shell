@@ -33,10 +33,10 @@ void exec1(ssize_t chars_nbr, char *line_buff)
 	char *args[] = {NULL};
 
 	(void) chars_nbr;
-	one_token = strtok(line_buff, " \n\t");
+	one_token = _strtok(line_buff, " \n\t");
 	while (1)
 	{
-		two_token = strtok(NULL, " \t\n");
+		two_token = _strtok(NULL, " \t\n");
 		if (!two_token)
 			break;
 		strcat(one_token, two_token);
@@ -91,10 +91,12 @@ void exec3(ssize_t chars_nbr, char *line_buff, char **envp)
 	if (cmd)
 	{
 		execve(cmd, args, envp);
+		perror("cmd");
 	}
 	else
 	{
 		execve(args[0], args, NULL);
+		perror("execve");
 	}
 	exit(0);
 }

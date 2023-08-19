@@ -10,12 +10,12 @@
 int checker(char *line_buffer, char **envp)
 {
 	char *temp;
-	if (_strcmp(strtok(temp = _strdup(line_buffer), "\t\n "), "exit") == 0)
+	if (_strcmp(_strtok(temp = _strdup(line_buffer), "\t\n "), "exit") == 0)
 	{
 		free(temp);
 		return (1);
 	}
-	if (_strcmp(strtok(temp = _strdup(line_buffer), "\t\n "), "env") == 0)
+	if (_strcmp(_strtok(temp = _strdup(line_buffer), "\t\n "), "env") == 0)
 	{
 		free(temp);
 		print_env(envp);

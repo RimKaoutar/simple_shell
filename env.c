@@ -16,6 +16,7 @@ int _setenv(char *env_name, char *env_value, bool modify)
 
 	if (!env_name || !env_value)
 	{
+	  	perror("setenv");
 		return (-1);
 	}
 	while (environ[i])
@@ -61,6 +62,7 @@ int _unsetenv(char* env_name) {
 
   if(!env_name) 
   {
+	  perror("unsetenv");
 	  return -1;
   }
 

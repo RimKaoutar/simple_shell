@@ -50,5 +50,5 @@ char *_getline(char*, int);
 
 /* env */
 int _setenv(char *, char *, bool);
-
+int _unsetenv(char*);
 #endif

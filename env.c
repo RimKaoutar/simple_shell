@@ -46,3 +46,32 @@ int _setenv(char *env_name, char *env_value, bool modify)
 	free(new_env);
 	return(0);
 }
+
+/*
+ * _unsetenv - Removes an environment variable
+ * @env_name: The name of the environment variable to remove
+ * Return: 0 on success, -1 if variable not found
+*/
+
+int _unsetenv(char* env_name) {
+
+  extern char** environ;
+
+  int i = 0, len = _strlen(env_name);
+
+  while (environ[i]) {
+    if(_strncmp(environ[i], env_name, len) == 0) {
+      free(environ[i]);
+
+      while(environ[i]) {
+        environ[i] = environ[i+1];
+        i++;
+      }
+
+      environ[i-1] = NULL;
+      return 0;
+    }
+    i++;
+  }
+  return -1;
+}

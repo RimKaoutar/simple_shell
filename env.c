@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/*
+ * _setenv - sets or modifies an environment variable
+ * @env_name: name of the environment variable
+ * @env_value: value to set the environment variable to
+ * @modify: specifies whether to modify an existing variable or set a new one
+ * Return: 0 on success, -1 on error
+*/
+
 int _setenv(char *env_name, char *env_value, bool modify)
 {
 	extern char **environ;

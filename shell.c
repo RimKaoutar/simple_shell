@@ -26,7 +26,7 @@ int main(int ac, char **av, char **envp)
 	{
 		is_interactive = check_interactivity();
 		write (STDOUT_FILENO, "$ ", 2);
-		chars_nbr = getline(&line_buffer, &n, stdin);
+		chars_nbr = _getline(&line_buffer, &n);
 		if (chars_nbr == -1)
 		{
 			free(line_buffer);

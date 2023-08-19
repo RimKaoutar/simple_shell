@@ -26,12 +26,12 @@ unsigned int check_delim(char c, char *str)
 char *_strtok(char *str, char *delim)
 {
 	static char *qmsdlkfjqmsldk;
-	static char *nt;
+	static char *niterror;
 	unsigned int i;
 
 	if (str != NULL)
-		nt = str;
-	qmsdlkfjqmsldk = nt;
+		niterror = str;
+	qmsdlkfjqmsldk = niterror;
 	if (qmsdlkfjqmsldk == NULL)
 		return (NULL);
 	for (i = 0; qmsdlkfjqmsldk[i] != '\0'; i++)
@@ -39,26 +39,26 @@ char *_strtok(char *str, char *delim)
 		if (check_delim(qmsdlkfjqmsldk[i], delim) == 0)
 			break;
 	}
-	if (nt[i] == '\0' || nt[i] == '#')
+	if (niterror[i] == '\0' || niterror[i] == '#')
 	{
-		nt = NULL;
+		niterror = NULL;
 		return (NULL);
 	}
-	qmsdlkfjqmsldk = nt + i;
-	nt = qmsdlkfjqmsldk;
-	for (i = 0; nt[i] != '\0'; i++)
+	qmsdlkfjqmsldk = niterror + i;
+	niterror = qmsdlkfjqmsldk;
+	for (i = 0; niterror[i] != '\0'; i++)
 	{
-		if (check_delim(nt[i], delim) == 1)
+		if (check_delim(niterror[i], delim) == 1)
 			break;
 	}
-	if (nt[i] == '\0')
-		nt = NULL;
+	if (niterror[i] == '\0')
+		niterror = NULL;
 	else
 	{
-		nt[i] = '\0';
-		nt = nt + i + 1;
-		if (*nt == '\0')
-			nt = NULL;
+		niterror[i] = '\0';
+		niterror = niterror + i + 1;
+		if (*niterror == '\0')
+			niterror = NULL;
 	}
 	return (qmsdlkfjqmsldk);
 }

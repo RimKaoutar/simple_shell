@@ -24,7 +24,7 @@ int checker(char *line_buffer, char **envp)
 		return (2);
 	}
 	if (_strcmp(token, "setenv") == 0)
-	{ 
+	{
 		arg1 = _strtok_r(NULL, " \t\n", &save_ptr);
 		arg2 = _strtok_r(NULL, " \t\n", &save_ptr);
 		arg3 = _strtok_r(NULL, " \t\n", &save_ptr);
@@ -33,7 +33,7 @@ int checker(char *line_buffer, char **envp)
 			perror("error");
 			return (-1);
 		}
-		_setenv(arg1, arg2, (_strcmp(arg3, "1"))? false : true);
+		_setenv(arg1, arg2, (_strcmp(arg3, "1")) ? false : true);
 		free(cmd_copy);
 		return (3);
 	}

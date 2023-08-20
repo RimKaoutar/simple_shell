@@ -1,16 +1,16 @@
 #include "shell.h"
 #include <linux/limits.h>
+
 /**
- * _dir_ch - changes a dir
- * @command: the command arg
- * @Return: 0 on success -1 on error
+ * change_dir - changes a dir
+ * @command: the command
+ * @envp: the env pointer
+ * Return: 0 on success -1 else
 */
 int change_dir(char **command, char **envp)
 {
-	(void) envp;
 	int val = -1;
 	char cwd[PATH_MAX];
-
 
 	if (command[1] == NULL)
 	{

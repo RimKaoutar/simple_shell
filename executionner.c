@@ -1,14 +1,15 @@
 #include "shell.h"
 /**
  * _executionner - this is the function that will do it all
- * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line_buffer
  * @task_id: the task id to execute the right function for the right task
+ * @envp: the envp
+ * @token_of_tokens: the array of cmds
  */
 void executionner(char *line_buff, int task_id, char **envp
 , char **token_of_tokens)
 {
-	switch(task_id)
+	switch (task_id)
 	{
 		case 1:
 			exec1(line_buff);
@@ -21,12 +22,11 @@ void executionner(char *line_buff, int task_id, char **envp
 			break;
 		case 4:
 			exec4(token_of_tokens, envp);
-	}	
+	}
 }
 
 /**
  * exec1 - this function is specifically made for task 1
- * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
  */
 void exec1(char *line_buff)
@@ -52,8 +52,6 @@ void exec1(char *line_buff)
 
 /**
  * exec2 - task 2 funciton (the arguments array will be of size 1024,
- * we can reallocate it each time we need more but we still don't have realloc)
- * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
  */
 void exec2(char *line_buff)
@@ -68,8 +66,8 @@ void exec2(char *line_buff)
 
 /**
  * exec3 - this function is specifically made for task 3
- * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
+ * @envp: the env pointer
  */
 void exec3(char *line_buff, char **envp)
 {
@@ -99,7 +97,7 @@ void exec4(char **token_of_tokens, char **envp)
 
 	while (token_of_tokens)
 	{
-	cmd = get_command(token_of_tokens[0], envp);	
+	cmd = get_command(token_of_tokens[0], envp);
 	if (cmd)
 	{
 		execve(cmd, token_of_tokens, envp);

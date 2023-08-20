@@ -11,15 +11,17 @@ int _getchar(void)
 	ssize_t len_read;
 
 	len_read = read(STDIN_FILENO, &c, 1);
-	if (len_read == -1) {
+	if (len_read == -1)
+	{
 		perror("getchar");
 		return EOF;
 	}
-	if (len_read == 0) {
+	if (len_read == 0)
+	{
 		return EOF;
 	}
 
-	return c;
+	return (c);
 }
 /*
  * _getline - Reads a line from a stream into a buffer
@@ -31,21 +33,16 @@ int _getchar(void)
 */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	char *buff = NULL;
+	char *buff = NULL, c;
 	size_t buff_size = 0, len_read = 0;
-	char c;
 
 	if (lineptr == NULL || n == NULL || stream == NULL)
-	{
 		return (-1);
-	}
 	if (*lineptr == NULL)
 	{
 		*lineptr = malloc(*n * sizeof(char));
 		if (*lineptr == NULL)
-		{
 			return (-1);
-		}
 	}
 	buff = *lineptr;
 	buff_size = *n;
@@ -64,13 +61,10 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		}
 		buff[len_read++] = c;
 		if (c == '\n')
-		{
 			break;
-		}
 	}
 	if (len_read == 0)
 	{
-
 		free(buff);
 		return (-1);
 	}

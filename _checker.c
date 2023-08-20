@@ -8,8 +8,14 @@
  */
 int checker(char *line_buffer, char **envp) {
 
+	/*debug line */
+                                printf("in checker1 %s\n", line_buffer);
 	char *token = _strtok(line_buffer, " \t\n");
 	char *arg1, *arg2, *arg3;
+
+	/*debug line */
+                                printf("in checker1 %s\n", line_buffer);
+
 	if(_strcmp(token, "exit") == 0) {
 		return 1;
 	}
@@ -36,5 +42,8 @@ int checker(char *line_buffer, char **envp) {
 		_unsetenv(arg1);
 		return 4;
 	}
+	/*debug line */
+                                printf("inchecker1 %s\n", line_buffer);
+
 	return 0;
 }

@@ -1,27 +1,22 @@
 #include "shell.h"
 
 /**
- * _getenv - gets the value of an environment variable
- * @env_var: the name of the environment variable
- *
+ * _getenv - getenv
+ * @var: the name of the environment variable
+ * @envp: the environ pointer , extern IS NOT ALLOWED
  * Return: the value of the environment variable, or NULL if it does not exist
  */
-char *_getenv(const char *key, char **envp)
+char *_getenv(const char *var, char **envp)
 {
     int i;
-    size_t len = strlen(key);
+    size_t len = strlen(var);
 
     for (i = 0; envp[i] != NULL; i++)
     {
-        if (strncmp(envp[i], key, len) == 0 && envp[i][len] == '=')
-        {
-            // Return a pointer to the value associated with the key
-            return &envp[i][len + 1];
-        }
+        if (_strncmp(envp[i], var, len) == 0 && envp[i][len] == '=')
+            return (&envp[i][len + 1]);
     }
-
-    // If no matching key was found, return NULL
-    return NULL;
+    return (NULL);
 }
 
 /**

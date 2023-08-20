@@ -67,6 +67,13 @@ void executionner_prime(char **envp, char *line_buffer, int task_id)
 			i++;
 			continue;
 		}
+		/*
+		if (!get_command(token_of_tokens[i][0], envp))
+		{
+			printf("error\n");
+			i++;
+			continue;
+		}*/
 		son = fork();
 		if (son == -1)
 		{

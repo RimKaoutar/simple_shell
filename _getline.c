@@ -1,6 +1,6 @@
 #include "shell.h"
 
-/*
+/**
  * _getchar - reads a single character from stdin
  *
  * Return: The character read from stdin if successful, EOF otherwise
@@ -14,16 +14,16 @@ int _getchar(void)
 	if (len_read == -1)
 	{
 		perror("getchar");
-		return EOF;
+		return (EOF);
 	}
 	if (len_read == 0)
 	{
-		return EOF;
+		return (EOF);
 	}
 
 	return (c);
 }
-/*
+/**
  * _getline - Reads a line from a stream into a buffer
  * @lineptr: Double pointer to the buffer that will store the line
  * @n: Pointer to the size of the buffer

@@ -8,21 +8,21 @@
  */
 char *_getenv(char *var, char **envp)
 {
-    int i;
-    size_t len = strlen(var);
+	int i;
+	size_t len = strlen(var);
 
-    for (i = 0; envp[i] != NULL; i++)
-    {
-        if (_strncmp(envp[i], var, len) == 0 && envp[i][len] == '=')
-            return (&envp[i][len + 1]);
-    }
-    return (NULL);
+	for (i = 0; envp[i] != NULL; i++)
+	{
+		if (_strncmp(envp[i], var, len) == 0 && envp[i][len] == '=')
+			return (&envp[i][len + 1]);
+	}
+	return (NULL);
 }
 
 /**
  * get_command - gets the full path of a command
  * @command: the command to get the path of
- *
+ * @envp: the env pointer
  * Return: the full path of the command, or NULL if it does not exist
  */
 char *get_command(char *command, char **envp)
@@ -58,7 +58,7 @@ void print_env(char **envp)
 
 	while (envp[i])
 	{
-		write(1,envp[i], _strlen(envp[i]));
+		write(1, envp[i], _strlen(envp[i]));
 		write(1, "\n", 1);
 		i++;
 	}

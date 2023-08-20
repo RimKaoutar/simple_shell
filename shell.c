@@ -38,7 +38,7 @@ int main(int ac, char **av, char **envp)
 				{
 					if (i == 1)
 						break;
-					if (i == 2)
+					else
 						continue;
 				}
 				/* we need to check if the command exists here*/

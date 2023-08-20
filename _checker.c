@@ -9,7 +9,7 @@
 int checker(char *line_buffer, char **envp) {
 
 	char *token = _strtok(line_buffer, " \t\n");
-
+	char *arg1, *arg2, *arg3;
 	if(_strcmp(token, "exit") == 0) {
 		return 1;
 	}
@@ -20,13 +20,22 @@ int checker(char *line_buffer, char **envp) {
 	}
 
 	if(_strcmp(token, "setenv") == 0) { 
-		
-		_setenv(token, _strtok(NULL, " \t\n"), (_strcmp(_strtok(NULL, " \t\n"), "1"))? false : true);
+		arg1 = _strtok(NULL, " \t\n");
+		arg2 = _strtok(NULL, " \t\n");
+		arg3 = _strtok(NULL, " \t\n");
+		if(!arg1 || !arg2 ) {
+			fprintf(stderr, "Missing args\n");
+			return -1;
+		}
+		/* this line is for debuging purpores */
+		printf("%s   %s  %s\n",arg1, arg2, arg3);
+		_setenv(arg1, arg2, (_strcmp(arg3, "1"))? false : true);
 		return 3;
 	}
 
 	if(_strcmp(token, "unsetenv") == 0) {
-		_unsetenv(_strtok(NULL, " \t\n"));
+		arg1 = _strtok(NULL, " \t\n");
+		_unsetenv(arg1);
 		return 4;
 	}
 	return 0;

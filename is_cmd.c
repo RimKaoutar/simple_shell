@@ -3,7 +3,7 @@
 /**
  * is_command - Checks if a command exists in PATH
  * @cmd: The command name to check
- *
+ * @envp: the envp
  * Return: 1 if command exists, 0 if not
 */
 

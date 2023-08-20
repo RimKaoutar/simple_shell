@@ -18,7 +18,7 @@ int _puts(char *s)
 {
 	char *p = s;
 	int len = 0;
-	
+
 	while (*p)
 	{
 		_putchar(*p);
@@ -36,7 +36,7 @@ int _strlen(char *s)
 {
 	char *p = s;
 	int len = 0;
-	
+
 	while (*p)
 	{
 		p++;
@@ -46,9 +46,9 @@ int _strlen(char *s)
 }
 /**
  * _strcat - concates str2  into str1
- * @str1: the result
- * @str2: the str to concate
- * Return: the result str 
+ * @dest: the result
+ * @src: the str to concate
+ * Return: the result str
 */
 char *_strcat(char *dest, char *src)
 {

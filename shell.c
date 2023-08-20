@@ -51,8 +51,10 @@ int main(int ac, char **av, char **envp)
 	exit(0);
 }
 /**
- * executionner_prime - big daddy
- * @envp: env pointer, EXTERN IS NOT ALLOWED
+ * executionner_prime - will iterate through an array of commands that
+ * were separated by ';' in the line_buffer, and then fork and execute
+ * each one of them
+ * @envp: env pointer, EXTERN is in the header if you want to use it
  * @line_buffer: evident
  * @task_id: the task id
 */

@@ -26,7 +26,7 @@ int _setenv(char *env_name, char *env_value, bool modify)
 		{
 			if (modify)
 			{
-				new_env = malloc(len_env_name + _strlen(env_value) + 2);
+				new_env = malloc(sizeof(char) * (len_env_name + _strlen(env_value) + 2));
 				_strcpy(new_env, env_name);
 				_strcat(new_env, "=");
 				_strcat(new_env, env_value);

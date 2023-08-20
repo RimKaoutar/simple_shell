@@ -9,7 +9,7 @@
 
 int is_command(char *cmd, char **envp)
 {
-	char *path = NULL;
+	char *path = NULL, *saveptr;
 	char *token = NULL;
 	char *cmd_path = NULL;
 	struct stat st;
@@ -23,11 +23,11 @@ int is_command(char *cmd, char **envp)
 		return (1);
 	}
 	path = _getenv("PATH", envp);
-	token = _strtok(path, ":");
+	token = _strtok_r(path, ":", &saveptr);
 
 	while (token)
 	{
-		cmd_path = malloc(sizeof(char) * _strlen(token) + _strlen(cmd) + 2);
+		cmd_path = malloc(sizeof(char) * (_strlen(token) + _strlen(cmd) + 2));
 		_strcpy(cmd_path, token);
 		_strcat(cmd_path, "/");
 		_strcat(cmd_path, cmd);
@@ -37,7 +37,7 @@ int is_command(char *cmd, char **envp)
 			return (1);
 		}
 		free(cmd_path);
-		token = _strtok(NULL, ":");
+		token = _strtok_r(NULL, ":", &saveptr);
 	}
 	return (0);
 }

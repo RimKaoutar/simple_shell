@@ -5,20 +5,22 @@
  * @line_buff: the line_buffer
  * @task_id: the task id to execute the right function for the right task
  */
-void executionner(ssize_t chars_nbr, char *line_buff, int task_id, char **envp)
+void executionner(char *line_buff, int task_id, char **envp
+, char **token_of_tokens)
 {
-	(void) chars_nbr;
 	switch(task_id)
 	{
 		case 1:
-			exec1(chars_nbr, line_buff);
+			exec1(line_buff);
 			break;
 		case 2:
-			exec2(chars_nbr, line_buff);
+			exec2(line_buff);
 			break;
 		case 3:
-			exec3(chars_nbr, line_buff, envp);
+			exec3(line_buff, envp);
 			break;
+		case 4:
+			exec4(token_of_tokens, envp);
 	}	
 }
 
@@ -27,16 +29,15 @@ void executionner(ssize_t chars_nbr, char *line_buff, int task_id, char **envp)
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
  */
-void exec1(ssize_t chars_nbr, char *line_buff)
+void exec1(char *line_buff)
 {
-	char *one_token, *two_token;
+	char *one_token, *two_token, *saveptr;
 	char *args[] = {NULL};
 
-	(void) chars_nbr;
-	one_token = _strtok(line_buff, " \n\t");
+	one_token = _strtok_r(line_buff, " \n\t", &saveptr);
 	while (1)
 	{
-		two_token = _strtok(NULL, " \t\n");
+		two_token = _strtok_r(NULL, " \t\n", &saveptr);
 		if (!two_token)
 			break;
 		strcat(one_token, two_token);
@@ -55,19 +56,10 @@ void exec1(ssize_t chars_nbr, char *line_buff)
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
  */
-void exec2(ssize_t chars_nbr, char *line_buff)
+void exec2(char *line_buff)
 {
 	char **args = splitstr(line_buff);
-	int i = 0;
 
-	(void) chars_nbr;
-
-	/*this loop is for debuging purpose only, will be omited when done*/
-	while (args[i])
-	{
-		printf("%s\n", args[i]);
-		i++;
-	}
 	if (args)
 	{
 		execve(args[0], args, NULL);
@@ -79,14 +71,11 @@ void exec2(ssize_t chars_nbr, char *line_buff)
  * @chars_nbr: the number of chars printed to getline
  * @line_buff: the line buffer
  */
-void exec3(ssize_t chars_nbr, char *line_buff, char **envp)
+void exec3(char *line_buff, char **envp)
 {
 	char **args = splitstr(line_buff);
 	char *cmd;
 
-	(void) chars_nbr;
-	if (strcmp(args[0], "exit") == 0)
-		exit(EXIT_SUCCESS);
 	cmd = get_command(args[0], envp);
 	if (cmd)
 	{
@@ -98,5 +87,28 @@ void exec3(ssize_t chars_nbr, char *line_buff, char **envp)
 		execve(args[0], args, NULL);
 		perror("execve");
 	}
-	exit(0);
+}
+/**
+ * exec4 - this function will handle the ";" "&&" "#" and "||"
+ * @token_of_tokens: this is an array of arrays of strings
+ * @envp: the env pointer, again , extern is not allowed
+*/
+void exec4(char **token_of_tokens, char **envp)
+{
+	char *cmd;
+
+	while (token_of_tokens)
+	{
+	cmd = get_command(token_of_tokens[0], envp);	
+	if (cmd)
+	{
+		execve(cmd, token_of_tokens, envp);
+		perror("cmd");
+	}
+	else
+	{
+		execve(token_of_tokens[0], token_of_tokens, NULL);
+		perror("execve");
+	}
+	}
 }

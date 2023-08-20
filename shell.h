@@ -25,12 +25,16 @@ char *_strcpy(char *, char *);
 char *_strdup(char *);
 int _strncmp(char *, char *, int);
 
-/* executionners */
-void executionner(ssize_t, char *, int, char **);
-void exec1(ssize_t, char *);
-void exec2(ssize_t, char *);
-void exec3(ssize_t, char *, char **);
+/* string_functions_3*/
+char ***split_str_prime(char *);
 
+/* executionners */
+void executionner_prime(char **, char *, int);
+void executionner(char *, int, char **, char **);
+void exec1(char *);
+void exec2(char *);
+void exec3(char *, char **);
+void exec4(char **, char **);
 /* _realloc */
 void *_realloc(void *, unsigned int, unsigned int);
 
@@ -43,7 +47,7 @@ void print_env(char **);
 int checker(char *, char **);
 
 /* _strtok */
-char *_strtok(char *, char *);
+char *_strtok_r(char *, char *, char **);
 
 /* _getline*/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);

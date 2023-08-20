@@ -15,11 +15,10 @@ int check_interactivity(void)
  */
 int main(int ac, char **av, char **envp)
 {
-	int is_interactive = 1, status, i;
+	int is_interactive = 1, i;
 	char *line_buffer = NULL;
 	ssize_t chars_nbr;
-	size_t n = 0, task_id = 3;
-	pid_t weldi;
+	size_t n = 0, task_id = 4;
 
 	(void) ac, (void) av;
 	while (is_interactive)
@@ -41,24 +40,38 @@ int main(int ac, char **av, char **envp)
 				else
 					continue;
 			}
-			/* we need to check if the command exists here*/
-			weldi = fork();
-			if (weldi == -1)
-			{
-				free(line_buffer);
-				perror("weldi mat");
-				return(EXIT_FAILURE);
-			}
-			if (weldi == 0)
-			{
-				executionner(chars_nbr, line_buffer, task_id, envp);
-			}
-			else
-			{
-				waitpid(weldi, &status, WUNTRACED);
-			}
+			executionner_prime(envp, line_buffer, task_id);
 		}
 	}
 	free(line_buffer);
 	exit(0);
+}
+
+void executionner_prime(char **envp, char *line_buffer, int task_id)
+{
+	char ***token_of_tokens;
+	pid_t son;
+	int stat, i = 0;
+
+	token_of_tokens = split_str_prime(line_buffer);
+	while (token_of_tokens[i])
+	{
+		son = fork();
+		if (son == -1)
+		{
+			free(line_buffer);
+			perror("son died");
+			exit(EXIT_FAILURE);
+		}
+		if (son == 0)
+		{
+			executionner(line_buffer, task_id, envp, token_of_tokens[i]);
+		}
+		else
+		{
+			wait(&stat);
+		}
+		i++;
+	}
+	free(token_of_tokens);
 }

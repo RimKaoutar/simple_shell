@@ -8,10 +8,10 @@
  */
 char **splitstr(char *str)
 {
-	char *token, **tokens = NULL;
+	char *token, **tokens = NULL, *saveptr;
 	int count = 0;
 
-	token = _strtok(str, " \t\n");
+	token = _strtok_r(str, " \t\n", &saveptr);
 	while (token)
 	{
 		tokens = _realloc(tokens, count * sizeof(char *), (count + 1) * sizeof(char *));
@@ -22,7 +22,7 @@ char **splitstr(char *str)
 			exit(EXIT_FAILURE);
 		}
 		tokens[count - 1] = token;
-		token = _strtok(NULL, " \t\n");
+		token = _strtok_r(NULL, " \t\n", &saveptr);
 	}
 	tokens[count] = NULL;
 	return (tokens);

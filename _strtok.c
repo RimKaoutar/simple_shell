@@ -18,47 +18,53 @@ unsigned int check_delim(char c, char *str)
 }
 
 /**
- * _strtok - Token A String Into Token (strtrok)
+ * _strtok_r - Token A String Into Token (strtrok)
  * @str: Str
  * @delim: delimiter
  * Return: Pointer To The
  */
-char *_strtok(char *str, char *delim)
+char *_strtok_r(char *str, char *delim, char **saveptr)
 {
-	static char *qmsdlkfjqmsldk;
-	static char *niterror;
+	char *token;
 	unsigned int i;
 
 	if (str != NULL)
-		niterror = str;
-	qmsdlkfjqmsldk = niterror;
-	if (qmsdlkfjqmsldk == NULL)
+		*saveptr = str;
+
+	token = *saveptr;
+	if (token == NULL)
 		return (NULL);
-	for (i = 0; qmsdlkfjqmsldk[i] != '\0'; i++)
+
+	for (i = 0; token[i] != '\0'; i++)
 	{
-		if (check_delim(qmsdlkfjqmsldk[i], delim) == 0)
+		if (check_delim(token[i], delim) == 0)
 			break;
 	}
-	if (niterror[i] == '\0' || niterror[i] == '#')
+
+	if ((*saveptr)[i] == '\0' || (*saveptr)[i] == '#')
 	{
-		niterror = NULL;
+		*saveptr = NULL;
 		return (NULL);
 	}
-	qmsdlkfjqmsldk = niterror + i;
-	niterror = qmsdlkfjqmsldk;
-	for (i = 0; niterror[i] != '\0'; i++)
+
+	token = *saveptr + i;
+	*saveptr = token;
+
+	for (i = 0; (*saveptr)[i] != '\0'; i++)
 	{
-		if (check_delim(niterror[i], delim) == 1)
+		if (check_delim((*saveptr)[i], delim) == 1)
 			break;
 	}
-	if (niterror[i] == '\0')
-		niterror = NULL;
+
+	if ((*saveptr)[i] == '\0')
+		*saveptr = NULL;
 	else
 	{
-		niterror[i] = '\0';
-		niterror = niterror + i + 1;
-		if (*niterror == '\0')
-			niterror = NULL;
+		(*saveptr)[i] = '\0';
+		*saveptr = *saveptr + i + 1;
+		if (**saveptr == '\0')
+			*saveptr = NULL;
 	}
-	return (qmsdlkfjqmsldk);
+
+	return token;
 }

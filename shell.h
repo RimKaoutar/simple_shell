@@ -47,6 +47,7 @@ char *_strtok(char *, char *);
 
 /* _getline*/
 char *_getline(char*, int);
+int _getchar(void);
 
 /* env */
 int _setenv(char *, char *, bool);

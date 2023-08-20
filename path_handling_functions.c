@@ -6,21 +6,22 @@
  *
  * Return: the value of the environment variable, or NULL if it does not exist
  */
-char *_getenv(const char *env_var, char **envp)
+char *_getenv(const char *key, char **envp)
 {
-	int i = 0;
-	char *token, *saveptr;
+    int i;
+    size_t len = strlen(key);
 
-	while (envp[i])
-	{
-		token = _strtok_r(envp[i], "=", &saveptr);
-		if (strcmp(token, env_var) == 0)
-		{
-			return (_strtok_r(NULL, "\n", &saveptr));
-		}
-		i++;
-	}
-	return (NULL);
+    for (i = 0; envp[i] != NULL; i++)
+    {
+        if (strncmp(envp[i], key, len) == 0 && envp[i][len] == '=')
+        {
+            // Return a pointer to the value associated with the key
+            return &envp[i][len + 1];
+        }
+    }
+
+    // If no matching key was found, return NULL
+    return NULL;
 }
 
 /**

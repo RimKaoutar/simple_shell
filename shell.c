@@ -46,7 +46,12 @@ int main(int ac, char **av, char **envp)
 	free(line_buffer);
 	exit(0);
 }
-
+/**
+ * executionner_prime - big daddy
+ * @envp: env pointer, EXTERN IS NOT ALLOWED
+ * @line_buffer: evident
+ * @task_id: the task id
+*/
 void executionner_prime(char **envp, char *line_buffer, int task_id)
 {
 	char ***token_of_tokens;
@@ -56,6 +61,12 @@ void executionner_prime(char **envp, char *line_buffer, int task_id)
 	token_of_tokens = split_str_prime(line_buffer);
 	while (token_of_tokens[i])
 	{
+		if (_strcmp(token_of_tokens[i][0], "cd") == 0)
+		{
+			change_dir(token_of_tokens[i], envp);
+			i++;
+			continue;
+		}
 		son = fork();
 		if (son == -1)
 		{

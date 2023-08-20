@@ -1,7 +1,7 @@
 #include "shell.h"
 
-/*
- * _setenv - sets or modifies an environment variable
+/**
+ * _setenv - set an env
  * @env_name: name of the environment variable
  * @env_value: value to set the environment variable to
  * @modify: specifies whether to modify an existing variable or set a new one
@@ -10,7 +10,7 @@
 
 int _setenv(char *env_name, char *env_value, bool modify)
 {
-	extern char **environ;
+
 	int i = 0, len_env_name = 0;
 	char *new_env;
 
@@ -54,7 +54,7 @@ int _setenv(char *env_name, char *env_value, bool modify)
 
 int _unsetenv(char *env_name)
 {
-	extern char **environ;
+
 	unsigned int i = 0;
 	int len;
 

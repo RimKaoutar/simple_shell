@@ -38,6 +38,7 @@ void exec4(char **, char **);
 /* _realloc */
 void *_realloc(void *, unsigned int, unsigned int);
 
+extern char **environ;
 /* path_handling_functions */
 char *_getenv(char *, char **);
 char *get_command(char *, char **);

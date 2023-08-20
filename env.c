@@ -31,7 +31,7 @@ int _setenv(char *env_name, char *env_value, bool modify)
 				_strcat(new_env, "=");
 				_strcat(new_env, env_value);
 				environ[i] = new_env;
-				return(0);
+				return (0);
 			}
 			return (0);
 		}
@@ -43,7 +43,7 @@ int _setenv(char *env_name, char *env_value, bool modify)
 	_strcat(new_env, env_value);
 	environ[i] = new_env;
 	environ[i + 1] = NULL;
-	return(0);
+	return (0);
 }
 
 /*
@@ -52,33 +52,36 @@ int _setenv(char *env_name, char *env_value, bool modify)
  * Return: 0 on success, -1 if variable not found
  */
 
-int _unsetenv(char* env_name) {
-
-	extern char** environ;
+int _unsetenv(char* env_name)
+{
+	extern char **environ;
 	unsigned int i = 0;
 	int len;
 
-	if(!env_name) 
+	if (!env_name) 
 	{
 		perror("unsetenv");
-		return -1;
+		return (-1);
 	}
 
 	len = _strlen(env_name);
 
-	while (environ[i]) {
+	while (environ[i])
+	{
 
-		if(_strncmp(environ[i], env_name, len) == 0) {
+		if (_strncmp(environ[i], env_name, len) == 0)
+		{
 			free(environ[i]);
 
-			while(environ[i]) {
-				environ[i] = environ[i+1];
+			while(environ[i])
+			{
+				environ[i] = environ[i + 1];
 				i++;
 			}
-			environ[i-1] = NULL;
-			return 0;
+			environ[i - 1] = NULL;
+			return (0);
 		}
 		i++;
 	}
-	return -1;
+	return (-1);
 }

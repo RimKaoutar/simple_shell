@@ -6,7 +6,7 @@
  * @envp: the environ pointer , extern IS NOT ALLOWED
  * Return: the value of the environment variable, or NULL if it does not exist
  */
-char *_getenv(const char *var, char **envp)
+char *_getenv(char *var, char **envp)
 {
     int i;
     size_t len = strlen(var);

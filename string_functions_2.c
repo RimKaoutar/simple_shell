@@ -113,15 +113,15 @@ char *_strdup(char *str)
  */
 int _strncmp(char *cs, char *ct, int count)
 {
-	unsigned char c1, c2;
+	int i = 0, j = 0;
 
 	while (count) {
-		c1 = *cs++;
-		c2 = *ct++;
-		if (c1 != c2)
-			return c1 < c2 ? -1 : 1;
-		if (!c1)
-			break;
+		if (cs[i] != ct[j])
+		{
+			return (cs[i] - ct[j]);
+		}
+		i++;
+		j++;
 		count--;
 	}
 	return 0;

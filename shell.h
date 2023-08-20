@@ -39,7 +39,7 @@ void exec4(char **, char **);
 void *_realloc(void *, unsigned int, unsigned int);
 
 /* path_handling_functions */
-char *_getenv(const char *, char **);
+char *_getenv(char *, char **);
 char *get_command(char *, char **);
 void print_env(char **);
 int change_dir(char **, char **);

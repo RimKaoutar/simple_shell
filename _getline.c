@@ -22,13 +22,13 @@ int _getchar(void)
 	return c;
 }
 /*
- * _getline - gets a line of input from the user.
+ * _getline - Reads a line from a stream into a buffer
+ * @lineptr: Double pointer to the buffer that will store the line
+ * @n: Pointer to the size of the buffer
+ * @stream: The stream to read from (usually stdin)
  *
- * @str - A pointer to the buffer that will store the input line.
- * @n - The maximum number of characters that can be stored in the buffer.
- * Returns:
- *   A pointer to the buffer that contains the input line.
- */
+ * Return: The number of characters read or -1 on error
+*/
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	char *buff = NULL;

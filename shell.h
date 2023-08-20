@@ -46,7 +46,7 @@ int checker(char *, char **);
 char *_strtok(char *, char *);
 
 /* _getline*/
-char *_getline(char*, int);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 int _getchar(void);
 
 /* env */

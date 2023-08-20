@@ -29,7 +29,7 @@ int _getchar(void)
  * Returns:
  *   A pointer to the buffer that contains the input line.
  */
-ssize_t getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
 	char *buff = NULL;
 	size_t buff_size = 0, len_read = 0;
@@ -50,7 +50,7 @@ ssize_t getline(char **lineptr, size_t *n, FILE *stream)
 	buff = *lineptr;
 	buff_size = *n;
 
-	while ((c = _getchar() != EOF))
+	while ((c = _getchar()) != EOF)
 	{
 		if (len_read + 1 >= buff_size)
 		{

@@ -1,25 +1,33 @@
 #include "shell.h"
 
 /**
- * checker - checks is the line_buffer has exit or env in it
- * @line_buffer: the line buffer
- * @envp: the environ pointer
- * Return: 1 for exit, 2 for env, 0 for a command that exists, -1 for
- * a command that doesn't exist
-*/
-int checker(char *line_buffer, char **envp)
-{
-	char *temp;
-	if (_strcmp(_strtok(temp = _strdup(line_buffer), "\t\n "), "exit") == 0)
-	{
-		free(temp);
-		return (1);
+ * checker - checks line buffer for builtin commands
+ * @line_buffer: the command line
+ * @envp: environ pointer
+ * Return: command indicator or 0 if not found
+ */
+int checker(char *line_buffer, char **envp) {
+
+	char *token = _strtok(line_buffer, " \t\n");
+
+	if(_strcmp(token, "exit") == 0) {
+		return 1;
 	}
-	if (_strcmp(_strtok(temp = _strdup(line_buffer), "\t\n "), "env") == 0)
-	{
-		free(temp);
+
+	if(_strcmp(token, "env") == 0) {
 		print_env(envp);
-		return (2);
+		return 2;
 	}
-	return (0);
+
+	if(_strcmp(token, "setenv") == 0) { 
+		
+		_setenv(token, _strtok(NULL, " \t\n"), (_strcmp(_strtok(NULL, " \t\n"), "1"))? false : true);
+		return 3;
+	}
+
+	if(_strcmp(token, "unsetenv") == 0) {
+		_unsetenv(_strtok(NULL, " \t\n"));
+		return 4;
+	}
+	return 0;
 }

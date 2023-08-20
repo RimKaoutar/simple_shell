@@ -14,7 +14,8 @@ char **splitstr(char *str)
 	token = _strtok_r(str, " \t\n", &saveptr);
 	while (token)
 	{
-		tokens = _realloc(tokens, count * sizeof(char *), (count + 1) * sizeof(char *));
+		tokens = _realloc(tokens,
+		count * sizeof(char *), (count + 1) * sizeof(char *));
 		count++;
 		if (!tokens)
 		{
@@ -65,7 +66,7 @@ int _strcmp(char *s1, char *s2)
 	if (!s1 || !s2)
 	{
 		return (-15);
-	}	
+	}
 	index = 0;
 	while (s1[index] != '\0' && s2[index] != '\0')
 	{
@@ -106,7 +107,7 @@ char *_strdup(char *str)
 }
 
 /**
- * strncmp - Compare two length-limited strings
+ * _strncmp - Compare two length-limited strings
  * @cs: One string
  * @ct: Another string
  * @count: The maximum number of bytes to compare
@@ -115,7 +116,8 @@ int _strncmp(char *cs, char *ct, int count)
 {
 	int i = 0, j = 0;
 
-	while (count) {
+	while (count)
+	{
 		if (cs[i] != ct[j])
 		{
 			return (cs[i] - ct[j]);
@@ -124,5 +126,5 @@ int _strncmp(char *cs, char *ct, int count)
 		j++;
 		count--;
 	}
-	return 0;
+	return (0);
 }

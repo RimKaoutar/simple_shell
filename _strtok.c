@@ -30,11 +30,9 @@ char *_strtok_r(char *str, char *delim, char **saveptr)
 
 	if (str != NULL)
 		*saveptr = str;
-
 	token = *saveptr;
 	if (token == NULL)
 		return (NULL);
-
 	for (i = 0; token[i] != '\0'; i++)
 	{
 		if (check_delim(token[i], delim) == 0)
@@ -46,10 +44,8 @@ char *_strtok_r(char *str, char *delim, char **saveptr)
 		*saveptr = NULL;
 		return (NULL);
 	}
-
 	token = *saveptr + i;
 	*saveptr = token;
-
 	for (i = 0; (*saveptr)[i] != '\0'; i++)
 	{
 		if (check_delim((*saveptr)[i], delim) == 1)
@@ -66,5 +62,5 @@ char *_strtok_r(char *str, char *delim, char **saveptr)
 			*saveptr = NULL;
 	}
 
-	return token;
+	return (token);
 }

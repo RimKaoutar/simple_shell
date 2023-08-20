@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * _split_str_prime - each time encountering ";" in line_buffer
+ * split_str_prime - each time encountering ";" in line_buffer
  * we call splitstr, thus having a *** array
  * @line_buffer: the line buffer
  * Return: the array of arrays of strings

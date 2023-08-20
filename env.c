@@ -14,21 +14,6 @@ int _setenv(char *env_name, char *env_value, bool modify)
 	int i = 0, len_env_name = 0;
 	char *new_env;
 
-	/*debug zone */
-	printf("hello I am setenv\n ");
-	printf("Entered _setenv with:\n");
-
-	printf("env_name: %s\n", env_name);
-	printf("env_value: %s\n", env_value);
-
-	if(modify) {
-		printf("Modify mode TRUE\n");
-	}
-	else {
-		printf("Modify mode FALSE\n");
-	}
-	/* end debug */
-
 	if (!env_name || !env_value)
 	{
 		perror("setenv");
@@ -36,18 +21,15 @@ int _setenv(char *env_name, char *env_value, bool modify)
 	}
 	while (environ[i])
 	{
-		printf("in while\n");
 		len_env_name = _strlen(env_name);
 		if (_strncmp(environ[i], env_name, len_env_name) == 0)
 		{
-			printf("after if\n");
 			if (modify)
 			{
 				new_env = malloc(len_env_name + _strlen(env_value) + 2);
 				_strcpy(new_env, env_name);
 				_strcat(new_env, "=");
 				_strcat(new_env, env_value);
-				printf("new env : %s\n", new_env);
 				environ[i] = new_env;
 				return(0);
 			}
@@ -59,7 +41,6 @@ int _setenv(char *env_name, char *env_value, bool modify)
 	_strcpy(new_env, env_name);
 	_strcat(new_env, "=");
 	_strcat(new_env, env_value);
-	printf("new env : %s\n", new_env);
 	environ[i] = new_env;
 	environ[i + 1] = NULL;
 	return(0);

@@ -27,8 +27,6 @@ int checker(char *line_buffer, char **envp) {
 			fprintf(stderr, "Missing args\n");
 			return -1;
 		}
-		/* this line is for debuging purpores */
-		printf("%s   %s  %s\n",arg1, arg2, arg3);
 		_setenv(arg1, arg2, (_strcmp(arg3, "1"))? false : true);
 		return 3;
 	}

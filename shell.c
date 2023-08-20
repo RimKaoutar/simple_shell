@@ -34,14 +34,18 @@ int main(int ac, char **av, char **envp)
 		}
 		if (chars_nbr != EOF)
 		{
-				if ((i = checker(line_buffer, envp)) != 0)
-				{
-					if (i == 1)
-						break;
-					else
-						continue;
-				}
-				/* we need to check if the command exists here*/
+			if ((i = checker(line_buffer, envp)) != 0)
+			{
+				if (i == 1)
+					break;
+				else
+					continue;
+			}
+			/* we need to check if the command exists here*/
+			if (is_command(line_buffer, envp))
+			{
+				/* line for debug */
+				printf("i exist i fork\n");
 				weldi = fork();
 				if (weldi == -1)
 				{
@@ -50,9 +54,16 @@ int main(int ac, char **av, char **envp)
 					return(EXIT_FAILURE);
 				}
 				if (weldi == 0)
-					executionner(chars_nbr, line_buffer, task_id, envp);
+				{
+				/* line for debug */
+					printf("%s\n", line_buffer);
+					executionner(chars_nbr, line_buffer, 3, envp);
+				}
 				else
+				{
 					waitpid(weldi, &status, WUNTRACED);
+				}
+			}
 		}
 	}
 	free(line_buffer);

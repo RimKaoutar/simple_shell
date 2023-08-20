@@ -52,4 +52,8 @@ int _getchar(void);
 /* env */
 int _setenv(char *, char *, bool);
 int _unsetenv(char*);
+
+/* is_cmd */
+int is_command(char *cmd, char **envp);
+
 #endif

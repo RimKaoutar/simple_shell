@@ -27,8 +27,6 @@ int main(int ac, char **av, char **envp)
 		is_interactive = check_interactivity();
 		write (STDOUT_FILENO, "$ ", 2);
 		chars_nbr = _getline(&line_buffer, &n, stdin);
-		/*debug line */
-		printf("second %s\n", line_buffer);
 		if (chars_nbr == -1)
 		{
 			free(line_buffer);
@@ -36,8 +34,6 @@ int main(int ac, char **av, char **envp)
 		}
 		if (chars_nbr != EOF)
 		{
-			/*debug line */
-			printf("before if %s\n", line_buffer);
 			if ((i = checker(line_buffer, envp)) != 0)
 			{
 				if (i == 1)
@@ -45,8 +41,6 @@ int main(int ac, char **av, char **envp)
 				else
 					continue;
 			}
-			/*debug line */
-			printf("before fork %s\n", line_buffer);
 			/* we need to check if the command exists here*/
 			weldi = fork();
 			if (weldi == -1)
@@ -57,13 +51,10 @@ int main(int ac, char **av, char **envp)
 			}
 			if (weldi == 0)
 			{
-				executionner(chars_nbr, line_buffer, 3, envp);
+				executionner(chars_nbr, line_buffer, task_id, envp);
 			}
 			else
 			{
-
-				/*debug line */
-				printf("second %s\n", line_buffer);
 				waitpid(weldi, &status, WUNTRACED);
 			}
 		}

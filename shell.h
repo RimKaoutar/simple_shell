@@ -29,6 +29,7 @@ int _strncmp(char *, char *, int);
 char ***split_str_prime(char *);
 
 /* executionners */
+void exec_non_interactive(char **envp);
 void executionner_prime(char **, char *, int);
 void executionner(char *, int, char **, char **);
 void exec1(char *);
@@ -51,6 +52,7 @@ int checker(char *, char **);
 char *_strtok_r(char *, char *, char **);
 
 /* _getline*/
+ssize_t non_interactive_getline(char **lineptr, size_t *n, FILE *stream);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 int _getchar(void);
 

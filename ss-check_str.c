@@ -1,33 +1,80 @@
 #include "shell.h"
 /* modified */
+
 /**
- * is_chain - test if current char in buffer is a chain delimeter
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
- *
- * Return: 1 if chain delimeter else 0
- */
-bool is_chain(info_s *info, char *buf, size_t *p)
+ * change_string - changes str
+ * @django_unchaned: address of django_unchaned string
+ * @the_wolf_of_wall_street: the_wolf_of_wall_street string
+ * Return: 1 or 0
+*/
+int change_string(char **django_unchaned, char *the_wolf_of_wall_street)
+{
+	free(*django_unchaned);
+	*django_unchaned = the_wolf_of_wall_street;
+
+	return (1);
+}
+
+/**
+ * check_chain - check broj
+ * @information: info strct
+ * @buf: buffer
+ * @pp: ptr to addr in buf
+ * @i: i
+ * @legn:  len
+ * Return: nada
+*/
+void check_chain(info_s *information, char *bbuf, size_t *pp, size_t i, size_t legn)
+{
+	size_t jj = *pp;
+
+	if (information->sep_buff_kind == AND_FLAG)
+	{
+		if (information->status)
+		{
+			bbuf[i] = 0;
+			jj = legn;
+		}
+	}
+
+	if (information->sep_buff_kind == OR_FLAG)
+	{
+		if (!information->status)
+		{
+			bbuf[i] = 0;
+			jj = legn;
+		}
+	}
+	*pp = jj;
+}
+
+/**
+ * is_chain - test the chain
+ * @information: information struct
+ * @bufferr: the char bufferrfer
+ * @p: address of cu
+ * Return: 1 or 0
+*/
+bool is_chain(info_s *information, char *bufferr, size_t *p)
 {
 	size_t j = *p;
 
-	if (buf[j] == '|' && buf[j + 1] == '|')
+	if (bufferr[j] == '|' && bufferr[j + 1] == '|')
 	{
-		buf[j] = 0;
+		bufferr[j] = 0;
 		j++;
-		info->sep_buff_kind = OR_FLAG;
+		information->sep_buff_kind = OR_FLAG;
 	}
-	else if (buf[j] == '&' && buf[j + 1] == '&')
+	else if (bufferr[j] == '&' && bufferr[j + 1] == '&')
 	{
-		buf[j] = 0;
+		bufferr[j] = 0;
 		j++;
-		info->sep_buff_kind = AND_FLAG;
+		information->sep_buff_kind = AND_FLAG;
 	}
-	else if (buf[j] == ';')
+	else if (bufferr[j] == ';')
 	{
-		buf[j] = 0;
-		info->sep_buff_kind = CHAIN_FLAG;
+		bufferr[j] = 0;
+		information->sep_buff_kind = CHAIN_FLAG;
 	}
 	else
 		return (false);
@@ -36,93 +83,46 @@ bool is_chain(info_s *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
- * @i: starting position in buf
- * @len: length of buf
- *
- * Return: Void
- */
-void check_chain(info_s *info, char *buf, size_t *p, size_t i, size_t len)
+ * change_v - replacer
+ * @inforrrmation: the strct
+ * Return: 1 or 0 bruh
+*/
+int change_v(info_s *inforrrmation)
 {
-	size_t j = *p;
+	int iy = 0;
+	list_s *noede;
 
-	if (info->sep_buff_kind == AND_FLAG)
+	for (iy = 0; inforrrmation->argv[iy]; iy++)
 	{
-		if (info->status)
-		{
-			buf[i] = 0;
-			j = len;
-		}
-	}
-	if (info->sep_buff_kind == OR_FLAG)
-	{
-		if (!info->status)
-		{
-			buf[i] = 0;
-			j = len;
-		}
-	}
-	*p = j;
-}
-
-/**
- * change_v - replaces vars in the tokenized string
- * @info: the parameter struct
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int change_v(info_s *info)
-{
-	int i = 0;
-	list_s *node;
-
-	for (i = 0; info->argv[i]; i++)
-	{
-		if (info->argv[i][0] != '$' || !info->argv[i][1])
+		if (inforrrmation->argv[iy][0] != '$' || !inforrrmation->argv[iy][1])
 			continue;
-		if (!_strcmp(info->argv[i], "$?"))
+		if (!_strcmp(inforrrmation->argv[iy], "$?"))
 		{
-			change_string(&(info->argv[i]),
+			change_string(&(inforrrmation->argv[iy]),
 
-						   _strdup(change_base(info->status, 10, 0)));
+						   _strdup(change_base(inforrrmation->status, 10, 0)));
 
 			continue;
 		}
-		if (!_strcmp(info->argv[i], "$$"))
+		if (!_strcmp(inforrrmation->argv[iy], "$$"))
 		{
-			change_string(&(info->argv[i]),
+			change_string(&(inforrrmation->argv[iy]),
 
 						   _strdup(change_base(getpid(), 10, 0)));
 
 			continue;
 		}
-		node = node_str_start(info->env, &info->argv[i][1], '=');
-		if (node)
+		noede = node_str_start(inforrrmation->env, &inforrrmation->argv[iy][1], '=');
+		if (noede)
 		{
-			change_string(&(info->argv[i]),
+			change_string(&(inforrrmation->argv[iy]),
 
-						   _strdup(_strchr(node->str, '=') + 1));
+						   _strdup(_strchr(noede->str, '=') + 1));
 
 			continue;
 		}
-		change_string(&info->argv[i], _strdup(""));
+		change_string(&inforrrmation->argv[iy], _strdup(""));
 	}
 	return (0);
 }
-/**
- * change_string - replaces string
- * @old: address of old string
- * @new: new string
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int change_string(char **old, char *new)
-{
-	free(*old);
-	*old = new;
 
-	return (1);
-}

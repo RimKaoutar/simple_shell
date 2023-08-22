@@ -51,8 +51,8 @@ int main(int ac, char **av, char **envp)
 			}
 			executionner_prime(envp, line_buffer, task_id);
 		}
+		free(line_buffer);
 	}
-	free(line_buffer);
 	exit(0);
 }
 /**

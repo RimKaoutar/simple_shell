@@ -7,8 +7,8 @@
  */
 int _getchar(void)
 {
-	int c;
-	ssize_t len_read;
+	int c = 0;
+	ssize_t len_read = 0;
 
 	len_read = read(STDIN_FILENO, &c, 1);
 	if (len_read == -1)

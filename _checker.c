@@ -8,9 +8,9 @@
  */
 int checker(char *line_buffer, char **envp)
 {
-	char *cmd_copy = strdup(line_buffer), *save_ptr;
+	char *cmd_copy = _strdup(line_buffer), *save_ptr = NULL;
 	char *token = _strtok_r(cmd_copy, " \t\n", &save_ptr);
-	char *arg1, *arg2, *arg3;
+	char *arg1 = NULL, *arg2 = NULL, *arg3 = NULL;
 
 	if (_strcmp(token, "exit") == 0)
 	{
@@ -31,6 +31,7 @@ int checker(char *line_buffer, char **envp)
 		if (!arg1 || !arg2)
 		{
 			perror("error");
+			free(cmd_copy);
 			return (-1);
 		}
 		_setenv(arg1, arg2, (_strcmp(arg3, "1")) ? false : true);

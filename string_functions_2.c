@@ -25,6 +25,7 @@ char **splitstr(char *str)
 		tokens[count - 1] = token;
 		token = _strtok_r(NULL, " \t\n", &saveptr);
 	}
+	tokens = _realloc(tokens, count * sizeof(char*), (count + 1) * sizeof(char *));
 	tokens[count] = NULL;
 	return (tokens);
 }
@@ -98,7 +99,10 @@ char *_strdup(char *str)
 	duplicate = malloc(sizeof(char) * (i + 1));
 
 	if (duplicate == NULL)
+	{
+		free(duplicate);
 		return (NULL);
+	}
 
 	for (r = 0; str[r]; r++)
 		duplicate[r] = str[r];

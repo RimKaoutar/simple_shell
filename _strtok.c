@@ -21,6 +21,7 @@ unsigned int check_delim(char c, char *str)
  * _strtok_r - Token A String Into Token (strtrok), this is a safe version
  * of _strtok
  * @str: Str
+ * @saveptr: a saving pointer instead of static chars
  * @delim: delimiter
  * Return: Pointer To The
  */

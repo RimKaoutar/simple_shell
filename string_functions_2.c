@@ -111,6 +111,7 @@ char *_strdup(char *str)
  * @cs: One string
  * @ct: Another string
  * @count: The maximum number of bytes to compare
+ * Return: cs - ct
  */
 int _strncmp(char *cs, char *ct, int count)
 {

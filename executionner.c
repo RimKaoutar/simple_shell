@@ -28,6 +28,8 @@ void executionner(char *line_buff, int task_id, char **envp
 /**
  * exec1 - this function is specifically made for task 1
  * @line_buff: the line buffer
+ * @tokens: an array of args
+ * @envp: the env pointer
  */
 void exec1(char *line_buff, char **tokens, char **envp)
 {
@@ -41,7 +43,7 @@ void exec1(char *line_buff, char **tokens, char **envp)
 		if (line_buff[i] == '\n')
 		{
 			one_token = _strtok_r(line_buff + j, " \t", &saveptr);
-			while(1)
+			while (1)
 			{
 				two_token = _strtok_r(NULL, " \t", &saveptr);
 				if (!two_token)

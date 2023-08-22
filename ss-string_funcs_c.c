@@ -1,85 +1,85 @@
 #include "shell.h"
 /* modified */
 /**
- * _strcpy - copies a string
- * @dest: the destination
- * @src: the source
- *
- * Return: pointer to destination
- */
-char *_strcpy(char *dest, char *src)
+ * _strcpy - cpy a str
+ * @qmlsdfqmljk: the qmlsdfqmljkination
+ * @qmslkdfjqmlkjds: the sour
+* Return: pointer to qmlsdfqmljkination
+*/
+char *_strcpy(char *qmlsdfqmljk, char *qmslkdfjqmlkjds)
 {
 	int i = 0;
 
-	if (dest == src || src == 0)
-		return (dest);
-	for(; src[i]; i++)
-		dest[i] = src[i];
-	dest[i] = 0;
-	return (dest);
+	if (qmlsdfqmljk == qmslkdfjqmlkjds || qmslkdfjqmlkjds == 0)
+		return (qmlsdfqmljk);
+	for(; qmslkdfjqmlkjds[i]; i++)
+		qmlsdfqmljk[i] = qmslkdfjqmlkjds[i];
+	qmlsdfqmljk[i] = 0;
+	return (qmlsdfqmljk);
 }
 
 /**
- * _strdup - duplicates a string
- * @str: the string to duplicate
- *
+ * _strdup - dups str
+ * @stringgg: the str dup
  * Return: pointer to the duplicated string
- */
-char *_strdup(const char *str)
+*/
+char *_strdup(const char *stringgg)
 {
-	int length = 0;
+	int lenss = 0;
 	char *ret;
 
-	if (str == NULL)
+	if (stringgg == NULL)
 		return (NULL);
-	while (*str++)
-		length++;
-	ret = malloc(sizeof(char) * (length + 1));
+	while (*stringgg++)
+		lenss++;
+	ret = malloc(sizeof(char) * (lenss + 1));
+
 	if (!ret)
 		return (NULL);
-	for (length++; length--;)
-		ret[length] = *--str;
+	for (lenss++; lenss--;)
+		ret[lenss] = *--stringgg;
 	return (ret);
-}
-
-/**
- * _puts - prints an input string
- * @str: the string to be printed
- *
- * Return: Nothing
- */
-
-void _puts(char *str)
-{
-	int i = 0;
-
-	if (!str)
-		return;
-	while (str[i] != '\0')
-	{
-		_putchar(str[i]);
-		i++;
-	}
 }
 
 /**
  * _putchar - writes the character c to stdout
  * @c: The character to print
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
- */
+ * Return: On success 1 on err -1 and errno is set
+*/
 int _putchar(char c)
 {
 	static int i;
-	static char buf[BUFFER_SIZE_WRITE];
+	static char buffer[BUFFER_SIZE_WRITE];
 
 	if (c == NEG_ONE || i >= BUFFER_SIZE_WRITE)
 	{
-		write(1, buf, i);
+		write(1, buffer, i);
 		i = 0;
 	}
 	if (c != NEG_ONE)
-		buf[i++] = c;
+		buffer[i++] = c;
 	return (1);
 }
+
+/**
+ * _puts - puts broo
+* @stringggg: stringggg
+ * Return: nada
+*/
+void _puts(char *stringggg)
+{
+	int i = 0;
+
+	if (!stringggg)
+	{
+		return;
+	}
+	while (stringggg[i] != '\0')
+	{
+		_putchar(stringggg[i]);
+		i++;
+	}
+}
+
+

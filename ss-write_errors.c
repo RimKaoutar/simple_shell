@@ -1,81 +1,79 @@
+/* modified */
 #include "shell.h"
 /**
- * puts_err - prints an input string
- * @str: the string to be printed
- *
- * Return: Nothing
- */
-void puts_err(char *str)
+ * puts_err - puts an error
+ * @stringg: the stringging to be printed
+ * Return: nada
+*/
+void puts_err(char *stringg)
 {
-	int i = 0;
+	int index = 0;
 
-	if (!str)
+	if (!stringg)
 		return;
-	while (str[i] != '\0')
+	while (stringg[index] != '\0')
 	{
-		putchar_err(str[i]);
-		i++;
+		putchar_err(stringg[index]);
+		index++;
 	}
 }
 /**
- * putchar_err - writes the character c to stderr
- * @c: The character to print
- *
- * Return: On success 1.
- * On failure, -1 is returned
- */
-int putchar_err(char c)
+ * putchar_err - puts a char to stderr
+ * @chhar: c
+ * Return: success 1 , fail -1
+*/
+int putchar_err(char chhar)
 {
 	static int i;
-	static char buf[BUFFER_SIZE_WRITE];
+	static char bufferr[BUFFER_SIZE_WRITE];
 
-	if (c == NEG_ONE || i >= BUFFER_SIZE_WRITE)
+	if (chhar == NEG_ONE || i >= BUFFER_SIZE_WRITE)
 	{
-		write(2, buf, i);
+		write(2, bufferr, i);
 		i = 0;
 	}
-	if (c != NEG_ONE)
-		buf[i++] = c;
+	if (chhar != NEG_ONE)
+		bufferr[i++] = chhar;
 	return (1);
 }
 /**
- * write_char - writes the character c to given fd
- * @c: The character to print
- * @fd: The filedescriptor to write to
- *
- * Return: On success 1.
- * On failure, -1 is returned
- */
-int write_char(char c, int fd)
+ * write_char - write a c
+ * @chhar: char
+ * @file_desc: the fd
+ * Return: success = 1
+*/
+int write_char(char chhar, int file_desc)
 {
 	static int i;
-	static char buf[BUFFER_SIZE_WRITE];
+	static char buffer[BUFFER_SIZE_WRITE];
 
-	if (c == NEG_ONE || i >= BUFFER_SIZE_WRITE)
+	if (chhar == NEG_ONE || i >= BUFFER_SIZE_WRITE)
 	{
-		write(fd, buf, i);
+		write(file_desc, buffer, i);
 		i = 0;
 	}
-	if (c != NEG_ONE)
-		buf[i++] = c;
+
+	if (chhar != NEG_ONE)
+		buffer[i++] = chhar;
 	return (1);
 }
 /**
- * write_chars - prints an input string
- * @str: the string to be printed
- * @fd: the filedescriptor to write to
- *
+ * write_chars - print
+ * @sttring: the sttringing to be printed
+ * @fd: the fd
  * Return: the number of chars put
- */
-int write_chars(char *str, int fd)
+*/
+int write_chars(char *sttring, int fd)
 {
 	int i = 0;
 
-	if (!str)
-		return (0);
-	while (*str)
+	if (!sttring)
 	{
-		i += write_char(*str++, fd);
+		return (0);
+	}
+	while (*sttring)
+	{
+		i += write_char(*sttring++, fd);
 	}
 	return (i);
 }

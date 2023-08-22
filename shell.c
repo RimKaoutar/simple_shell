@@ -21,7 +21,7 @@ int main(int ac, char **av, char **envp)
 	int is_interactive = 1, i;
 	char *line_buffer = NULL;
 	ssize_t chars_nbr;
-	size_t n = 0, task_id = 1;
+	size_t n = 0, task_id = 4;
 
 	(void) ac, (void) av;
 	is_interactive = check_interactivity();
@@ -97,3 +97,4 @@ void executionner_prime(char **envp, char *line_buffer, int task_id)
 	}
 	free(token_of_tokens);
 }
+

@@ -10,6 +10,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <errno.h>
+#include <limits.h>
 
 /* string_funtions_1 */
 int _putchar(char);

@@ -1,5 +1,5 @@
 #include "shell.h"
-
+/* modified */
 /**
  * _strcpy - copies a string
  * @dest: the destination
@@ -13,11 +13,8 @@ char *_strcpy(char *dest, char *src)
 
 	if (dest == src || src == 0)
 		return (dest);
-	while (src[i])
-	{
+	for(; src[i]; i++)
 		dest[i] = src[i];
-		i++;
-	}
 	dest[i] = 0;
 	return (dest);
 }

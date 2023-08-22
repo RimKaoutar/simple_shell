@@ -1,79 +1,73 @@
 #include "shell.h"
-
+/* modified */
 /**
- * from_terminal - returns true if shell is interactive mode
- * @info: struct address
- *
+ * from_terminal - sees if stdin was redirected
+ * @information: struct address
  * Return: 1 if from_terminal mode else 0
- */
-
-int from_terminal(info_s *info)
+*/
+int from_terminal(info_s *information)
 {
-	return (isatty(STDIN_FILENO) && info->fd_read <= 2);
+	return (isatty(STDIN_FILENO) && information->fd_read <= 2);
 }
 
 /**
- * _isalpha - checks for alphabetic character
- * @c: The character to input
- * Return: 1 if c is alphabetic else 0 if not
- */
-
-int _isalpha(int c)
+ * _isalpha - checks for if the c is alpha
+ * @chhar: the char
+ * Return:  10 
+*/
+int _isalpha(int chhar)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+	if ((chhar >= 'a' && chhar <= 'z') || (chhar >= 'A' && chhar <= 'Z'))
 		return (1);
 	else
 		return (0);
 }
 
 /**
- * _atoi - converts a string to an integer
- * @s: the string to be converted
- * Return: 0 if no numbers in string else converted integer
- */
-
-int _atoi(char *s)
+ * is_delimiter - sees if delimiter
+ * @chhar: char
+ * @dells: the str
+ * Return: true or false
+*/
+bool is_delimiter(char chhar, char *dells)
 {
-	int i, sign = 1, flag = 0, output;
-	unsigned int result = 0;
+	int stringg;
 
-	for (i = 0; s[i] != '\0' && flag != 2; i++)
-	{
-		if (s[i] == '-')
-			sign *= -1;
-		if (s[i] >= '0' && s[i] <= '9')
+	for (stringg = 0; dells[stringg]; stringg++)
+		if (chhar == dells[stringg])
 		{
-			flag = 1;
-			result *= 10;
-			result += (s[i] - '0');
+			return (true);
 		}
-		else if (flag == 1)
-			flag = 2;
-	}
-	if (sign == -1)
-		output = -result;
-	else
-		output = result;
-	return (output);
+	return (false);
 }
 
 /**
- * is_delimiter - checks if a character is a delimiter
- * @c: Character to be checked.
- * @delimiters: String of charaters to be compated.
- *
- * This function compares a character to one or more of delimiters
- * to see if the character matches any of the delimiters.
- *
- * Return: True if it is a delimiter, else false.
- */
-
-bool is_delimiter(char c, char *delimiters)
+ * _atoi - string to int
+ * @stringg: str
+ * Return: if nothing to convert 0
+*/
+int _atoi(char *stringg)
 {
-	int s;
+	int i, sign = 1, flgg = 0;
+	int otpot;
+	unsigned int res = 0;
 
-	for (s = 0; delimiters[s]; s++)
-		if (c == delimiters[s])
-			return (true);
-	return (false);
+	for (i = 0; stringg[i] != '\0' && flgg != 2; i++)
+	{
+		if (stringg[i] == '-')
+			sign *= -1;
+		if (stringg[i] >= '0' && stringg[i] <= '9')
+		{
+			flgg = 1;
+			res *= 10;
+			res += (stringg[i] - '0');
+		}
+		else if (flgg == 1)
+			flgg = 2;
+	}
+	if (sign == -1)
+		otpot = -res;
+	else
+		otpot = res;
+	return (otpot);
 }

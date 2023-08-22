@@ -21,38 +21,38 @@ int main(int ac, char **av, char **envp)
 	int is_interactive = 1, i;
 	char *line_buffer = NULL;
 	ssize_t chars_nbr;
-	size_t n = 0, task_id = 4;
+	size_t n = 0, task_id = 1;
 
 	(void) ac, (void) av;
-	is_interactive = check_interactivity();
-	if (is_interactive)
+	while (is_interactive)
 	{
-		while (1)
-		{	
+		is_interactive = check_interactivity();
+		if (is_interactive)
+		{
 			write(STDOUT_FILENO, "$ ", 2);
 			chars_nbr = _getline(&line_buffer, &n, stdin);
-			if (chars_nbr == -1)
-			{
-				free(line_buffer);
-				return (EXIT_FAILURE);
-			}
-			if (chars_nbr != EOF)
-			{
-				i = checker(line_buffer, envp);
-				if (i != 0)
-				{
-					if (i == 1)
-						break;
-					if (i != 1)
-						continue;
-				}
-				executionner_prime(envp, line_buffer, task_id);
-			}
 		}
-		free(line_buffer);
+		else
+			chars_nbr = non_interactive_getline(&line_buffer, &n, stdin);
+		if (chars_nbr == -1)
+		{
+			free(line_buffer);
+			return (EXIT_FAILURE);
+		}
+		if (chars_nbr != EOF)
+		{
+			i = checker(line_buffer, envp);
+			if (i != 0)
+			{
+				if (i == 1)
+					break;
+				if (i != 1)
+					continue;
+			}
+			executionner_prime(envp, line_buffer, task_id);
+		}
 	}
-	else
-		exec_non_interactive(envp);
+	free(line_buffer);
 	exit(0);
 }
 /**

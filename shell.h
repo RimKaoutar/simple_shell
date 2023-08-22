@@ -34,7 +34,7 @@ char ***split_str_prime(char *);
 void exec_non_interactive(char **envp);
 void executionner_prime(char **, char *, int);
 void executionner(char *, int, char **, char **);
-void exec1(char *);
+void exec1(char *, char **, char **);
 void exec2(char *);
 void exec3(char *, char **);
 void exec4(char **, char **);

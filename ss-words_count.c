@@ -1,70 +1,64 @@
 #include "shell.h"
+/* modified */
+
 
 /**
- * words_count - counts the number of words in a string specified by
- *				 one or more delimiter. It also counts the length of
- *				 each word and stores them in an array.
- * @str: String to be parsed.
- * @separators: One or more delimiters to separate the string by.
- * @arr: Pointer to array where the word lengths will be stored.
- *
- * Return: Number of words.
- */
+ * words_count - Counts the number of words in a string.
+ * @s: The string to count words in.
+ * @delim: The delimiter characters to use for separating words.
+ * @ptr: A pointer to an unsigned int array to store the lengths of words.
+ * 
+ * Return: The number of words counted.
+*/
 
-int words_count(char *str, char *separators, unsigned int *arr)
+int words_count(char *s, char *delim, unsigned int *ptr)
 {
-	unsigned int c, d, word_len = 1;
-	unsigned int word_count = 0;
-	char *str_copy = str;
-	bool start = false, delimiter;
+	unsigned int i, j, len = 1;
+	unsigned int cnt = 0;
+	char *str = s;
+	bool go = false, delimiter;
 
-	/* If the string is empty */
-	if (!str)
+	if (!s)
 		return (0);
 
-	/* Shift string pointer to first non-delimiter character */
-	while (!start)
-		for (d = 0; separators[d]; d++)
+	while (!go)
+		for (j = 0; delim[j]; j++)
 		{
-			if (*str_copy == separators[d])
-				str_copy++;
+			if (*str == delim[j])
+				str++;
 			else
-				start = true;
+				go = true;
 		}
 
-	/* If the string has only one character */
-	if (!*(str_copy + 1))
+	if (!*(str + 1))
 	{
-		arr[0] = 1;
+		ptr[0] = 1;
 		return (1);
 	}
 
-	for (c = 1; str_copy[c]; c++)
+	for (i = 1; str[i]; i++)
 	{
-		/* Compare each delimiter with the current character */
-		delimiter = is_delimiter(str_copy[c], separators);
+		delimiter = is_delimiter(str[i], delim);
 
-		/* If current char is a delimiter and previous char is not */
-		if (delimiter && !(is_delimiter(str_copy[c - 1], separators)))
+		if (delimiter && !(is_delimiter(str[i - 1], delim)))
 		{
-			arr[word_count] = word_len;
-			word_count++;
+			ptr[cnt] = len;
+			cnt++;
 		}
 
-		/* If we're at the end of the string and its not a delimiter */
-		if ((!str_copy[c + 1]) && !delimiter)
+		if ((!str[i + 1]) && !delimiter)
 		{
-			word_len++;
-			arr[word_count] = word_len;
-			word_count++;
+			len++;
+			ptr[cnt] = len;
+			cnt++;
 			break;
 		}
 
 		if (!delimiter)
-			word_len++;
+			len++;
 		else
-			word_len = 0;
+			len = 0;
 	}
 
-	return (word_count);
+	return (cnt);
 }

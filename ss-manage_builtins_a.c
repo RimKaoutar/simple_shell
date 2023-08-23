@@ -1,131 +1,132 @@
 #include "shell.h"
-
+/* modified */
 /**
- * unset_alias - sets alias to string
- * @info: parameter struct
- * @str: the string alias
- *
- * Return: Always 0 on success, 1 on error
- */
-int unset_alias(info_s *info, char *str)
+ * unset_alias - set alias
+ * @info: shell strct
+ * @string: string
+ * Return: 0 or 1
+*/
+int unset_alias(info_s *info, char *string)
 {
 	char *p, c;
-	int ret;
+	int retr;
 
-	p = _strchr(str, '=');
+	p = _strchr(string, '=');
 	if (!p)
 		return (1);
 	c = *p;
 	*p = 0;
-	ret = delete_node_at_index(&(info->alias),
-							   get_node_index(info->alias, node_str_start(info->alias, str, -1)));
+	retr = delete_node_at_index(&(info->alias),
+	get_node_index(info->alias, node_str_start(info->alias, string, -1)));
 	*p = c;
-	return (ret);
+	return (retr);
 }
 
 /**
- * set_alias - sets alias to string
- * @info: parameter struct
- * @str: the string alias
- *
- * Return: Always 0 on success, 1 on error
- */
-int set_alias(info_s *info, char *str)
+ * set_alias - revers of unset alias
+ * @info: shell struct
+ * @str: str
+ * Return: 0 or 1
+*/
+int set_alias(info_s *infro, char *stzr)
 {
 	char *p;
 
-	p = _strchr(str, '=');
+	p = _strchr(stzr, '=');
 	if (!p)
+	{
 		return (1);
+	}
 	if (!*++p)
-		return (unset_alias(info, str));
+		return (unset_alias(infro, stzr));
 
-	unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	unset_alias(infro, stzr);
+
+	return (add_node_end(&(infro->alias), stzr, 0) == NULL);
 }
 
 /**
- * print_alias - prints an alias string
- * @node: the alias node
- *
- * Return: Always 0 on success, 1 on error
- */
-int print_alias(list_s *node)
+ * print_alias - puts alias
+ * @neud: the done
+ * Return: 0 1
+*/
+int print_alias(list_s *neud)
 {
-	char *p = NULL, *a = NULL;
+	char *pr = NULL;
+	char *a = NULL;
 
-	if (node)
+	if (neud)
 	{
-		p = _strchr(node->str, '=');
-		for (a = node->str; a <= p; a++)
+		pr = _strchr(neud->str, '=');
+		for (a = neud->str; a <= pr; a++)
 			_putchar(*a);
 		_putchar('\'');
-		_puts(p + 1);
+
+		_puts(pr + 1);
 		_puts("'\n");
 		return (0);
 	}
+
 	return (1);
 }
-
 /**
- * handle_alias - mimics the alias builtin (man alias)
- * @info: contains simulated arguments for a function pointer,
- * allowing for a consistent function prototype
- *	Return: Always 0
- */
-int handle_alias(info_s *info)
+ * change_alias - chenging the alias
+ * @infro: the shell params
+ * Return: iether 1 or 0
+*/
+int change_alias(info_s *infro)
 {
-	int i = 0;
-	char *p = NULL;
-	list_s *node = NULL;
-
-	if (info->argc == 1)
-	{
-		node = info->alias;
-		while (node)
-		{
-			print_alias(node);
-			node = node->next;
-		}
-		return (0);
-	}
-	for (i = 1; info->argv[i]; i++)
-	{
-		p = _strchr(info->argv[i], '=');
-		if (p)
-			set_alias(info, info->argv[i]);
-		else
-			print_alias(node_str_start(info->alias, info->argv[i], '='));
-	}
-	return (0);
-}
-
-/**
- * change_alias - replaces an aliases in the tokenized string
- * @info: the parameter struct
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int change_alias(info_s *info)
-{
-	int i;
-	list_s *node;
+	int index;
+	list_s *neud;
 	char *p;
 
-	for (i = 0; i < 10; i++)
+	for (index = 0; index < 10; index++)
 	{
-		node = node_str_start(info->alias, info->argv[0], '=');
-		if (!node)
+		neud = node_str_start(infro->alias, infro->argv[0], '=');
+		if (!neud)
 			return (0);
-		free(info->argv[0]);
-		p = _strchr(node->str, '=');
+		free(infro->argv[0]);
+		p = _strchr(neud->str, '=');
 		if (!p)
 			return (0);
 		p = _strdup(p + 1);
 		if (!p)
 			return (0);
-		info->argv[0] = p;
+		infro->argv[0] = p;
 	}
 
 	return (1);
+}
+
+/**
+ * handle_alias - mimics alias
+ * @infro: the shel paramas pointer to strct
+ *	Return: 0
+*/
+int handle_alias(info_s *infro)
+{
+	int i = 0;
+	char *p = NULL;
+	list_s *neud = NULL;
+
+	if (infro->argc == 1)
+	{
+		neud = infro->alias;
+		while (neud)
+		{
+			print_alias(neud);
+			neud = neud->next;
+		}
+		return (0);
+	}
+	for (i = 1; infro->argv[i]; i++)
+	{
+		p = _strchr(infro->argv[i], '=');
+		if (p)
+			set_alias(infro, infro->argv[i]);
+		else
+			print_alias(node_str_start(infro->alias, infro->argv[i], '='));
+	}
+
+	return (0);
 }

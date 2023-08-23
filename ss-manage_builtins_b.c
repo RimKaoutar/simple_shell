@@ -1,117 +1,109 @@
 #include "shell.h"
-
+/* modified */
 /**
- * handle_exit - exits the shell
- * @info: contains simulated arguments for a function pointer,
- * allowing for a consistent function prototype
- * Return: exits with a given exit status
- * (0) if info.argv[0] != "exit"
- */
-
-int handle_exit(info_s *info)
+ * handle_exit - exit
+ * @infeo: shell params
+ * Return: exit with a status
+*/
+int handle_exit(info_s *infeo)
 {
-	int exitcheck;
+	int exx_check;
 
-	if (info->argv[1]) /* If there is an exit arguement */
+	if (infeo->argv[1])
 	{
-		exitcheck = err_num(info->argv[1]);
-		if (exitcheck == -1)
+		exx_check = err_num(infeo->argv[1]);
+		if (exx_check == -1)
 		{
-			info->status = 2;
-			print_error(info, "Illegal number: ");
-			puts_err(info->argv[1]);
+			infeo->status = 2;
+			print_error(infeo, "Illegal number: ");
+			puts_err(infeo->argv[1]);
+
 			putchar_err('\n');
 			return (1);
 		}
-		info->error_code = err_num(info->argv[1]);
+		infeo->error_code = err_num(infeo->argv[1]);
 		return (-2);
 	}
-	info->error_code = -1;
+
+	infeo->error_code = -1;
 	return (-2);
 }
 /**
- * handle_cd - changes the current directory of the process
- * @info: contains simulated arguments for a function pointer,
- *		  allowing for a consistent function prototype
- *
+ * handle_help - handles the help cmd
+ * @info: the paramsof shel
  * Return: 0
- */
+*/
 
-int handle_cd(info_s *info)
+int handle_help(info_s *infto)
 {
-	char *s, *dir, buffer[1024];
-	int chdir_ret;
+	char **rr_arr;
 
-	s = getcwd(buffer, 1024);
+	rr_arr = infto->argv;
+	_puts("help call works. Function not yet implemented \n");
+	if (0)
+		_puts(*rr_arr);
+	return (0);
+}
+
+/**
+ * handle_history - aficcher la liste de commnads
+ * @infto: the shell pa
+ * Return: 0
+*/
+
+int handle_history(info_s *infto)
+{
+	print_list(infto->history);
+
+	return (0);
+}
+
+/**
+ * handle_cd - its cd
+ * @inefo: the params shell struct
+ * Return: 0
+*/
+int handle_cd(info_s *inefo)
+{
+	char *s, *dir, buff[1024];
+	int ink_what_to;
+
+	s = getcwd(buff, 1024);
 	if (!s)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
-	if (!info->argv[1])
+	if (!inefo->argv[1])
 	{
-		dir = _getenv(info, "HOME=");
+		dir = _getenv(inefo, "HOME=");
 		if (!dir)
-			chdir_ret = /* TODO: what should this be? */
-				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+			ink_what_to =
+				chdir((dir = _getenv(inefo, "PWD=")) ? dir : "/");
 		else
-			chdir_ret = chdir(dir);
+			ink_what_to = chdir(dir);
 	}
-	else if (_strcmp(info->argv[1], "-") == 0)
+	else if (_strcmp(inefo->argv[1], "-") == 0)
 	{
-		if (!_getenv(info, "OLDPWD="))
+		if (!_getenv(inefo, "OLDPWD="))
 		{
 			_puts(s);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
-		chdir_ret = /* TODO: what should this be? */
-			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+		_puts(_getenv(inefo, "OLDPWD=")), _putchar('\n');
+		ink_what_to =
+			chdir((dir = _getenv(inefo, "OLDPWD=")) ? dir : "/");
 	}
 	else
-		chdir_ret = chdir(info->argv[1]);
+		ink_what_to = chdir(inefo->argv[1]);
 
-	if (chdir_ret == -1)
+	if (ink_what_to == -1)
 	{
-		print_error(info, "can't cd to ");
-		puts_err(info->argv[1]), putchar_err('\n');
+		print_error(inefo, "can't cd to ");
+		puts_err(inefo->argv[1]), putchar_err('\n');
 	}
 	else
 	{
-		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		_setenv(info, "PWD", getcwd(buffer, 1024));
+		_setenv(inefo, "OLDPWD", _getenv(inefo, "PWD="));
+		_setenv(inefo, "PWD", getcwd(buff, 1024));
 	}
-	return (0);
-}
-
-/**
- * handle_help - prints a message for aa function not implemented
- * @info:	contains simulated arguments for a function pointer,
- *			constant function prototype.
- * Return: 0
- */
-
-int handle_help(info_s *info)
-{
-	char **arg_array;
-
-	arg_array = info->argv;
-	_puts("help call works. Function not yet implemented \n");
-	if (0)
-		_puts(*arg_array);
-
-	return (0);
-}
-
-/**
- * handle_history - displays the history list, one command by line, preceded
- *					with line numbers, starting at 0.
- * @info: contains simulated arguments for a function pointer,
- *		  constant function prototype.
- *	Return: Always 0
- */
-
-int handle_history(info_s *info)
-{
-	print_list(info->history);
-
 	return (0);
 }

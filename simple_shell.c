@@ -1,14 +1,15 @@
 #include "shell.h"
+/* modified */
+
 /**
- * main - Entry point to shell program
- * @argc: Number of arguments passed into the shell executable.
- * @argv: Vector containing arguments passed.
- *
- * Return: 0 on success or 1 on failure.
- */
+ * main - the main
+ * @argc: nbr of args
+ * @argv: the args
+ * Return: 0 or 1
+*/
 int main(int argc, char **argv)
 {
-	info_s info[] = {SET_INFO};
+	info_s infoe[] = {SET_INFO};
 	int fd = 2;
 
 	asm("mov %1, %0\n\t"
@@ -37,12 +38,12 @@ int main(int argc, char **argv)
 			return (EXIT_FAILURE);
 		}
 
-		info->fd_read = fd;
+		infoe->fd_read = fd;
 	}
 
-	gather_env(info);
-	read_history(info);
-	shell_main(info, argv);
+	gather_env(infoe);
+	read_history(infoe);
+	shell_main(infoe, argv);
 
 	return (EXIT_SUCCESS);
 }

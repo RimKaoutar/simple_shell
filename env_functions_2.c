@@ -1,9 +1,15 @@
 #include "shell.h"
-/* modified */
+
 /**
- * get_environ - gets the environ vars
- * @irnfo: params of the shelll
- * Return: The environment variables as an array of strings.
+ * get_environ - Returns environ array from environment list
+ * @irnfo: Info structure containing environment
+ * 
+ * Description:
+ * Checks if environ array needs updating from linked list
+ * If so, calls list_to_vector() to convert list to array
+ * Resets changed flag after conversion
+ * 
+ * Return: Pointer to environ array
 */
 char **get_environ(info_s *irnfo)
 {
@@ -17,10 +23,16 @@ char **get_environ(info_s *irnfo)
 }
 
 /**
- * _unsetenv - usets enf
- * @info: shell params structure
- * @varibal: varibaliable.
- * Return: 1 on sec, 0 if else
+ * _unsetenv - Unsets an environment variable from linked list
+ * @info: Info structure containing environment list
+ * @varibal: Variable name to unset
+ * 
+ * Description:
+ * Loops linked list to find matching variable
+ * Calls delete_node_at_index() to remove matched node
+ * Sets changed flag if removed
+ * 
+ * Returns: Changed flag status
 */
 int _unsetenv(info_s *info, char *varibal)
 {
@@ -47,11 +59,18 @@ int _unsetenv(info_s *info, char *varibal)
 }
 
 /**
- * _setenv - set an env var
- * @info: params shell struct
- * @var: the key
- * @val: val
- * Return: 0 on suc; 1 if else
+ * _setenv - Sets an environment variable in the linked list
+ * @info: Info structure containing environment list
+ * @va: Variable name
+ * @val: Variable value
+ * 
+ * Description:
+ * Allocates a buffer with name=value
+ * Loops list to find/update existing variable
+ * Adds new node if not found
+ * Frees buffer and sets changed flag
+ * 
+ * Return: 0 on success, else 1.
 */
 
 int _setenv(info_s *info, char *va, char *val)
@@ -85,5 +104,3 @@ int _setenv(info_s *info, char *va, char *val)
 	info->env_changed = 1;
 	return (0);
 }
-
-

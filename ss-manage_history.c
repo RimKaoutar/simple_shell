@@ -1,76 +1,89 @@
 #include "shell.h"
-
+/* modified */
 /**
- * read_hist - gets the history file
- * @info: parameter struct
- *
- * Return: allocated string containg history file
- */
-
-char *read_hist(info_s *info)
+ * read_hist - reads the hyst
+ * @infor: strcut info
+ * Return: a string with  hystory
+*/
+char *read_hist(info_s *infor)
 {
-	char *buf, *dir;
+	char *bufferr, *directory;
 
-	dir = _getenv(info, "HOME=");
-	if (!dir)
+	directory = _getenv(infor, "HOME=");
+	if (!directory)
 		return (NULL);
-	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE_NAME) + 2));
-	if (!buf)
+	bufferr = malloc(sizeof(char) * (_strlen(directory) + _strlen(HIST_FILE_NAME) + 2));
+	if (!bufferr)
+	{
 		return (NULL);
-	buf[0] = 0;
-	_strcpy(buf, dir);
-	_strcat(buf, "/");
-	_strcat(buf, HIST_FILE_NAME);
-	return (buf);
+	}
+	bufferr[0] = 0;
+	_strcpy(bufferr, directory);
+	_strcat(bufferr, "/");
+	_strcat(bufferr, HIST_FILE_NAME);
+	return (bufferr);
 }
 
 /**
- * create_history - creates a file, or appends to an existing file
- * @info: the parameter struct
- *
- * Return: 1 on success, else -1
- */
-int create_history(info_s *info)
+ * create_history - creats a file containing hystory
+ * @informm: the struct for the params of the shell
+ * Return: 1 and -1
+*/
+int create_history(info_s *informm)
 {
-	ssize_t fd;
-	char *filename = read_hist(info);
-	list_s *node = NULL;
+	ssize_t file_desc;
+	char *file_nm = read_hist(informm);
+	list_s *neud = NULL;
 
-	if (!filename)
+	if (!file_nm)
 		return (-1);
 
-	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	free(filename);
-	if (fd == -1)
+	file_desc = open(file_nm, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	free(file_nm);
+	if (file_desc == -1)
 		return (-1);
-	for (node = info->history; node; node = node->next)
+	for (neud = informm->history; neud; neud = neud->next)
 	{
-		write_chars(node->str, fd);
-		write_char('\n', fd);
+		write_chars(neud->str, file_desc);
+		write_char('\n', file_desc);
 	}
-	write_char(NEG_ONE, fd);
-	close(fd);
+	write_char(NEG_ONE, file_desc);
+	close(file_desc);
 	return (1);
 }
 
 /**
- * read_history - reads history from file
- * @info: the parameter struct
- *
- * Return: hist_lines on success, 0 otherwise
- */
-int read_history(info_s *info)
+ * renumber_history - updates the number of hystory lines
+ * @struct_info: the hystory container
+ * Return: hystory line newly renumbered
+*/
+int renumber_history(info_s *struct_info)
 {
-	int i, last = 0, linecount = 0;
+	int i = 0;
+	list_s *neud = struct_info->history;
+
+	for (; neud; neud = neud->next)
+		neud->num = i++;
+	return (struct_info->hist_lines = i);
+}
+
+/**
+ * read_history - reads hystory
+ * @innfor: a struct containing params of the shell
+ * Return: hystory line , on failiure 0
+*/
+int read_history(info_s *innfor)
+{
+	int i, dernier = 0;
+	int line_counter = 0;
 	ssize_t fd, rdlen, fsize = 0;
 	struct stat st;
-	char *buf = NULL, *filename = read_hist(info);
+	char *buf = NULL, *file_name = read_hist(innfor);
 
-	if (!filename)
+	if (!file_name)
 		return (0);
-
-	fd = open(filename, O_RDONLY);
-	free(filename);
+	fd = open(file_name, O_RDONLY);
+	free(file_name);
 	if (fd == -1)
 		return (0);
 	if (!fstat(fd, &st))
@@ -89,55 +102,40 @@ int read_history(info_s *info)
 		if (buf[i] == '\n')
 		{
 			buf[i] = 0;
-			update_history(info, buf + last, linecount++);
-			last = i + 1;
+			update_history(innfor, buf + dernier, line_counter++);
+			dernier = i + 1;
 		}
-	if (last != i)
-		update_history(info, buf + last, linecount++);
+	if (dernier != i)
+		update_history(innfor, buf + dernier, line_counter++);
 	free(buf);
-	info->hist_lines = linecount;
-	while (info->hist_lines-- >= HIST_SIZE_MAX)
-		delete_node_at_index(&(info->history), 0);
-	renumber_history(info);
-	return (info->hist_lines);
+	innfor->hist_lines = line_counter;
+	while (innfor->hist_lines-- >= HIST_SIZE_MAX)
+		delete_node_at_index(&(innfor->history), 0);
+	renumber_history(innfor);
+	return (innfor->hist_lines);
 }
 
 /**
- * update_history - adds entry to a history linked list
- * @info: contains simulated arguments for a function pointer,
- * @buf: buffer
- * @linecount: the history linecount, hist_lines
- *
- * Return: Always 0
- */
-int update_history(info_s *info, char *buf, int linecount)
+ * update_history - apdates the hystory linked list
+ * @infoe: the struct
+ * @baffer: a baffer
+ * @line_c: number of lines in hystory f
+ * Return: 0
+*/
+int update_history(info_s *infoe, char *baffer, int line_c)
 {
-	list_s *node = NULL;
+	list_s *neud = NULL;
 
-	if (info->history)
-		node = info->history;
-	add_node_end(&node, buf, linecount);
+	if (infoe->history)
+		neud = infoe->history;
 
-	if (!info->history)
-		info->history = node;
+	add_node_end(&neud, baffer, line_c);
+
+	if (!infoe->history)
+	{
+		infoe->history = neud;
+	}
 	return (0);
 }
 
-/**
- * renumber_history - renumbers the history linked list after changes
- * @info: contains simulated arguments for a function pointer,
- *
- * Return: the new hist_lines
- */
-int renumber_history(info_s *info)
-{
-	list_s *node = info->history;
-	int i = 0;
 
-	while (node)
-	{
-		node->num = i++;
-		node = node->next;
-	}
-	return (info->hist_lines = i);
-}

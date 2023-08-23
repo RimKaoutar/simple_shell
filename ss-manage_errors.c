@@ -1,136 +1,141 @@
 #include "shell.h"
+/* modified */
 /**
- * err_num - converts a string to an integer
- * @s: the string to be converted
- * Return: 0 if no numbers in string,
- * converted integer else -1
- *
+ * err_num - like atoi
+ * @s: str
+ * Return: return 0 if no numbers to convert
  */
 int err_num(char *s)
 {
-	int i = 0;
-	unsigned long int result = 0;
+	unsigned long int ress = 0;
+	int ir = 0;
 
 	if (*s == '+')
 		s++;
-	for (i = 0; s[i] != '\0'; i++)
+
+	for (ir = 0; s[ir] != '\0'; ir++)
 	{
-		if (s[i] >= '0' && s[i] <= '9')
+		if (s[ir] >= '0' && s[ir] <= '9')
 		{
-			result *= 10;
-			result += (s[i] - '0');
-			if (result > INT_MAX)
+			ress *= 10;
+			ress += (s[ir] - '0');
+			if (ress > INT_MAX)
 				return (-1);
 		}
 		else
 			return (-1);
 	}
-	return (result);
+	return (ress);
 }
 /**
- * print_error - prints an error message
- * @info: the parameter & return info struct
- * @estr: string containing specified error type
- * Return: 0 if no numbers in string,
- * converted integer else -1
- */
-void print_error(info_s *info, char *estr)
+ * print_error - puts an err msg
+ * @info_params: struct containing shell params
+ * @error_str: error str
+*/
+void print_error(info_s *info_params, char *error_str)
 {
-	puts_err(info->prog_name);
+	puts_err(info_params->prog_name);
 	puts_err(": ");
-	print_dec(info->lines, STDERR_FILENO);
+
+	print_dec(info_params->lines, STDERR_FILENO);
 	puts_err(": ");
-	puts_err(info->argv[0]);
+
+	puts_err(info_params->argv[0]);
 	puts_err(": ");
-	puts_err(estr);
+
+	puts_err(error_str);
 }
+
 /**
- * print_dec - function prints a decimal (integer) number (base 10)
- * @input: the input
- * @fd: the filedescriptor to write to
- *
- * Return: number of characters printed
- */
-int print_dec(int input, int fd)
+ * handle_comments - if # encountered , replace by a null term
+ * @bbufer: the line_bbuferfer
+ * Return: 0;
+*/
+
+void handle_comments(char *bbufer)
+{
+	int i = 0;
+
+	while (bbufer[i] != '\0')
+	{
+		if (bbufer[i] == '#' && (!i || bbufer[i - 1] == ' '))
+		{
+			bbufer[i] = '\0';
+			break;
+		}
+		i++;
+	}
+}
+
+/**
+ * print_dec - prints a decimal
+ * @nbr: the number to print
+ * @file_dex: the file_dex to write to
+ * Return: nbr of chars putted to the file
+*/
+int print_dec(int nbr, int file_dex)
 {
 	int (*__putchar)(char) = _putchar;
-	int i, count = 0;
-	unsigned int _abs_, current;
+	int i;
+	int compteur = 0;
+	unsigned int absolute, courant;
 
-	if (fd == STDERR_FILENO)
+	if (file_dex == STDERR_FILENO)
 		__putchar = putchar_err;
-	if (input < 0)
+	if (nbr < 0)
 	{
-		_abs_ = -input;
+		absolute = -nbr;
 		__putchar('-');
-		count++;
+		compteur++;
 	}
 	else
-		_abs_ = input;
-	current = _abs_;
+		absolute = nbr;
+	courant = absolute;
 	for (i = 1000000000; i > 1; i /= 10)
 	{
 
-		if (_abs_ / i)
+		if (absolute / i)
 		{
-			__putchar('0' + current / i);
-			count++;
+			__putchar('0' + courant / i);
+			compteur++;
 		}
-		current %= i;
+		courant %= i;
 	}
-	__putchar('0' + current);
-	count++;
-	return (count);
+	__putchar('0' + courant);
+	compteur++;
+	return (compteur);
 }
 /**
- * change_base - converter function, a clone of itoa
- * @num: number
- * @base: base
- * @flags: argument flags
- *
- * Return: string
- */
-char *change_base(long int num, int base, int flags)
+ * change_base - converts bases
+ * @num: usually an int
+ * @bas_de_nbr: this is the base of the nbr to convert
+ * @the_flags: arg flgs
+ * Return: a str
+*/
+char *change_base(long int num, int bas_de_nbr, int the_flags)
 {
 	char sign = 0;
 	char *ptr;
 	unsigned long n = num;
 
-	static char *array;
-	static char buffer[50];
+	static char *tab;
+	static char buf[50];
 
-	if (!(flags & BAS_CHANGE_UNSIG) && num < 0)
+	if (!(the_flags & BAS_CHANGE_UNSIG) && num < 0)
 	{
 		n = -num;
 		sign = '-';
 	}
-	array = flags & BAS_CHANGE_LOWER ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
+	tab = the_flags & BAS_CHANGE_LOWER ? "0123456789abcdef" : "0123456789ABCDEF";
+	ptr = &buf[49];
 	*ptr = '\0';
 	do {
-		*--ptr = array[n % base];
-		n /= base;
+		*--ptr = tab[n % bas_de_nbr];
+		n /= bas_de_nbr;
 	} while (n != 0);
 	if (sign)
 		*--ptr = sign;
 	return (ptr);
 }
 
-/**
- * handle_comments - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
- *
- * Return: 0;
- */
 
-void handle_comments(char *buf)
-{
-	int i;
-
-	for (i = 0; buf[i] != '\0'; i++)
-		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
-		{
-			buf[i] = '\0';
-			break;
-		}
-}

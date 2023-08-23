@@ -1,95 +1,97 @@
 #include "shell.h"
-
+/* modified */
 /**
- * _getenv - gets the value of an environ variable
- * @info: contains simulated arguments for a function pointer,
- * @name: env var name
- *
- * Return: the value
- */
-
-char *_getenv(info_s *info, const char *name)
+ * _getenv - like getenv
+ * @inforr: params of shell
+ * @nom: variable kay nom
+ * Return: its value
+*/
+char *_getenv(info_s *inforr, const char *nom)
 {
 	char *p;
-	list_s *node = info->env;
+	list_s *neud = inforr->env;
 
-	while (node)
+	while (neud)
 	{
-		p = starts_with(node->str, name);
+		p = starts_with(neud->str, nom);
 		if (p && *p)
 			return (p);
-		node = node->next;
+		neud = neud->next;
 	}
 	return (NULL);
 }
 
 /**
- * check_setenv - Checks if an environment variable has been set.
- * @info: contains simulated arguments for a function pointer,
- * allowing for a consistent function prototype
- *
- * Return: 0 if set, else 1.
- */
-
-int check_setenv(info_s *info)
+ * check_setenv - checker for the funct setenv.
+ * @infoe: params of shell stuct
+ * Return: 1 or 0
+*/
+int check_setenv(info_s *infoe)
 {
-	if (info->argc != 3)
+	if (infoe->argc != 3)
 	{
 		puts_err("Incorrect number of arguements\n");
 		return (1);
 	}
-
-	if (_setenv(info, info->argv[1], info->argv[2]))
+	if (_setenv(infoe, infoe->argv[1], infoe->argv[2]))
+	{
 		return (0);
+	}
 	return (1);
 }
 
 /**
- * check_unsetenv - Remove an environment variable
- * @info: contains simulated arguments for a function pointer,
- * allowing for a consistent function prototype
- * Return: Always 0
- */
-int check_unsetenv(info_s *info)
+ * _printenv - this function will print all the environ
+ * @infro: the params of shel
+ * Return: nada
+*/
+int _printenv(info_s *infro)
 {
-	int i;
+	print_list_str(infro->env);
 
-	if (info->argc == 1)
+	return (0);
+}
+
+/**
+ * check_unsetenv - Rremove var env
+ * @infot: params of shell
+ * Return: 0
+*/
+int check_unsetenv(info_s *infot)
+{
+	int iz = 1;
+
+	if (infot->argc == 1)
 	{
 		puts_err("Too few arguements.\n");
 		return (1);
 	}
-	for (i = 1; i <= info->argc; i++)
-		_unsetenv(info, info->argv[i]);
-
+	while (iz <= infot->argc)
+	{
+		_unsetenv(infot, infot->argv[iz]);
+		iz++;
+	}
 	return (0);
 }
 
 /**
- * gather_env - populates env linked list
- * @info: contains simulated arguments for a function pointer,
- * allowing for a consistent function prototype
- * Return: Always 0
- */
-int gather_env(info_s *info)
+ * gather_env - env
+ * @inefo: shell params struct
+ * Return: 0 on success
+*/
+int gather_env(info_s *inefo)
 {
-	list_s *node = NULL;
-	size_t i;
+	size_t i = 0;
+	list_s *neud = NULL;
 
-	for (i = 0; environ[i]; i++)
-		add_node_end(&node, environ[i], 0);
-	info->env = node;
+	while (environ[i])
+	{
+		add_node_end(&neud, environ[i], 0);
+		i++;
+	}
+
+	inefo->env = neud;
 	return (0);
 }
 
-/**
- * _printenv - prints the current environment
- * @info: contains simulated arguments for a function pointer,
- * allowing for a consistent function prototype
- * Return: Always 0
- */
-int _printenv(info_s *info)
-{
-	print_list_str(info->env);
-	return (0);
-}
+

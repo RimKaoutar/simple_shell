@@ -58,7 +58,7 @@ char **split_string(char *str, char *delimeter, size_t *cnt)
 
 	line[i] = NULL;
 
-	return (words);
+	return (line);
 }
 
 /**
@@ -82,7 +82,7 @@ char **strtow(char *str, char *delimeter)
 
 	while (str[i] != '\0')
 	{
-		if (!is_delimiter(str[i], d) && (is_delimiter(str[i + 1], delimeter) || !str[i + 1]))
+		if (!is_delimiter(str[i], delimeter) && (is_delimiter(str[i + 1], delimeter) || !str[i + 1]))
 			num++;
 		i++;
 	}

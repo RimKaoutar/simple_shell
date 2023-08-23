@@ -120,88 +120,130 @@ typedef struct builtin
 	int (*func)(shell_t *);
 } builtin_commands;
 
-int shell_main(shell_t *info, char **av);
-int write_char(char c, int fd);
-int write_chars(char *str, int fd);
-int _strlen(char *s);
-int _strcmp(char *s1, char *s2);
-int putchar_err(char);
-int _putchar(char);
-int _isalpha(int);
-int _atoi(char *);
-int err_num(char *);
+/* builtins_1.c */
 int handle_exit(shell_t *);
-int handle_cd(shell_t *);
 int handle_help(shell_t *);
 int handle_history(shell_t *);
+int handle_cd(shell_t *);
+
+/* builtins_2.c */
+int unset_alias(shell_t *, char *);
+int set_alias(shell_t *, char *);
+int print_alias(list_t *);
+int change_alias(shell_t *);
 int handle_alias(shell_t *);
+
+/* builtins_input.c */
+ssize_t input_buf(shell_t *, char **, size_t *);
+ssize_t read_buf(shell_t *, char *, size_t *);
+ssize_t get_input(shell_t *);
 int _getline(shell_t *, char **, size_t *);
-int _printenv(shell_t *);
+void handle_sigint(int);
+
+/* command_checker.c */
+int change_string(char **, char *);
+int change_v(shell_t *);
+void check_chain(shell_t *, char *, size_t *, size_t, size_t);
+bool is_chain(shell_t *, char *, size_t *);
+
+/* command.c */
+int handle_builtin(shell_t *);
+void create_process(shell_t *);
+int shell_main(shell_t *, char **);
+void check_command(shell_t *);
+
+/* env_functions_1.c */
+char *_getenv(shell_t *, const char *);
 int check_setenv(shell_t *);
+int _printenv(shell_t *);
 int check_unsetenv(shell_t *);
+int gather_env(shell_t *);
+
+/* env_functions_2.c */
+char **get_environ(shell_t *);
 int _unsetenv(shell_t *, char *);
 int _setenv(shell_t *, char *, char *);
+
+/* errors_fonctions.c */
 void puts_err(char *);
-void _puts(char *);
-char *_strcat(char *, char *);
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
-char *_strncpy(char *, char *, int);
-char *_strncat(char *, char *, int);
-char *_strchr(char *, char);
-char *_memset(char *, char, unsigned int);
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char *_getenv(shell_t *, const char *);
-char *starts_with(const char *, const char *);
-char *dup_chars(char *, int, int);
-char *check_file_in_path(shell_t *info, char *pathstr, char *cmd);
-char *change_base(long int, int, int);
-char *read_hist(shell_t *info);
-char **get_environ(shell_t *);
-void free_vector(char **);
-void print_error(shell_t *, char *);
-void handle_comments(char *);
-void free_list(list_t **);
-void check_chain(shell_t *info, char *buf, size_t *p, size_t i, size_t len);
-int handle_builtin(shell_t *);
-bool is_executable(shell_t *, char *);
-int loophsh(char **);
-int bfree(void **);
+int putchar_err(char);
+int write_char(char , int);
+int write_chars(char *, int);
+
+/* helpers.c */
 int from_terminal(shell_t *);
-int print_dec(int, int);
-int gather_env(shell_t *);
-int create_history(shell_t *info);
-int read_history(shell_t *info);
-int update_history(shell_t *info, char *buf, int linecount);
-int renumber_history(shell_t *info);
-int delete_node_at_index(list_t **, unsigned int);
-bool is_chain(shell_t *, char *, size_t *);
-int change_alias(shell_t *);
-int change_v(shell_t *);
+int _isalpha(int);
+bool is_delimiter(char, char *);
+int _atoi(char *);
 
+/* history.c */
+char *read_hist(shell_t *);
+int create_history(shell_t *);
+int renumber_history(shell_t *);
+int read_history(shell_t *);
+int update_history(shell_t *, char *, int);
 
-char **strtow(char *, char *);
+/* initialization.c */
+void set_zeros(unsigned int *, size_t);
+void set_nulls(char *, size_t);
+
+/* list_utils_1.c */
+size_t _listlen(const list_t *);
 char **list_to_vector(list_t *);
-void check_command(shell_t *);
-void create_process(shell_t *);
-void handle_sigint(int);
+size_t print_list(const list_t *);
+list_t *node_str_start(list_t *, char *, char);
+ssize_t get_node_index(list_t *, list_t *);
+
+/* list_utils_2.c */
+list_t *add_node_start(list_t **, const char *, int);
+list_t *add_node_end(list_t **, const char *, int);
+size_t print_list_ttr(const list_t *);
+int delete_node_at_index(list_t **, unsigned);
+void free_list(list_t **);
+
+/* memory_utils.c */
+char *_memset(char *, char, unsigned);
+void free_vector(char **);
+void *_realloc(void *, unsigned int, unsigned int);
+int bfree(void **);
+
+/* path_utils.c */
+char *check_file_in_path(shell_t *, char *, char *);
+bool is_executable(shell_t *, char *);
+char *dup_chars(char *, int, int);
+
+/* shell_info.c */
 void clear_info(shell_t *);
 void set_info(shell_t *, char **);
 void free_info(shell_t *, int);
 
-int change_string(char **, char *);
-list_t *add_node_start(list_t **head, const char *str, int num);
-list_t *add_node_end(list_t **head, const char *str, int num);
-list_t *node_str_start(list_t *, char *, char);
-size_t print_list_ttr(const list_t *);
-size_t _listlen(const list_t *);
-size_t print_list(const list_t *);
-ssize_t get_input(shell_t *);
-ssize_t get_node_index(list_t *, list_t *);
-char **split_string(char *str, char *separators, size_t *word_count);
-int words_count(char *str, char *separators, unsigned int *arr);
-void set_zeros(unsigned int *arr, size_t size);
-void set_nulls(char *arr, size_t size);
-bool is_delimiter(char c, char *delimiters);
+/* shell_utils.c */
+int err_num(char *);
+void print_error(shell_t *, char *);
+void handle_comments(char *);
+int print_dec(int, int);
+char *change_base(long int, int, int);
+
+/* string_functions_1.c */
+char *_strcpy(char *, char *);
+char *_strdup(const char *);
+int _putchar(char);
+void _puts(char *);
+
+/* string_functions_2.c */
+char **strtow(char *, char *);
+char **split_string(char *, char *, size_t *);
+char *_strncpy(char *, char *, int);
+char *_strncat(char *, char *, int);
+char *_strchr(char *, char);
+
+/* string_functions_3.c */
+int _strlen(char *);
+int _strcmp(char *, char *);
+char *starts_with(const char *, const char *);
+char *_strcat(char *, char *);
+
+/* words_coount.c */
+int words_count(char *, char *, unsigned int *);
 
 #endif /* SHELL_H */

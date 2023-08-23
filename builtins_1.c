@@ -11,7 +11,7 @@
  * 
  * Return: -2 to exit program, 1 if err
 */
-int handle_exit(info_s *infeo)
+int handle_exit(shell_t *infeo)
 {
 	int exx_check;
 
@@ -49,7 +49,7 @@ int handle_exit(info_s *infeo)
  * 
  * Return: 0 for success
 */
-int handle_help(info_s *infto)
+int handle_help(shell_t *infto)
 {
 	char **rr_arr;
 
@@ -72,7 +72,7 @@ int handle_help(info_s *infto)
  * 
  * Return: 0 for success
 */
-int handle_history(info_s *infto)
+int handle_history(shell_t *infto)
 {
 	print_list(infto->history);
 
@@ -91,7 +91,7 @@ int handle_history(info_s *infto)
  * 
  * Returns 0 on success
 */
-int handle_cd(info_s *inefo)
+int handle_cd(shell_t *inefo)
 {
 	char *s, *dir, buff[1024];
 	int ink_what_to;

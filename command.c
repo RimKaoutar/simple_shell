@@ -10,7 +10,7 @@
  * If match, calls corresponding function
  * Return: value from built-in function or -1
 */
-int handle_builtin(info_s *info)
+int handle_builtin(shell_t *info)
 {
 	int i = 0;
 	int return_vlr = -1;
@@ -48,7 +48,7 @@ int handle_builtin(info_s *info)
  * 
  * Returns: Nothing
 */
-void create_process(info_s *informati)
+void create_process(shell_t *informati)
 {
 	pid_t son;
 
@@ -94,7 +94,7 @@ void create_process(info_s *informati)
  * 
  * Return: exit status or -2 if quit
 */
-int shell_main(info_s *informations, char **av)
+int shell_main(shell_t *informations, char **av)
 {
 	ssize_t rd_res = 0;
 	int btin_rtrn_vl = 0;
@@ -143,7 +143,7 @@ int shell_main(info_s *informations, char **av)
  * 
  * Return: Nothing.
 */
-void check_command(info_s *informationes)
+void check_command(shell_t *informationes)
 {
 	char *pathh = NULL;
 	int i;

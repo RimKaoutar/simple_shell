@@ -47,7 +47,7 @@ int err_num(char *s)
  * 
  * Return: Nothing
 */
-void print_error(info_s *info_params, char *error_str)
+void print_error(shell_t *info_params, char *error_str)
 {
 	puts_err(info_params->prog_name);
 	puts_err(": ");

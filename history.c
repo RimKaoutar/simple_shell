@@ -12,7 +12,7 @@
  * 
  * Return: a string with  hystory
 */
-char *read_hist(info_s *infor)
+char *read_hist(shell_t *infor)
 {
 	char *bufferr, *directory;
 
@@ -43,11 +43,11 @@ char *read_hist(info_s *infor)
  * 
  * Return: 1 and -1
 */
-int create_history(info_s *informm)
+int create_history(shell_t *informm)
 {
 	ssize_t file_desc;
 	char *file_nm = read_hist(informm);
-	list_s *neud = NULL;
+	list_t *neud = NULL;
 
 	if (!file_nm)
 		return (-1);
@@ -76,10 +76,10 @@ int create_history(info_s *informm)
  * 
  * Return: hystory line newly renumbered
 */
-int renumber_history(info_s *struct_info)
+int renumber_history(shell_t *struct_info)
 {
 	int i = 0;
-	list_s *neud = struct_info->history;
+	list_t *neud = struct_info->history;
 
 	for (; neud; neud = neud->next)
 		neud->num = i++;
@@ -97,7 +97,7 @@ int renumber_history(info_s *struct_info)
  * 
  * Return: hystory line , on failiure 0
 */
-int read_history(info_s *innfor)
+int read_history(shell_t *innfor)
 {
 	int i, dernier = 0;
 	int line_counter = 0;
@@ -153,9 +153,9 @@ int read_history(info_s *innfor)
  * 
  * Return: 0
 */
-int update_history(info_s *infoe, char *baffer, int line_c)
+int update_history(shell_t *infoe, char *baffer, int line_c)
 {
-	list_s *neud = NULL;
+	list_t *neud = NULL;
 
 	if (infoe->history)
 		neud = infoe->history;

@@ -12,7 +12,8 @@
 */
 char **strtow(char *stringss, char *d)
 {
-	int i, j, k, m, numwords = 0;
+	int i, j,
+	 k, m, numwords = 0;
 	char **s;
 
 	if (stringss == NULL || stringss[0] == 0)

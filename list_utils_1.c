@@ -9,7 +9,7 @@
  * 
  * Return: The number of nodes in the list
 */
-size_t _listlen(const list_s *node)
+size_t _listlen(const list_t *node)
 {
 	size_t i = 0;
 
@@ -31,9 +31,9 @@ size_t _listlen(const list_s *node)
  * Return: Pointer to new vector or NULL on failure
  */
 
-char **list_to_vector(list_s *head)
+char **list_to_vector(list_t *head)
 {
-	list_s *node = head;
+	list_t *node = head;
 	char **str_list, *str;
 	size_t i = _listlen(head), j = 0;
 
@@ -76,7 +76,7 @@ char **list_to_vector(list_s *head)
  * Return: The number of nodes printed
  */
 
-size_t print_list(const list_s *head)
+size_t print_list(const list_t *head)
 {
 	size_t i = 0;
 
@@ -114,7 +114,7 @@ size_t print_list(const list_s *head)
  * Return: Pointer to matching node or NULL
  */
 
-list_s *node_str_start(list_s *head, char *prefix, char c)
+list_t *node_str_start(list_t *head, char *prefix, char c)
 {
 	char *ptr = NULL;
 
@@ -141,7 +141,7 @@ list_s *node_str_start(list_s *head, char *prefix, char c)
  * Return: Index of node or -1 if not found
  */
 
-ssize_t get_node_index(list_s *head, list_s *node)
+ssize_t get_node_index(list_t *head, list_t *node)
 {
 	size_t i = 0;
 

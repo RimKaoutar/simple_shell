@@ -8,7 +8,7 @@
  * 
  * Return: 1 if input is from terminal, 0 otherwise
 */
-int from_terminal(info_s *information)
+int from_terminal(shell_t *information)
 {
 	return (isatty(STDIN_FILENO) && information->fd_read <= 2);
 }

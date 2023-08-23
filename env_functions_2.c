@@ -11,7 +11,7 @@
  * 
  * Return: Pointer to environ array
 */
-char **get_environ(info_s *irnfo)
+char **get_environ(shell_t *irnfo)
 {
 	if (!irnfo->environ || irnfo->env_changed)
 	{
@@ -34,9 +34,9 @@ char **get_environ(info_s *irnfo)
  * 
  * Returns: Changed flag status
 */
-int _unsetenv(info_s *info, char *varibal)
+int _unsetenv(shell_t *info, char *varibal)
 {
-	list_s *neud = info->env;
+	list_t *neud = info->env;
 	size_t i = 0;
 	char *p;
 
@@ -73,10 +73,10 @@ int _unsetenv(info_s *info, char *varibal)
  * Return: 0 on success, else 1.
 */
 
-int _setenv(info_s *info, char *va, char *val)
+int _setenv(shell_t *info, char *va, char *val)
 {
 	char *buffer = NULL, *p;
-	list_s *neu;
+	list_t *neu;
 
 	if (!va || !val)
 		return (1);

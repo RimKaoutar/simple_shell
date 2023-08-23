@@ -18,20 +18,19 @@
 #include <stdarg.h>
 #include <errno.h>
 
+#define HIST_FILE_NAME ".my_history"
+#define NEG_ONE -1
+#define USE_STRTOK 0
 #define BUFFER_SIZE_READ 1024
 #define BUFFER_SIZE_WRITE 1024
-#define MAX_WORD_COUNT 100
-#define NEG_ONE -1
 #define REG_FLAG 0
 #define OR_FLAG 1
-#define AND_FLAG 2
-#define CHAIN_FLAG 3
-#define BAS_CHANGE_LOWER 1
-#define BAS_CHANGE_UNSIG 2
-// #define USE_GETLINE 0
-#define USE_STRTOK 0
-#define HIST_FILE_NAME ".ss_history"
+#define MAX_WORD_COUNT 100
 #define HIST_SIZE_MAX 4096
+#define BAS_CHANGE_UNSIG 2
+#define BAS_CHANGE_LOWER 1
+#define CHAIN_FLAG 3
+#define AND_FLAG 2
 #define SET_INFO							\
 	{										\
 		NULL, NULL, NULL, 0, 0, 0, 0,		\
@@ -46,16 +45,20 @@ extern char **environ;
  * @num: the number field
  * @str: a string
  * @next: points to the next node
+ * 
+ * Description:
+ * Defines a struct for use as nodes in a doubly linked list.
+ * Used to store environment variables, history etc. as lists.
  */
 typedef struct ListNode
 {
 	int num;
 	char *str;
 	struct ListNode *next;
-} list_s;
+} list_t;
 
 /**
- * struct InfoNode - this is the struct of the params of the shell
+ * struct InfoNode - Struct containing shell execution details
  * @arg: the args
  * @argv: the arrays of strings rated form arts
  * @path: the path string for the current command
@@ -74,6 +77,10 @@ typedef struct ListNode
  * @sep_buff_kind: the type ofcmdnd buffer (CMD_type ||, &&, ;)
  * @fd_read: the file descriptor used for reading line input
  * @hist_lines: the number of ls in the history
+ * 
+ * Description:
+ * Main struct used to store and pass info between functions
+ * Fields contain command info, environment details and flags
  */
 typedef struct InfoNode
 {
@@ -85,32 +92,35 @@ typedef struct InfoNode
 	int error_code;
 	int lc_flag;
 	char *prog_name;
-	list_s *env;
-	list_s *history;
-	list_s *alias;
+	list_t *env;
+	list_t *history;
+	list_t *alias;
 	char **environ;
 	int env_changed;
 	int status;
-
 	char **sep_buff;
 	int sep_buff_kind;
 	int fd_read;
 	int hist_lines;
-} info_s;
+} shell_t;
 
 /**
  * struct builtin - struct b
  * @type: the type
  * @func: the function ptr
+ * 
+ * Description:
+ * Used to store name and function pointer for each builtin command
+ * Allows builtins to be easily added/removed from the builtin handler
  */
 
 typedef struct builtin
 {
 	char *type;
-	int (*func)(info_s *);
+	int (*func)(shell_t *);
 } builtin_commands;
 
-int shell_main(info_s *info, char **av);
+int shell_main(shell_t *info, char **av);
 int write_char(char c, int fd);
 int write_chars(char *str, int fd);
 int _strlen(char *s);
@@ -120,17 +130,17 @@ int _putchar(char);
 int _isalpha(int);
 int _atoi(char *);
 int err_num(char *);
-int handle_exit(info_s *);
-int handle_cd(info_s *);
-int handle_help(info_s *);
-int handle_history(info_s *);
-int handle_alias(info_s *);
-int _getline(info_s *, char **, size_t *);
-int _printenv(info_s *);
-int check_setenv(info_s *);
-int check_unsetenv(info_s *);
-int _unsetenv(info_s *, char *);
-int _setenv(info_s *, char *, char *);
+int handle_exit(shell_t *);
+int handle_cd(shell_t *);
+int handle_help(shell_t *);
+int handle_history(shell_t *);
+int handle_alias(shell_t *);
+int _getline(shell_t *, char **, size_t *);
+int _printenv(shell_t *);
+int check_setenv(shell_t *);
+int check_unsetenv(shell_t *);
+int _unsetenv(shell_t *, char *);
+int _setenv(shell_t *, char *, char *);
 void puts_err(char *);
 void _puts(char *);
 char *_strcat(char *, char *);
@@ -141,53 +151,53 @@ char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 char *_memset(char *, char, unsigned int);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
-char *_getenv(info_s *, const char *);
+char *_getenv(shell_t *, const char *);
 char *starts_with(const char *, const char *);
 char *dup_chars(char *, int, int);
-char *check_file_in_path(info_s *info, char *pathstr, char *cmd);
+char *check_file_in_path(shell_t *info, char *pathstr, char *cmd);
 char *change_base(long int, int, int);
-char *read_hist(info_s *info);
-char **get_environ(info_s *);
+char *read_hist(shell_t *info);
+char **get_environ(shell_t *);
 void free_vector(char **);
-void print_error(info_s *, char *);
+void print_error(shell_t *, char *);
 void handle_comments(char *);
-void free_list(list_s **);
-void check_chain(info_s *info, char *buf, size_t *p, size_t i, size_t len);
-int handle_builtin(info_s *);
-bool is_executable(info_s *, char *);
+void free_list(list_t **);
+void check_chain(shell_t *info, char *buf, size_t *p, size_t i, size_t len);
+int handle_builtin(shell_t *);
+bool is_executable(shell_t *, char *);
 int loophsh(char **);
 int bfree(void **);
-int from_terminal(info_s *);
+int from_terminal(shell_t *);
 int print_dec(int, int);
-int gather_env(info_s *);
-int create_history(info_s *info);
-int read_history(info_s *info);
-int update_history(info_s *info, char *buf, int linecount);
-int renumber_history(info_s *info);
-int delete_node_at_index(list_s **, unsigned int);
-bool is_chain(info_s *, char *, size_t *);
-int change_alias(info_s *);
-int change_v(info_s *);
+int gather_env(shell_t *);
+int create_history(shell_t *info);
+int read_history(shell_t *info);
+int update_history(shell_t *info, char *buf, int linecount);
+int renumber_history(shell_t *info);
+int delete_node_at_index(list_t **, unsigned int);
+bool is_chain(shell_t *, char *, size_t *);
+int change_alias(shell_t *);
+int change_v(shell_t *);
 
 
 char **strtow(char *, char *);
-char **list_to_vector(list_s *);
-void check_command(info_s *);
-void create_process(info_s *);
+char **list_to_vector(list_t *);
+void check_command(shell_t *);
+void create_process(shell_t *);
 void handle_sigint(int);
-void clear_info(info_s *);
-void set_info(info_s *, char **);
-void free_info(info_s *, int);
+void clear_info(shell_t *);
+void set_info(shell_t *, char **);
+void free_info(shell_t *, int);
 
 int change_string(char **, char *);
-list_s *add_node_start(list_s **head, const char *str, int num);
-list_s *add_node_end(list_s **head, const char *str, int num);
-list_s *node_str_start(list_s *, char *, char);
-size_t print_list_str(const list_s *);
-size_t _listlen(const list_s *);
-size_t print_list(const list_s *);
-ssize_t get_input(info_s *);
-ssize_t get_node_index(list_s *, list_s *);
+list_t *add_node_start(list_t **head, const char *str, int num);
+list_t *add_node_end(list_t **head, const char *str, int num);
+list_t *node_str_start(list_t *, char *, char);
+size_t print_list_ttr(const list_t *);
+size_t _listlen(const list_t *);
+size_t print_list(const list_t *);
+ssize_t get_input(shell_t *);
+ssize_t get_node_index(list_t *, list_t *);
 char **split_string(char *str, char *separators, size_t *word_count);
 int words_count(char *str, char *separators, unsigned int *arr);
 void set_zeros(unsigned int *arr, size_t size);

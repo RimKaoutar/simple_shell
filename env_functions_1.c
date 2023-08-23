@@ -11,10 +11,10 @@
  * 
  * Return: pointer to value if found, else NULL
 */
-char *_getenv(info_s *inforr, const char *nom)
+char *_getenv(shell_t *inforr, const char *nom)
 {
 	char *p;
-	list_s *neud = inforr->env;
+	list_t *neud = inforr->env;
 
 	while (neud)
 	{
@@ -38,7 +38,7 @@ char *_getenv(info_s *inforr, const char *nom)
  * 
  * Return: 0 on success, 1 on failure
 */
-int check_setenv(info_s *infoe)
+int check_setenv(shell_t *infoe)
 {
 	if (infoe->argc != 3)
 	{
@@ -57,14 +57,14 @@ int check_setenv(info_s *infoe)
  * @infro: Info structure containing environment list
  * 
  * Description:
- * Prints out each environment variable by calling print_list_str()
+ * Prints out each environment variable by calling print_list_ttr()
  * on the environment linked list.
  * 
  * Return: Always returns 0 to indicate success.
 */
-int _printenv(info_s *infro)
+int _printenv(shell_t *infro)
 {
-	print_list_str(infro->env);
+	print_list_ttr(infro->env);
 
 	return (0);
 }
@@ -81,7 +81,7 @@ int _printenv(info_s *infro)
  * 
  * Return: 0 on success
 */
-int check_unsetenv(info_s *infot)
+int check_unsetenv(shell_t *infot)
 {
 	int iz = 1;
 
@@ -109,10 +109,10 @@ int check_unsetenv(info_s *infot)
  * 
  * Return: 0 on success
 */
-int gather_env(info_s *inefo)
+int gather_env(shell_t *inefo)
 {
 	size_t i = 0;
-	list_s *neud = NULL;
+	list_t *neud = NULL;
 
 	while (environ[i])
 	{

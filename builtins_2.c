@@ -12,7 +12,7 @@
  * 
  * Return: Status from delete_node operation
 */
-int unset_alias(info_s *info, char *string)
+int unset_alias(shell_t *info, char *string)
 {
 	char *p, c;
 	int retr;
@@ -41,7 +41,7 @@ int unset_alias(info_s *info, char *string)
  * 
  * Return: 0 on success, 1 on failure
 */
-int set_alias(info_s *infro, char *stzr)
+int set_alias(shell_t *infro, char *stzr)
 {
 	char *p;
 
@@ -70,7 +70,7 @@ int set_alias(info_s *infro, char *stzr)
  * 
  * Return: 0 for success, 1 if no node
 */
-int print_alias(list_s *neud)
+int print_alias(list_t *neud)
 {
 	char *pr = NULL;
 	char *a = NULL;
@@ -101,10 +101,10 @@ int print_alias(list_s *neud)
  * 
  * Return: 1 if fully expanded, 0 if not expanded
 */
-int change_alias(info_s *infro)
+int change_alias(shell_t *infro)
 {
 	int index;
-	list_s *neud;
+	list_t *neud;
 	char *p;
 
 	for (index = 0; index < 10; index++)
@@ -138,11 +138,11 @@ int change_alias(info_s *infro)
  * 
  * Return: 0 for success
 */
-int handle_alias(info_s *infro)
+int handle_alias(shell_t *infro)
 {
 	int i = 0;
 	char *p = NULL;
-	list_s *neud = NULL;
+	list_t *neud = NULL;
 
 	if (infro->argc == 1)
 	{

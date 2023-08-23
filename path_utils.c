@@ -14,7 +14,7 @@
  * 
  * Return: Path if found, NULL if not found
 */
-char *check_file_in_path(info_s *info, char *str_path, char *cmd)
+char *check_file_in_path(shell_t *info, char *str_path, char *cmd)
 {
 	int i = 0, curr_pos = 0;
 	char *pathh;
@@ -61,7 +61,7 @@ char *check_file_in_path(info_s *info, char *str_path, char *cmd)
  * 
  * Return: 1 if executable, 0 if not
 */
-bool is_executable(info_s *infooo, char *path)
+bool is_executable(shell_t *infooo, char *path)
 {
 	struct stat statisi;
 

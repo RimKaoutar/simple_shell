@@ -32,10 +32,10 @@ int change_string(char **django_unchaned, char *the_wolf_of_wall_street)
  * 
  * Returns: 0 on success
 */
-int change_v(info_s *inforrrmation)
+int change_v(shell_t *inforrrmation)
 {
 	int iy = 0;
-	list_s *noede;
+	list_t *noede;
 
 	for (iy = 0; inforrrmation->argv[iy]; iy++)
 	{
@@ -87,7 +87,7 @@ int change_v(info_s *inforrrmation)
  * 
  * Return: Nothing
 */
-void check_chain(info_s *information, char *bbuf, size_t *pp, size_t i, size_t legn)
+void check_chain(shell_t *information, char *bbuf, size_t *pp, size_t i, size_t legn)
 {
 	size_t jj = *pp;
 
@@ -125,7 +125,7 @@ void check_chain(info_s *information, char *bbuf, size_t *pp, size_t i, size_t l
  * 
  * Return: True if separator found, false otherwise
 */
-bool is_chain(info_s *information, char *bufferr, size_t *p)
+bool is_chain(shell_t *information, char *bufferr, size_t *p)
 {
 	size_t j = *p;
 

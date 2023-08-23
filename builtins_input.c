@@ -14,7 +14,7 @@
  * 
  * Return: Number of bytes read or -1 on error
 */
-ssize_t input_buf(info_s *info, char **bufr, size_t *len)
+ssize_t input_buf(shell_t *info, char **bufr, size_t *len)
 {
 	ssize_t r = 0;
 	size_t len_pp = 0;
@@ -55,7 +55,7 @@ ssize_t input_buf(info_s *info, char **bufr, size_t *len)
  * 
  * Return: Number of bytes read or -1 on errorread_buf - read
 */
-ssize_t read_buf(info_s *info, char *bfuerr, size_t *i)
+ssize_t read_buf(shell_t *info, char *bfuerr, size_t *i)
 {
 	ssize_t r = 0;
 
@@ -77,7 +77,7 @@ ssize_t read_buf(info_s *info, char *bfuerr, size_t *i)
  * 
  * Return: length of parsed argv string or -1 on error
 */
-ssize_t get_input(info_s *info)
+ssize_t get_input(shell_t *info)
 {
 	static char *bufr;
 	static size_t i, j, len;
@@ -126,7 +126,7 @@ ssize_t get_input(info_s *info)
  * 
  * Return: number of bytes read or -1 on error
 */
-int _getline(info_s *info, char **pointeur, size_t *nobguerur)
+int _getline(shell_t *info, char **pointeur, size_t *nobguerur)
 {
 	static char buf[BUFFER_SIZE_READ];
 	static size_t i, nong;

@@ -10,7 +10,7 @@
  *
  * Return: Nothing.
  */
-void clear_info(info_s *shell)
+void clear_info(shell_t *shell)
 {
 	shell->arg = NULL;
 	shell->argv = NULL;
@@ -30,7 +30,7 @@ void clear_info(info_s *shell)
  * 
  * Return: Nothing.
  */
-void set_info(info_s *shell, char **av)
+void set_info(shell_t *shell, char **av)
 {
 	int i = 0;
 
@@ -72,7 +72,7 @@ void set_info(info_s *shell, char **av)
  * 
  * Return: Nothing.
  */
-void free_info(info_s *shell, int free_all)
+void free_info(shell_t *shell, int free_all)
 {
 	free_vector(shell->argv);
 	shell->argv = NULL;

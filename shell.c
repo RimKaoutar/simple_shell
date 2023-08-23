@@ -17,7 +17,7 @@
 int main(int argc, char **argv)
 {
 	int fd = 2;
-	info_s infoe[] = {SET_INFO};
+	shell_t infoe[] = {SET_INFO};
 
 	asm("mov %1, %0\n\t"
 		"add $3, %0"

@@ -1,11 +1,13 @@
 #include "shell.h"
-/* modified */
 
 /**
  * _strncpy - Copies a string from a source to a destination
  * @destination: The destination string
  * @source: The source string
  * @n: The maximum number of characters to copy
+ * 
+ * Description: Copies up to n characters of source string
+ * to destination. Pads remaining dest with null bytes.
  * 
  * Return: A pointer to the destination string
 */ 

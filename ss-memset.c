@@ -1,33 +1,44 @@
 #include "shell.h"
 
 /**
- * set_zeros - sets all the bytes of an integer array to 0
- * @arr: Array to be initialized.
- * @size: Size of the array.
- *
+ * set_zeros - Sets all elements of an array to zero
+ * @array: The target array
+ * @size: Number of elements in the array
+ * 
+ * Description: Iterates through the array and sets each
+ * element to zero.
+ * 
  * Return: Nothing
- */
-
-void set_zeros(unsigned int *arr, size_t size)
+*/
+void set_zeros(unsigned int *array, size_t size)
 {
-	size_t x;
+	size_t i = 0;
 
-	for (x = 0; x < size; x++)
-		arr[x] = 0;
+	while (i < size)
+	{
+		array[i] = 0;
+		i++;
+	}
 }
 
 /**
- * set_nulls - sets all the characters in a char array to nulls
- * @arr: Array to be initialized.
- * @size: Size of the array.
+ * set_nulls - Sets all elements of a string array to null terminators
+ * @array: The target string array
+ * @size: Number of elements in the array
+ * 
+ * Description: Iterates through the array and sets each
+ * element to the null terminator character.
  *
  * Return: Nothing
  */
 
-void set_nulls(char *arr, size_t size)
+void set_nulls(char *array, size_t size)
 {
-	size_t x;
+	size_t i = 0;
 
-	for (x = 0; x < size; x++)
-		arr[x] = '\0';
+	while (i < size)
+	{
+		array[i] = '\0';
+		i++;
+	}
 }

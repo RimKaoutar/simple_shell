@@ -1,9 +1,52 @@
 #include "shell.h"
-/* modified */
+
 /**
- * create_process - creats a process using fork
- * @informati: a ptr to the struct of the shell params
- * Return: none
+ * handle_builtin - Handles built-in shell commands
+ * @info: Info struct containing command details
+ * 
+ * Description:
+ * Loops through struct of built-in commands
+ * Compares argv[0] to command name
+ * If match, calls corresponding function
+ * Return: value from built-in function or -1
+*/
+int handle_builtin(info_s *info)
+{
+	int i = 0;
+	int return_vlr = -1;
+
+	builtin_commands buits[] = {
+		{"cd", handle_cd},
+		{"env", _printenv},
+		{"exit", handle_exit},
+		{"help", handle_help},
+		{"alias", handle_alias},
+		{"setenv", check_setenv},
+		{"history", handle_history},
+		{"unsetenv", check_unsetenv},
+		{NULL, NULL}};
+
+	for (; buits[i].type; i++)
+		if (_strcmp(info->argv[0], buits[i].type) == 0)
+		{
+			info->lines++;
+			return_vlr = buits[i].func(info);
+			break;
+		}
+	return (return_vlr);
+}
+
+/**
+ * create_process - Forks a new process and executes a command
+ * @informati: Info struct containing command details
+ * 
+ * Description:
+ * Forks using fork() to create a child process
+ * Child process tries to execve() the command
+ * Parent waits for child and stores exit status
+ * Handles errors from execve() and permission denied
+ * 
+ * Returns: Nothing
 */
 void create_process(info_s *informati)
 {
@@ -39,10 +82,17 @@ void create_process(info_s *informati)
 }
 
 /**
- * shell_main - the hsh
- * @informations: info strct
- * @av: arr of args
- * Return: exit with last stat
+ * shell_main - Main loop for the shell interpreter
+ * @informations: Info struct
+ * @av: Argument vector
+ * 
+ * Description:
+ * Loops getting input and processing commands
+ * Handles builtins or calls command checker
+ * Cleans up after each loop iteration
+ * Exits with appropriate status on error or quit
+ * 
+ * Return: exit status or -2 if quit
 */
 int shell_main(info_s *informations, char **av)
 {
@@ -82,40 +132,16 @@ int shell_main(info_s *informations, char **av)
 }
 
 /**
- * handle_builtin - looks for builtin cmds
- * @info: a struct ptr
- * Return: 0 if found , other if not
-*/
-int handle_builtin(info_s *info)
-{
-	int i = 0;
-	int return_vlr = -1;
-
-	builtin_commands buits[] = {
-		{"cd", handle_cd},
-		{"env", _printenv},
-		{"exit", handle_exit},
-		{"help", handle_help},
-		{"alias", handle_alias},
-		{"setenv", check_setenv},
-		{"history", handle_history},
-		{"unsetenv", check_unsetenv},
-		{NULL, NULL}};
-
-	for (; buits[i].type; i++)
-		if (_strcmp(info->argv[0], buits[i].type) == 0)
-		{
-			info->lines++;
-			return_vlr = buits[i].func(info);
-			break;
-		}
-	return (return_vlr);
-}
-
-/**
- * check_command - looks for commandj
- * @informationes: str of info
- * Return: none
+ * check_command - Checks and executes a non-builtin command
+ * @informationes: Info struct containing command details
+ * 
+ * Description:
+ * Checks if command is executable using PATH search
+ * Sets command path and calls process creator
+ * Prints error if command not found
+ * Handles case of empty command and built-ins returning
+ * 
+ * Return: Nothing.
 */
 void check_command(info_s *informationes)
 {
@@ -152,5 +178,3 @@ void check_command(info_s *informationes)
 		}
 	}
 }
-
-

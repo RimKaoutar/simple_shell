@@ -55,28 +55,26 @@ typedef struct ListNode
 } list_s;
 
 /**
- * struct InfoNode - contains simulated arguments for a function pointer,
- *					 allowing for a consistent function prototype
- * @arg: a string generated from getline that holds arguments
- * @argv: an array of strings generated from @arg
+ * struct InfoNode - this is the struct of the params of the shell
+ * @arg: the args
+ * @argv: the arrays of strings rated form arts
  * @path: the path string for the current command
  * @argc: the number of arguments
  * @lines: the number of errors encountered
- * @error_code: the exit() error code
- * @lc_flag: a flag indicating whether this line of input should be counted
+ * @error_code: the e error code
+ * @lc_flag: a flag indicating wther this line of input should be counted
  * @prog_name: the name of the program's file
- * @env: a linked list representing a local copy of the environment variables
- * @environ: a custom-modified copy of the environ from the linked list env
- * @history: the node for the command history
+ * @env: the environ
+ * @environ: a custom-modified copy of the eniron from the linked list env
+ * @history: hystory
  * @alias: the node for the command alias
- * @env_changed: a flag that indicates whether environ has been changed
+ * @env_changed: a flagtether environ has been changed
  * @status: the return status of the most recent executed command
  * @sep_buff: the address of the pointer to sep_buff, used for chaining
- * @sep_buff_kind: the type of command buffer (CMD_type ||, &&, ;)
+ * @sep_buff_kind: the type ofcmdnd buffer (CMD_type ||, &&, ;)
  * @fd_read: the file descriptor used for reading line input
- * @hist_lines: the number of lines in the history
+ * @hist_lines: the number of ls in the history
  */
-
 typedef struct InfoNode
 {
 	char *arg;
@@ -101,9 +99,9 @@ typedef struct InfoNode
 } info_s;
 
 /**
- * struct builtin - contains a builtin string and related function
- * @type: the builtin command flag
- * @func: the function
+ * struct builtin - struct b
+ * @type: the type
+ * @func: the function ptr
  */
 
 typedef struct builtin
@@ -150,14 +148,6 @@ char *check_file_in_path(info_s *info, char *pathstr, char *cmd);
 char *change_base(long int, int, int);
 char *read_hist(info_s *info);
 char **get_environ(info_s *);
-char **strtow(char *, char *);
-char **list_to_vector(list_s *);
-void check_command(info_s *);
-void create_process(info_s *);
-void handle_sigint(int);
-void clear_info(info_s *);
-void set_info(info_s *, char **);
-void free_info(info_s *, int);
 void free_vector(char **);
 void print_error(info_s *, char *);
 void handle_comments(char *);
@@ -178,6 +168,17 @@ int delete_node_at_index(list_s **, unsigned int);
 bool is_chain(info_s *, char *, size_t *);
 int change_alias(info_s *);
 int change_v(info_s *);
+
+
+char **strtow(char *, char *);
+char **list_to_vector(list_s *);
+void check_command(info_s *);
+void create_process(info_s *);
+void handle_sigint(int);
+void clear_info(info_s *);
+void set_info(info_s *, char **);
+void free_info(info_s *, int);
+
 int change_string(char **, char *);
 list_s *add_node_start(list_s **head, const char *str, int num);
 list_s *add_node_end(list_s **head, const char *str, int num);

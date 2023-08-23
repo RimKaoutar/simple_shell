@@ -1,69 +1,109 @@
 #include "shell.h"
+/* modified */
+
 /**
- * clear_info - initializes info_s struct
- * @info: struct address
+ * clear_info - Clears the argument info structure
+ * @shell: Pointer to the info structure to clear
+ *
+ * Description:
+ * Sets all fields of the info structure to NULL or 0.
+ * Resets the structure to contain no arguments.
+ *
+ * Return: Nothing.
  */
-void clear_info(info_s *info)
+void clear_info(info_s *shell)
 {
-	info->arg = NULL;
-	info->argv = NULL;
-	info->path = NULL;
-	info->argc = 0;
+	shell->arg = NULL;
+	shell->argv = NULL;
+	shell->path = NULL;
+	shell->argc = 0;
 }
 /**
- * set_info - initializes info_s struct
- * @info: struct address
- * @av: argument vector
+ * set_info - Sets argument info structure from argument array
+ * @shell: Info structure pointer
+ * @av: Argument array
+ * 
+ * Description:
+ * Sets program name from first arg
+ * Splits arg string into argv array
+ * Counts argv elements into argc
+ * Applies alias and environment substitutions
+ * 
+ * Return: Nothing.
  */
-void set_info(info_s *info, char **av)
+void set_info(info_s *shell, char **av)
 {
 	int i = 0;
 
-	info->prog_name = av[0];
-	if (info->arg)
+	shell->prog_name = av[0];
+
+	if (shell->arg)
 	{
-		info->argv = strtow(info->arg, " \t");
-		if (!info->argv)
+		shell->argv = strtow(shell->arg, " \t");
+		if (!shell->argv)
 		{
-			info->argv = malloc(sizeof(char *) * 2);
-			if (info->argv)
+			shell->argv = malloc(sizeof(char *) * 2);
+			if (shell->argv)
 			{
-				info->argv[0] = _strdup(info->arg);
-				info->argv[1] = NULL;
+				shell->argv[0] = _strdup(shell->arg);
+				shell->argv[1] = NULL;
 			}
 		}
-		for (i = 0; info->argv && info->argv[i]; i++)
-			;
-		info->argc = i;
-		change_alias(info);
-		change_v(info);
+		while (shell->argv && shell->argv[i])
+		{
+			i++;
+		}
+		shell->argc = i;
+		change_alias(shell);
+		change_v(shell);
 	}
 }
 /**
- * free_info - frees info_s struct fields
- * @info: struct address
- * @all: true if freeing all fields
+ * free_info - Frees memory used by the info structure
+ * @shell: Info structure to free
+ * @free_all: Flag to fully free internal data
+ * 
+ * Description:
+ * Frees argv vector and sets pointers to NULL.
+ * If free_all, it additionally:
+ * Frees arg string
+ * Frees linked lists
+ * Frees environment vector
+ * Closes file descriptors
+ * 
+ * Return: Nothing.
  */
-void free_info(info_s *info, int all)
+void free_info(info_s *shell, int free_all)
 {
-	free_vector(info->argv);
-	info->argv = NULL;
-	info->path = NULL;
-	if (all)
+	free_vector(shell->argv);
+	shell->argv = NULL;
+	shell->path = NULL;
+	if (free_all)
 	{
-		if (!info->sep_buff)
-			free(info->arg);
-		if (info->env)
-			free_list(&(info->env));
-		if (info->history)
-			free_list(&(info->history));
-		if (info->alias)
-			free_list(&(info->alias));
-		free_vector(info->environ);
-		info->environ = NULL;
-		bfree((void **)info->sep_buff);
-		if (info->fd_read > 2)
-			close(info->fd_read);
+		if (!shell->sep_buff)
+		{
+			free(shell->arg);
+		}
+		if (shell->env)
+		{
+			free_list(&(shell->env));
+		}
+		if (shell->history)
+		{
+			free_list(&(shell->history));
+		}
+		if (shell->alias)
+		{
+			free_list(&(shell->alias));
+		}
+		free_vector(shell->environ);
+		shell->environ = NULL;
+		bfree((void **)shell->sep_buff);
+
+		if (shell->fd_read > 2)
+		{
+			close(shell->fd_read);
+		}
 		_putchar(NEG_ONE);
 	}
 }

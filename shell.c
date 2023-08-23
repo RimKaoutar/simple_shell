@@ -1,16 +1,23 @@
 #include "shell.h"
-/* modified */
 
 /**
- * main - the main
- * @argc: nbr of args
- * @argv: the args
- * Return: 0 or 1
+ * main - Entry point of the shell program
+ * @argc: Argument count
+ * @argv: Argument vector
+ * 
+ * Description:
+ * Initializes info struct and file descriptor
+ * Opens file for reading if given as argv[1]
+ * Sets up environment and history
+ * Calls main shell loop
+ * Exits cleanly
+ * 
+ * Return: EXIT_SUCCESS (1) or EXIT_FAILURE (0)
 */
 int main(int argc, char **argv)
 {
-	info_s infoe[] = {SET_INFO};
 	int fd = 2;
+	info_s infoe[] = {SET_INFO};
 
 	asm("mov %1, %0\n\t"
 		"add $3, %0"
@@ -28,7 +35,7 @@ int main(int argc, char **argv)
 			if (errno == ENOENT)
 			{
 				puts_err(argv[0]);
-				puts_err(": 0: Can't open ");
+				puts_err(": 0: Can not open ");
 				puts_err(argv[1]);
 				putchar_err('\n');
 				putchar_err(NEG_ONE);

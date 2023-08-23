@@ -1,9 +1,11 @@
 #include "shell.h"
-/* modified */
 
 /**
  * _listlen - Returns the length of a singly linked list
  * @node: The head node of the list
+ * 
+ * Description: Traverses the list by iterating the next pointer
+ * and counting the nodes until reaching the tail (null next).
  * 
  * Return: The number of nodes in the list
 */
@@ -22,6 +24,9 @@ size_t _listlen(const list_s *node)
 /**
  * list_to_vector - Converts a singly linked list to a vector of strings
  * @head: Head node of linked list
+ * 
+ * Description: Counts list length to determine vector size.
+ * Loops through list copying string data into new vectors.
  * 
  * Return: Pointer to new vector or NULL on failure
  */
@@ -65,6 +70,9 @@ char **list_to_vector(list_s *head)
  * print_list - Prints the elements of a linked list
  * @head: Pointer to the head of the linked list
  * 
+ * Description: Traverses list iterating next pointer.
+ * Prints node number and string value using helper functions.
+ * 
  * Return: The number of nodes printed
  */
 
@@ -99,6 +107,10 @@ size_t print_list(const list_s *head)
  * @prefix: String prefix to match
  * @c: Character to match or -1 to ignore
  *
+ * Description: Traverses list iterating next pointer. Checks
+ * each node string using starts_with() against prefix. Returns
+ * first match that also passes character check.
+ * 
  * Return: Pointer to matching node or NULL
  */
 
@@ -122,6 +134,9 @@ list_s *node_str_start(list_s *head, char *prefix, char c)
  * get_node_index - Gets the index of a node in a linked list
  * @head: Pointer to head of linked list
  * @node: Node to find index of
+ * 
+ * Description: Traverses list iterating next pointer.
+ * Returns index of first match with given node.
  * 
  * Return: Index of node or -1 if not found
  */

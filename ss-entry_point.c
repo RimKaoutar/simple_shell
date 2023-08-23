@@ -1,80 +1,97 @@
 #include "shell.h"
-
+/* modified */
 /**
- * shell_main - main control for the shell program
- * @info: pointer to an info_s struct containing shell information
- * @av: array of strings containing arguments to the shell
- *
- * Return: the status of the last executed builtin command
- */
-int shell_main(info_s *info, char **av)
+ * create_process - creats a process using fork
+ * @informati: a ptr to the struct of the shell params
+ * Return: none
+*/
+void create_process(info_s *informati)
 {
-	ssize_t read_result = 0;
-	int builtin_return_value = 0;
+	pid_t son;
 
-	while (read_result != -1 && builtin_return_value != -2)
+	son = fork();
+	if (son == -1)
 	{
-		clear_info(info);
+		perror("Error:");
+		return;
+	}
 
-		/* Display the shell prompt if in interactive mode */
-		if (from_terminal(info))
-			_puts("$ ");
-
-		putchar_err(NEG_ONE);
-		read_result = get_input(info);
-
-		/* Handle input if it was successfully read */
-		if (read_result != -1)
+	if (son == 0)
+	{
+		if (execve(informati->path, informati->argv, get_environ(informati)) == -1)
 		{
-			set_info(info, av);
-			builtin_return_value = handle_builtin(info);
-
-			/* Check for command execution if not a builtin command */
-			if (builtin_return_value == -1)
-				check_command(info);
+			free_info(informati, 1);
+			if (errno == EACCES)
+				exit(126);
+			exit(1);
 		}
-
-		/* Handle end of input if in from_terminal mode */
-		else if (from_terminal(info))
-			_putchar('\n');
-
-		free_info(info, 0);
 	}
-
-	/* Create and store the history list */
-	create_history(info);
-
-	/* Free memory and exit */
-	free_info(info, 1);
-	if (!from_terminal(info) && info->status)
-		exit(info->status);
-
-	/* Handle exit with error */
-	if (builtin_return_value == -2)
+	else
 	{
-		if (info->error_code == -1)
-			exit(info->status);
-		exit(info->error_code);
+		wait(&(informati->status));
+		if (WIFEXITED(informati->status))
+		{
+			informati->status = WEXITSTATUS(informati->status);
+			if (informati->status == 126)
+				print_error(informati, "Permission denied\n");
+		}
 	}
-
-	/* Return the last executed builtin command's status */
-	return (builtin_return_value);
 }
 
 /**
- * handle_builtin - finds a builtin command
- * @info: the parameter & return info struct
- *
- * Return: -1 if builtin not found,
- * 0 if builtin executed successfully,
- * 1 if builtin found but not successful,
- * 2 if builtin signals exit()
- */
+ * shell_main - the hsh
+ * @informations: info strct
+ * @av: arr of args
+ * Return: exit with last stat
+*/
+int shell_main(info_s *informations, char **av)
+{
+	ssize_t rd_res = 0;
+	int btin_rtrn_vl = 0;
+
+	while (rd_res != -1 && btin_rtrn_vl != -2)
+	{
+		clear_info(informations);
+		if (from_terminal(informations))
+			_puts("$ ");
+		putchar_err(NEG_ONE);
+		rd_res = get_input(informations);
+		if (rd_res != -1)
+		{
+			set_info(informations, av);
+			btin_rtrn_vl = handle_builtin(informations);
+			if (btin_rtrn_vl == -1)
+				check_command(informations);
+		}
+		else if (from_terminal(informations))
+			_putchar('\n');
+
+		free_info(informations, 0);
+	}
+	create_history(informations);
+	free_info(informations, 1);
+	if (!from_terminal(informations) && informations->status)
+		exit(informations->status);
+	if (btin_rtrn_vl == -2)
+	{
+		if (informations->error_code == -1)
+			exit(informations->status);
+		exit(informations->error_code);
+	}
+	return (btin_rtrn_vl);
+}
+
+/**
+ * handle_builtin - looks for builtin cmds
+ * @info: a struct ptr
+ * Return: 0 if found , other if not
+*/
 int handle_builtin(info_s *info)
 {
-	int i, builtin_return_value = -1;
+	int i = 0;
+	int return_vlr = -1;
 
-	builtin_commands builtints[] = {
+	builtin_commands buits[] = {
 		{"cd", handle_cd},
 		{"env", _printenv},
 		{"exit", handle_exit},
@@ -85,113 +102,55 @@ int handle_builtin(info_s *info)
 		{"unsetenv", check_unsetenv},
 		{NULL, NULL}};
 
-	for (i = 0; builtints[i].type; i++)
-		if (_strcmp(info->argv[0], builtints[i].type) == 0)
+	for (; buits[i].type; i++)
+		if (_strcmp(info->argv[0], buits[i].type) == 0)
 		{
 			info->lines++;
-			builtin_return_value = builtints[i].func(info);
+			return_vlr = buits[i].func(info);
 			break;
 		}
-	return (builtin_return_value);
+	return (return_vlr);
 }
 
 /**
- * check_command - searches for a command in PATH or the current directory
- * @info: a pointer to the parameter and return info struct
- *
- * Return: void
- */
-void check_command(info_s *info)
+ * check_command - looks for commandj
+ * @informationes: str of info
+ * Return: none
+*/
+void check_command(info_s *informationes)
 {
-	char *path = NULL;
-	int i, word_count;
+	char *pathh = NULL;
+	int i;
+	int words_nbr;
 
-	info->path = info->argv[0];
-	if (info->lc_flag == 1)
+	informationes->path = informationes->argv[0];
+	if (informationes->lc_flag == 1)
 	{
-		info->lines++;
-		info->lc_flag = 0;
+		informationes->lines++;
+		informationes->lc_flag = 0;
 	}
+	for (i = 0, words_nbr = 0; informationes->arg[i]; i++)
+		if (!is_delimiter(informationes->arg[i], " \t\n"))
+			words_nbr++;
 
-	/* Count the number of non-delimiter words in the argument */
-	for (i = 0, word_count = 0; info->arg[i]; i++)
-		if (!is_delimiter(info->arg[i], " \t\n"))
-			word_count++;
-
-	/* If there are no words, exit without doing anything */
-	if (!word_count)
+	if (!words_nbr)
 		return;
-
-	/* Check if the command is in the PATH variable */
-	path = check_file_in_path(info, _getenv(info, "PATH="), info->argv[0]);
-	if (path)
+	pathh= check_file_in_path(informationes, _getenv(informationes, "PATH="), informationes->argv[0]);
+	if (pathh)
 	{
-		info->path = path;
-		create_process(info);
+		informationes->path = pathh;
+		create_process(informationes);
 	}
 	else
 	{
-		/* Check if the command is in the current directory */
-		if ((from_terminal(info) || _getenv(info, "PATH=") || info->argv[0][0] == '/') && is_executable(info, info->argv[0]))
-			create_process(info);
-		/* If the command is not found, print an error message */
-		else if (*(info->arg) != '\n')
+		if ((from_terminal(informationes) || _getenv(informationes, "PATH=") || informationes->argv[0][0] == '/') && is_executable(informationes, informationes->argv[0]))
+			create_process(informationes);
+		else if (*(informationes->arg) != '\n')
 		{
-			info->status = 127;
-			print_error(info, "not found\n");
+			informationes->status = 127;
+			print_error(informationes, "not found\n");
 		}
 	}
 }
 
-/**
- * create_process - forks a new process to run the command
- * @info: pointer to the parameter & return info struct
- *
- * This function forks a new process and runs the command specified by the
- * @info->argv array. The new process runs in a separate memory space and
- * shares environment variables with the parent process.
- *
- * Return: void
- */
-void create_process(info_s *info)
-{
-	pid_t cpid;
 
-	/* Fork a new process */
-	cpid = fork();
-	if (cpid == -1)
-	{
-		/* TODO: PUT ERROR FUNCTION */
-		perror("Error:");
-		return;
-	}
-
-	/* Child process: execute the command */
-	if (cpid == 0)
-	{
-		/* Execute the command */
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
-		{
-			/* Handle execve errors */
-			free_info(info, 1);
-			if (errno == EACCES)
-				exit(126);
-			exit(1);
-		}
-		/* TODO: PUT ERROR FUNCTION */
-	}
-	/* Parent process: wait for child process to finish */
-	else
-	{
-		wait(&(info->status));
-		if (WIFEXITED(info->status))
-		{
-			/* Set return status to child's exit status */
-			info->status = WEXITSTATUS(info->status);
-
-			/* Print error message for permission denied errors */
-			if (info->status == 126)
-				print_error(info, "Permission denied\n");
-		}
-	}
-}

@@ -1,113 +1,130 @@
 #include "shell.h"
+/* modified */
 
 /**
- * split_string - splits a string into words specified by a delimiter(s),
- *				  storing the pointer to each word (null-terminated)
- *				  in an array.
- * @str: String to be split.
- * @separators: One or more delimiters by which to split the string.
- * @word_count: Number of words in the string (separated by the delimiters).
- *
- * Return: Vector of pointers to strings (words).
- *		   Remember to free vector after use.
- */
-
-char **split_string(char *str, char *separators, size_t *word_count)
+ * 
+ * split_string - Splits a string into tokens based on a delimiter
+ * @str: The string to split
+ * @delimiter: The delimiter characters
+ * @cnt: Pointer to store number of tokens
+ * 
+ * Return: Pointer to 2D array of tokens or NULL on failure
+*/
+char **split_string(char *str, char *delimeter, size_t *cnt)
 {
-	int v, no_of_words;
-	char **words;
-	char *str_ptr = str;
-	unsigned int c, word_sizes[MAX_WORD_COUNT];
+	int i = 0, num;
+	unsigned int j = 0, size[MAX_WORD_COUNT];
+	char **line, *str_ptr = str;
 
-	set_zeros(word_sizes, MAX_WORD_COUNT);
-	no_of_words = words_count(str, separators, word_sizes);
+	set_zeros(size, MAX_WORD_COUNT);
+	num = words_count(str, delimeter, size);
 
-	if (no_of_words == 0)
+	if (num == 0)
 		return (NULL);
 
-	/* Allocate space for the vector */
-	words = malloc((sizeof(char *) * no_of_words) + 1);
-	if (!words)
+	line = malloc((sizeof(char *) * num) + 1);
+	if (!line)
 		return (NULL);
 
-	/* Allocate space for each word in the vector, then copy the word */
-	for (v = 0; v < no_of_words; v++)
+	while (i < num)
 	{
-		/* Allocate for current word */
-		words[v] = malloc((sizeof(char) * word_sizes[v]) + 1);
-		if (!words[v])
+		line[i] = malloc((sizeof(char) * size[i]) + 1);
+		if (!line[i])
 		{
-			for (v--; v >= 0; v--)
-				free(words[v]);
-			free(words);
+			while (i-- >= 0)
+			{
+				free(line[i]);
+			}
+			free(line);
 			return (NULL);
 		}
 
-		/* Copy each character of current word to allocated space */
-		for (c = 0; c < word_sizes[v]; c++, str_ptr++)
+		while (j < size[i])
 		{
-			while (is_delimiter(*str_ptr, separators))
+			while (is_delimiter(*str_ptr, delimeter))
+			{
 				str_ptr++;
-
-			words[v][c] = *str_ptr;
+			}
+			line[i][j] = *str_ptr;
+			j++;
+			str_ptr++;
 		};
 
-		/* Add the null byte at the end of the word */
-		words[v][c] = '\0';
+		line[i][j] = '\0';
+		i++;
 	}
 
-	/* Store number of words so it can be used to free vector */
-	*word_count = no_of_words;
+	*cnt = num;
 
-	/* Vector should be null terminated */
-	words[v] = NULL;
+	line[i] = NULL;
 
 	return (words);
 }
 
-#include "shell.h"
 /**
- * **strtow - splits a string into words. Repeat delimiters are ignored
- * @str: the input string
- * @d: the delimeter string
- * Return: a pointer to an array of strings, or NULL on failure
- */
-char **strtow(char *str, char *d)
+ * strtow - Splits a string into words based on a delimiter
+ * @str: The string to split
+ * @delimiter: The delimiter characters (default is space)
+ * 
+ * Return: Pointer to 2D array of words or NULL on failure
+*/
+
+char **strtow(char *str, char *delimeter)
 {
-	int i, j, k, m, numwords = 0;
 	char **s;
+	int i = 0, j = 0, k = 0, l = 0, num = 0;
 
 	if (str == NULL || str[0] == 0)
 		return (NULL);
-	if (!d)
-		d = " ";
-	for (i = 0; str[i] != '\0'; i++)
-		if (!is_delimiter(str[i], d) && (is_delimiter(str[i + 1], d) || !str[i + 1]))
-			numwords++;
-	if (numwords == 0)
+
+	if (!delimeter)
+		delimeter = " ";
+
+	while (str[i] != '\0')
+	{
+		if (!is_delimiter(str[i], d) && (is_delimiter(str[i + 1], delimeter) || !str[i + 1]))
+			num++;
+		i++;
+	}
+	if (num == 0)
 		return (NULL);
-	s = malloc((1 + numwords) * sizeof(char *));
+		
+	s = malloc((1 + num) * sizeof(char *));
 	if (!s)
 		return (NULL);
-	for (i = 0, j = 0; j < numwords; j++)
+
+	i = 0;
+	while (j < num)
 	{
-		while (is_delimiter(str[i], d))
+		while (is_delimiter(str[i], delimeter))
+		{
 			i++;
+		}
 		k = 0;
-		while (!is_delimiter(str[i + k], d) && str[i + k])
+		while (!is_delimiter(str[i + k], delimeter) && str[i + k])
+		{
 			k++;
+		}
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])
 		{
-			for (k = 0; k < j; k++)
+			k = 0;
+			while (k < j)
+			{
 				free(s[k]);
+				k++;
+			}
 			free(s);
 			return (NULL);
 		}
 
-		for (m = 0; m < k; m++)
-			s[j][m] = str[i++];
-		s[j][m] = 0;
+		while (l < k)
+		{
+			s[j][l] = str[i++];
+			l++;
+		}
+		s[j][l] = 0;
+		j++;
 	}
 	s[j] = NULL;
 	return (s);

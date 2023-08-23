@@ -1,11 +1,18 @@
 #include "shell.h"
 
 /**
- * input_buf - intput fjk
- * @info: shell struct
- * @bufr: line buffer
- * @len: the length
- * Return: nbr of readed bytes
+ * input_buf - Reads input into a buffer from user
+ * @info: Info struct containing shell data
+ * @bufr: Pointer to buffer pointer
+ * @len: Length of buffer
+ * 
+ * Description:
+ * If buffer not allocated, frees existing and allocates
+ * Calls _getline() to read input into buffer
+ * Handles newline, comments, history updating
+ * Returns buffer and length on success
+ * 
+ * Return: Number of bytes read or -1 on error
 */
 ssize_t input_buf(info_s *info, char **bufr, size_t *len)
 {
@@ -17,11 +24,7 @@ ssize_t input_buf(info_s *info, char **bufr, size_t *len)
 		free(*bufr);
 		*bufr = NULL;
 		signal(SIGINT, handle_sigint);
-#if USE_GETLINE
-		r = getline(buf, &len_pp, stdin);
-#else
 		r = _getline(info, bufr, &len_pp);
-#endif
 		if (r > 0)
 		{
 			if ((*bufr)[r - 1] == '\n')
@@ -41,11 +44,16 @@ ssize_t input_buf(info_s *info, char **bufr, size_t *len)
 	return (r);
 }
 /**
- * read_buf - read
- * @info: the params strcut
- * @buf: the line buffer
- * @i: input
- * Return: the number
+ * read_buf - Reads input from file into a buffer
+ * @info: Info struct with file descriptor
+ * @bfuerr: Buffer to read into
+ * @i: Size of buffer
+ * 
+ * Description:
+ * Reads up to BUFFER_SIZE bytes from file
+ * Stores number of bytes read into size variable
+ * 
+ * Return: Number of bytes read or -1 on errorread_buf - read
 */
 ssize_t read_buf(info_s *info, char *bfuerr, size_t *i)
 {
@@ -59,9 +67,15 @@ ssize_t read_buf(info_s *info, char *bfuerr, size_t *i)
 	return (r);
 }
 /**
- * get_input - gets al ine
- * @info: the shell params
- * Return: bytes readed
+ * get_input - Gets input from user or file into argv
+ * @info: Info struct with input source
+ * 
+ * Description:
+ * Calls input_buf() to read input into static buffer
+ * Parses buffer into argv array separated by ;|&
+ * Handles multiple logical command lines in buffer
+ * 
+ * Return: length of parsed argv string or -1 on error
 */
 ssize_t get_input(info_s *info)
 {
@@ -100,11 +114,17 @@ ssize_t get_input(info_s *info)
 }
 
 /**
- * _getline - implementation of getline
- * @info: params struct
- * @pointeur: adrrr
- * @nobguerur: the lens
- * Return: s
+ * _getline - Reads input into a buffer with dynamic allocation
+ * @info: Info struct with input source
+ * @pointeur: Pointer to buffer pointer
+ * @nobguerur: Size of buffer
+ * 
+ * Description:
+ * Reads input from source into static buffer
+ * Reallocates and concatenates to passed buffer pointer
+ * Handles buffer resizing across multiple calls
+ * 
+ * Return: number of bytes read or -1 on error
 */
 int _getline(info_s *info, char **pointeur, size_t *nobguerur)
 {
@@ -144,9 +164,14 @@ int _getline(info_s *info, char **pointeur, size_t *nobguerur)
 }
 
 /**
- * handle_sigint - block control
- * @sig_num: sig
- * Return: none
+ * handle_sigint - Handles SIGINT interrupt signal
+ * @sig_num: Signal number (unused)
+ * 
+ * Description:
+ * Prints a newline followed by prompt when SIGINT received
+ * SIGINT is triggered by Ctrl-C
+ * Simply resets prompt to continue input
+ * Return: Nothing.
 */
 void handle_sigint(__attribute__((unused)) int sig_num)
 {

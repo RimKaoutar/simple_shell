@@ -28,7 +28,7 @@
 #define CHAIN_FLAG 3
 #define BAS_CHANGE_LOWER 1
 #define BAS_CHANGE_UNSIG 2
-#define USE_GETLINE 0
+// #define USE_GETLINE 0
 #define USE_STRTOK 0
 #define HIST_FILE_NAME ".ss_history"
 #define HIST_SIZE_MAX 4096

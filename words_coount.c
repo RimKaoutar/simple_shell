@@ -1,15 +1,12 @@
 #include "shell.h"
-/* modified */
-
-
 /**
  * words_count - Counts the number of words in a string.
  * @s: The string to count words in.
  * @delim: The delimiter characters to use for separating words.
  * @ptr: A pointer to an unsigned int array to store the lengths of words.
- * 
+ *
  * Return: The number of words counted.
-*/
+ */
 
 int words_count(char *s, char *delim, unsigned int *ptr)
 {

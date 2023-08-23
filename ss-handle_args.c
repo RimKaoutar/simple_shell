@@ -1,61 +1,56 @@
 #include "shell.h"
-
+/* modified */
 /**
- * is_executable - determines if a file is an executable command
- * @info: the info struct
- * @path: path to the file
- *
- * Return: 1 if true, 0 otherwise
- */
-bool is_executable(info_s *info, char *path)
+ * is_executable - checks if executable or not
+ * @infooo: info strct
+ * @path: the path
+ * Return: 1 or 0
+*/
+bool is_executable(info_s *infooo, char *path)
 {
-	struct stat st;
+	struct stat statisi;
 
-	(void)info;
-	if (!path || stat(path, &st))
+	(void)infooo;
+	if (!path || stat(path, &statisi))
 		return (0);
 
-	if (st.st_mode & S_IFREG)
-	{
+	if (statisi.st_mode & S_IFREG)
 		return (true);
-	}
 	return (false);
 }
 
 /**
- * dup_chars - duplicates characters
- * @pathstr: the PATH string
- * @start: starting index
- * @stop: stopping index
- *
+ * dup_chars - dups chars
+ * @str_path: path
+ * @commnece: the commneceinlg idx
+ * @end: the end
  * Return: pointer to new buffer
- */
-char *dup_chars(char *pathstr, int start, int stop)
+*/
+char *dup_chars(char *str_path, int commnece, int end)
 {
-	static char buf[1024];
+	static char buffer[1024];
 	int i = 0, k = 0;
 
-	for (k = 0, i = start; i < stop; i++)
-		if (pathstr[i] != ':')
-			buf[k++] = pathstr[i];
-	buf[k] = 0;
-	return (buf);
+	for (k = 0, i = commnece; i < end; i++)
+		if (str_path[i] != ':')
+			buffer[k++] = str_path[i];
+	buffer[k] = 0;
+	return (buffer);
 }
 
 /**
- * check_file_in_path - finds this cmd in the PATH string
- * @info: the info struct
- * @pathstr: the PATH string
- * @cmd: the cmd to find
- *
- * Return: full path of cmd if found or NULL
- */
-char *check_file_in_path(info_s *info, char *pathstr, char *cmd)
+ * check_file_in_path - looks for the cmd in the PATH variabl
+ * @info: strct info for params of shell
+ * @str_path: str of path
+ * @cmd: command to check
+ * Return: either path or NULL
+*/
+char *check_file_in_path(info_s *info, char *str_path, char *cmd)
 {
 	int i = 0, curr_pos = 0;
-	char *path;
+	char *pathh;
 
-	if (!pathstr)
+	if (!str_path)
 		return (NULL);
 	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
 	{
@@ -64,19 +59,19 @@ char *check_file_in_path(info_s *info, char *pathstr, char *cmd)
 	}
 	while (1)
 	{
-		if (!pathstr[i] || pathstr[i] == ':')
+		if (!str_path[i] || str_path[i] == ':')
 		{
-			path = dup_chars(pathstr, curr_pos, i);
-			if (!*path)
-				_strcat(path, cmd);
+			pathh = dup_chars(str_path, curr_pos, i);
+			if (!*pathh)
+				_strcat(pathh, cmd);
 			else
 			{
-				_strcat(path, "/");
-				_strcat(path, cmd);
+				_strcat(pathh, "/");
+				_strcat(pathh, cmd);
 			}
-			if (is_executable(info, path))
-				return (path);
-			if (!pathstr[i])
+			if (is_executable(info, pathh))
+				return (pathh);
+			if (!str_path[i])
 				break;
 			curr_pos = i;
 		}

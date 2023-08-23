@@ -1,22 +1,22 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include <fcntl.h>
-#include <math.h>
-#include <dirent.h>
-#include <limits.h>
-#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
+#include <stddef.h>
 #include <stdbool.h>
-#include <sys/types.h>
+#include <stdint.h>
+#include <stdarg.h>
+#include <string.h>
+#include <unistd.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <unistd.h>
-#include <stdarg.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <fcntl.h>
 #include <errno.h>
+#include <limits.h>
+#include <math.h>
 
 #define HIST_FILE_NAME ".my_history"
 #define NEG_ONE -1

@@ -1,46 +1,56 @@
 #include "shell.h"
-/**
- * _memset - fills memory with a constant byte
- * @s: the pointer to the memory area
- * @b: the byte to fill *s with
- * @n: the amount of bytes to be filled
- * Return: s- a pointer to the memory area of s
- */
-char *_memset(char *s, char b, unsigned int n)
-{
-	unsigned int i;
+/* modified */
 
-	for (i = 0; i < n; i++)
-		s[i] = b;
+/**
+ * _memset - Sets the first n bytes of a memory area to a specified value
+ * @s: A pointer to the memory area to be filled
+ * @c: The value to be set
+ * @n: Number of bytes to be set
+ * 
+ * Return: A pointer to the filled memory area
+ */
+char *_memset(char *s, char c, unsigned int n)
+{
+	unsigned int i = 0;
+
+	while (i < n)
+	{
+		s[i++] = c;
+	}
 	return (s);
 }
 
 /**
- * free_vector - frees memory allocated to a 2D character array
- * @vec: Vector to be freed.
+ * free_vector - Frees a 2D vector of strings
+ * @vector: The 2D vector to free
+ * 
+ * Description: Iterates through the vector and frees each
+ * inner string pointer. Then frees the vector pointer.
  *
  * Return: Nothing.
  */
 
-void free_vector(char **vec)
+void free_vector(char **vector)
 {
-	char **ptr = vec;
+	char **ptr = vector;
 
-	if (!vec)
+	if (!vector)
 		return;
-	while (*vec)
-		free(*vec++);
 
+	while (*vector)
+	{
+		free(*vector++);
+	}
 	free(ptr);
 }
 
 /**
- * _realloc - reallocates a block of memory
- * @ptr: pointer to previous memory allocated block
- * @old_size: byte size of previous block
- * @new_size: byte size of new block
- *
- * Return: pointer of old block.
+ * _realloc - Changes the size of the memory block pointed to by ptr
+ * @ptr: Pointer to previously allocated memory
+ * @old_size: Size of old block
+ * @new_size: Requested size of new block
+ * 
+ * Return: Pointer to newly allocated memory or NULL if failure
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
@@ -48,27 +58,33 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 	if (!ptr)
 		return (malloc(new_size));
+
 	if (!new_size)
 		return (free(ptr), NULL);
+
 	if (new_size == old_size)
 		return (ptr);
+
 	p = malloc(new_size);
 	if (!p)
 		return (NULL);
+
 	old_size = old_size < new_size ? old_size : new_size;
 	while (old_size--)
+	{
 		p[old_size] = ((char *)ptr)[old_size];
+	}
+
 	free(ptr);
 	return (p);
 }
 
-#include "shell.h"
 
 /**
- * bfree - frees a pointer and NULLs the address
- * @ptr: address of the pointer to free
- *
- * Return: 1 if freed, otherwise 0.
+ * bfree - Frees memory referenced by a pointer pointer
+ * @ptr: Address of pointer to free
+ * 
+ * Return: 1 if memory freed, 0 otherwise
  */
 int bfree(void **ptr)
 {

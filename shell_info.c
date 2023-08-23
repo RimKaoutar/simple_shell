@@ -1,5 +1,4 @@
 #include "shell.h"
-/* modified */
 
 /**
  * clear_info - Clears the argument info structure

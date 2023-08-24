@@ -3,13 +3,13 @@
 /**
  * read_hist - reads the hyst
  * @infor: strcut info
- * 
+ *
  * Description:
  * Gets the HOME enviroment variable to determine base path.
  * Allocates a new string large enough to hold the full path.
  * Concatenates the directory, file separator, and file name.
  * Returns the path string. Caller is responsible for freeing.
- * 
+ *
  * Return: a string with  hystory
 */
 char *read_hist(shell_t *infor)
@@ -19,7 +19,8 @@ char *read_hist(shell_t *infor)
 	directory = _getenv(infor, "HOME=");
 	if (!directory)
 		return (NULL);
-	bufferr = malloc(sizeof(char) * (_strlen(directory) + _strlen(HIST_FILE_NAME) + 2));
+	bufferr = malloc(sizeof(char) *
+			(_strlen(directory) + _strlen(HIST_FILE_NAME) + 2));
 	if (!bufferr)
 	{
 		return (NULL);
@@ -34,13 +35,13 @@ char *read_hist(shell_t *infor)
 /**
  * create_history - creats a file containing hystory
  * @informm: the struct for the params of the shell
- * 
+ *
  * Description:
  * Opens the history file in create/truncate mode.
  * Writes each history entry string followed by newline.
  * Writes EOF character and closes file.
  * Frees memory used for file path.
- * 
+ *
  * Return: 1 and -1
 */
 int create_history(shell_t *informm)
@@ -69,11 +70,11 @@ int create_history(shell_t *informm)
 /**
  * renumber_history - updates the number of hystory lines
  * @struct_info: the hystory container
- * 
+ *
  * Description:
  * Traverses the history linked list and renumbers each entry.
  * Sets the hist_lines field to the total number of entries.
- * 
+ *
  * Return: hystory line newly renumbered
 */
 int renumber_history(shell_t *struct_info)
@@ -89,12 +90,12 @@ int renumber_history(shell_t *struct_info)
 /**
  * read_history - reads hystory
  * @innfor: a struct containing params of the shell
- * 
+ *
  * Description:
  * Opens the history file and reads contents into a buffer.
  * Parses buffer by newline and calls update_history.
  * Renumbers and truncates history as needed.
- * 
+ *
  * Return: hystory line , on failiure 0
 */
 int read_history(shell_t *innfor)
@@ -143,14 +144,14 @@ int read_history(shell_t *innfor)
 /**
  * update_history - Updates the history of a linked list
  * @infoe: Info structure to update
- * @buffer: Line string to add
+ * @baffer: Line string to add
  * @line_c: Line number
- *  
+ *
  * Description:
  * Checks if history already exists, gets tail pointer.
  * Adds new node to end of list using line string and number.
  * Sets history head if not already set.
- * 
+ *
  * Return: 0
 */
 int update_history(shell_t *infoe, char *baffer, int line_c)

@@ -3,14 +3,14 @@
 /**
  * handle_exit - Handles the exit builtin command
  * @infeo: Info structure containing command args
- * 
+ *
  * Description:
  * Checks for an argument and passes to err_num()
  * Prints error and sets status if not a valid number
  * Returns exit code based on parsed number or default
- * 
+ *
  * Return: -2 to exit program, 1 if err
-*/
+ */
 int handle_exit(shell_t *infeo)
 {
 	int exx_check;
@@ -38,7 +38,7 @@ int handle_exit(shell_t *infeo)
 /**
  * handle_help - Handles printing help for builtin commands
  * @infto: Info structure containing command args
- * 
+ *
  * Description:
  * Currently just prints a placeholder message that
  * the function is not supported yet.
@@ -46,9 +46,9 @@ int handle_exit(shell_t *infeo)
  * Check for a command name argument
  * Print help text for the specified command
  * Print generic help if no command given
- * 
+ *
  * Return: 0 for success
-*/
+ */
 int handle_help(shell_t *infto)
 {
 	char **rr_arr;
@@ -63,15 +63,15 @@ int handle_help(shell_t *infto)
 /**
  * handle_history - Handles printing the command history
  * @infto: Info structure containing command history
- * 
+ *
  * Description:
  * Prints out the full command history linked list
  * By calling print_list() on the history pointer
  * Currently just a simple print, could eventually
  * support additional history manipulation.
- * 
+ *
  * Return: 0 for success
-*/
+ */
 int handle_history(shell_t *infto)
 {
 	print_list(infto->history);
@@ -82,21 +82,20 @@ int handle_history(shell_t *infto)
 /**
  * handle_cd - Handles changing working directory
  * @inefo: Info structure containing command args
- * 
+ *
  * Description:
  * Gets current working directory
  * Handles home, - and regular directory options
  * Calls chdir() and sets PWD/OLDPWD variables
  * Prints error if chdir fails
- * 
+ *
  * Returns 0 on success
-*/
+ */
 int handle_cd(shell_t *inefo)
 {
-	char *s, *dir, buff[1024];
+	char *s = getcwd(buff, 1024), *dir, buff[1024];
 	int ink_what_to;
 
-	s = getcwd(buff, 1024);
 	if (!s)
 		_puts("UPGRADE:getcwd failure message\n");
 	if (!inefo->argv[1])

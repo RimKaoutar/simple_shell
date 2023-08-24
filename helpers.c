@@ -2,10 +2,11 @@
 /**
  * from_terminal - Checks if input is coming from a terminal
  * @information: Info structure
+ *
  * Description: Checks if stdin file descriptor refers to a terminal
  * and input fd is less than or equal to standard file descriptors.
  * Indicates input is coming directly from user terminal.
- * 
+ *
  * Return: 1 if input is from terminal, 0 otherwise
 */
 int from_terminal(shell_t *information)
@@ -16,9 +17,10 @@ int from_terminal(shell_t *information)
 /**
  * _isalpha - Checks for an alphabetic character
  * @chhar: Character to check
+ *
  * Description: Checks if the character is between 'a-z' or
  * 'A-Z' in the ASCII table, which are alphabetic characters.
- * 
+ *
  * Return: 1 if alphabetic, 0 otherwise
 */
 int _isalpha(int chhar)
@@ -33,9 +35,10 @@ int _isalpha(int chhar)
  * is_delimiter - Checks if a character is a delimiter
  * @chhar: The character to check
  * @dells: String of delimiter characters
+ *
  * Description: Loops through the delimiter characters and
  * returns True if the input character matches any delimiter.
- * 
+ *
  * Return: True if match found, False otherwise
 */
 bool is_delimiter(char chhar, char *dells)
@@ -53,10 +56,10 @@ bool is_delimiter(char chhar, char *dells)
 /**
  * _atoi - Converts a string to an integer
  * @stringg: Null terminated string to convert
- * 
+ *
  * Description: Loops through characters and multiplies/adds
  * to result if a digit. Handles sign. Returns signed integer.
- * 
+ *
  * Return: Converted integer value
 */
 int _atoi(char *stringg)

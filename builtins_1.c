@@ -93,7 +93,7 @@ int handle_history(shell_t *infto)
  */
 int handle_cd(shell_t *inefo)
 {
-	char *s = getcwd(buff, 1024), *dir, buff[1024];
+	char buff[1024], *s = getcwd(buff, 1024), *dir;
 	int ink_what_to;
 
 	if (!s)

@@ -5,15 +5,15 @@
  * @info: Info struct containing shell data
  * @bufr: Pointer to buffer pointer
  * @len: Length of buffer
- * 
+ *
  * Description:
  * If buffer not allocated, frees existing and allocates
  * Calls _getline() to read input into buffer
  * Handles newline, comments, history updating
  * Returns buffer and length on success
- * 
+ *
  * Return: Number of bytes read or -1 on error
-*/
+ */
 ssize_t input_buf(shell_t *info, char **bufr, size_t *len)
 {
 	ssize_t r = 0;
@@ -48,13 +48,13 @@ ssize_t input_buf(shell_t *info, char **bufr, size_t *len)
  * @info: Info struct with file descriptor
  * @bfuerr: Buffer to read into
  * @i: Size of buffer
- * 
+ *
  * Description:
  * Reads up to BUFFER_SIZE bytes from file
  * Stores number of bytes read into size variable
- * 
+ *
  * Return: Number of bytes read or -1 on errorread_buf - read
-*/
+ */
 ssize_t read_buf(shell_t *info, char *bfuerr, size_t *i)
 {
 	ssize_t r = 0;
@@ -69,14 +69,14 @@ ssize_t read_buf(shell_t *info, char *bfuerr, size_t *i)
 /**
  * get_input - Gets input from user or file into argv
  * @info: Info struct with input source
- * 
+ *
  * Description:
  * Calls input_buf() to read input into static buffer
  * Parses buffer into argv array separated by ;|&
  * Handles multiple logical command lines in buffer
- * 
+ *
  * Return: length of parsed argv string or -1 on error
-*/
+ */
 ssize_t get_input(shell_t *info)
 {
 	static char *bufr;
@@ -106,7 +106,7 @@ ssize_t get_input(shell_t *info)
 			i = len = 0;
 			info->sep_buff_kind = REG_FLAG;
 		}
-		*bufer_pointer = p;	
+		*bufer_pointer = p;
 		return (_strlen(p));
 	}
 	*bufer_pointer = bufr;
@@ -118,14 +118,14 @@ ssize_t get_input(shell_t *info)
  * @info: Info struct with input source
  * @pointeur: Pointer to buffer pointer
  * @nobguerur: Size of buffer
- * 
+ *
  * Description:
  * Reads input from source into static buffer
  * Reallocates and concatenates to passed buffer pointer
  * Handles buffer resizing across multiple calls
- * 
+ *
  * Return: number of bytes read or -1 on error
-*/
+ */
 int _getline(shell_t *info, char **pointeur, size_t *nobguerur)
 {
 	static char buf[BUFFER_SIZE_READ];
@@ -166,13 +166,14 @@ int _getline(shell_t *info, char **pointeur, size_t *nobguerur)
 /**
  * handle_sigint - Handles SIGINT interrupt signal
  * @sig_num: Signal number (unused)
- * 
+ *
  * Description:
  * Prints a newline followed by prompt when SIGINT received
  * SIGINT is triggered by Ctrl-C
  * Simply resets prompt to continue input
+ *
  * Return: Nothing.
-*/
+ */
 void handle_sigint(__attribute__((unused)) int sig_num)
 {
 	_puts("\n");

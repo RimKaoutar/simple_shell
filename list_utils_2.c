@@ -5,11 +5,11 @@
  * @head: Double pointer to the head of the list
  * @str: String for new node
  * @num: Number for new node
- * 
+ *
  * Description: Allocates and initializes new node. Sets
  * next pointer and updates head pointer.
- * 
- * Returns: Pointer to new node or NULL on failure
+ *
+ * Return: Pointer to new node or NULL on failure
  */
 list_t *add_node_start(list_t **head, const char *str, int num)
 {
@@ -43,11 +43,11 @@ list_t *add_node_start(list_t **head, const char *str, int num)
  * @head: Pointer to pointer of head node
  * @str: String for new node
  * @num: Number for new node
- * 
+ *
  * Description: Allocates and initializes new node. Traverses
  * list to find tail and links new node, updating tail.
- * 
- * Returns: Pointer to new node or NULL
+ *
+ * Return: Pointer to new node or NULL
  */
 list_t *add_node_end(list_t **head, const char *str, int num)
 {
@@ -94,10 +94,10 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 /**
  * print_list_ttr - Prints the strings of nodes in a linked list
  * @head: Pointer to head of linked list
- * 
+ *
  * Description: Traverses the list iterating the next pointer.
  * Prints the string field of each node, or "(nil)" if null.
- * 
+ *
  * Return: Number of nodes printed
  */
 size_t print_list_ttr(const list_t *head)
@@ -125,11 +125,11 @@ size_t print_list_ttr(const list_t *head)
  * delete_node_at_index - Deletes a node at a given index in a linked list
  * @head: Pointer to head of the linked list
  * @index: Index of the node to delete
- * 
+ *
  * Description: Traverses list to find node at index. Handles
  * edge case of head node. Unlinks and frees target node.
- * 
- * Returns: 1 if node deleted, 0 otherwise
+ *
+ * Return: 1 if node deleted, 0 otherwise
  */
 int delete_node_at_index(list_t **head, unsigned int index)
 {
@@ -167,11 +167,11 @@ int delete_node_at_index(list_t **head, unsigned int index)
 /**
  * free_list - Frees the memory of a linked list
  * @head: Double pointer to the head of the list
- * 
+ *
  * Description:
  * Traverses the list and frees the string and node memory
  * for each node. Sets the head to NULL after freeing all nodes.
- * 
+ *
  * Return: Nothing.
  */
 void free_list(list_t **head)

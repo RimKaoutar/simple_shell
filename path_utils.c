@@ -6,12 +6,13 @@
  * @info: Info struct
  * @str_path: PATH environment variable value
  * @cmd: File name to search for
+ *
  * Description:
  * Searches each PATH directory for the given file name.
  * Handles "." prefix and duplicates substrings of PATH.
  * Returns path if file is executable, else NULL.
  * Uses dup_chars() and is_executable() functions.
- * 
+ *
  * Return: Path if found, NULL if not found
 */
 char *check_file_in_path(shell_t *info, char *str_path, char *cmd)
@@ -53,12 +54,12 @@ char *check_file_in_path(shell_t *info, char *str_path, char *cmd)
  * is_executable - Checks if a file is executable
  * @infooo: Info struct (unused)
  * @path: Path to file
- * 
+ *
  * Description:
  * Uses stat() system call to get file info
  * Checks if it is a regular file
  * And has executable permissions
- * 
+ *
  * Return: 1 if executable, 0 if not
 */
 bool is_executable(shell_t *infooo, char *path)
@@ -79,13 +80,13 @@ bool is_executable(shell_t *infooo, char *path)
  * @str_path: Source string
  * @commnece: Index of start character
  * @end: Index of end character
- * 
+ *
  * Description:
  * Copies characters from source string from start to end
  * Stores in a static buffer
  * Ignores ':' characters during copy
  * Adds null terminator
- * 
+ *
  * Return: Pointer to static buffer
 */
 char *dup_chars(char *str_path, int commnece, int end)

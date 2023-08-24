@@ -3,15 +3,15 @@
  * unset_alias - Unsets an alias from the alias list
  * @info: Info struct containing aliases
  * @string: Alias name to unset
- * 
+ *
  * Description:
  * Finds the '=' in the alias name=value string
  * Terminates the string there to get just the name
  * Calls delete_node_at_index() to remove alias node
  * by name from the alias linked list
- * 
+ *
  * Return: Status from delete_node operation
-*/
+ */
 int unset_alias(shell_t *info, char *string)
 {
 	char *p, c;
@@ -23,7 +23,7 @@ int unset_alias(shell_t *info, char *string)
 	c = *p;
 	*p = 0;
 	retr = delete_node_at_index(&(info->alias),
-	get_node_index(info->alias, node_str_start(info->alias, string, -1)));
+			get_node_index(info->alias, node_str_start(info->alias, string, -1)));
 	*p = c;
 	return (retr);
 }
@@ -32,15 +32,15 @@ int unset_alias(shell_t *info, char *string)
  * set_alias - Sets or unsets an alias
  * @infro: Info struct containing aliases
  * @stzr: Alias name=value string
- * 
+ *
  * Description:
  * Finds '=' in string and increments to value
  * If no value, calls unset_alias to remove alias
  * Otherwise, removes existing alias then adds
  * new alias node with full name=value string
- * 
+ *
  * Return: 0 on success, 1 on failure
-*/
+ */
 int set_alias(shell_t *infro, char *stzr)
 {
 	char *p;
@@ -61,15 +61,15 @@ int set_alias(shell_t *infro, char *stzr)
 /**
  * print_alias - Prints out an alias
  * @neud: Pointer to alias node in linked list
- * 
+ *
  * Description:
- * 
+ *
  * Finds '=' in alias string to separate name and value
  * Prints name up to '=' character
  * Prints value including surrounding ''
- * 
+ *
  * Return: 0 for success, 1 if no node
-*/
+ */
 int print_alias(list_t *neud)
 {
 	char *pr = NULL;
@@ -92,15 +92,15 @@ int print_alias(list_t *neud)
 /**
  * change_alias - Changes an alias to its expanded value
  * @infro: Info struct containing aliases and argument
- * 
+ *
  * Description:
  * Loops up to 10 times to recursively expand an alias
  * Finds matching alias node by name
  * Frees current argv[0] and replaces with alias value
  * Stop looping if no match or value found
- * 
+ *
  * Return: 1 if fully expanded, 0 if not expanded
-*/
+ */
 int change_alias(shell_t *infro)
 {
 	int index;
@@ -128,16 +128,16 @@ int change_alias(shell_t *infro)
 /**
  * handle_alias - Handles alias commands
  * @infro: Info struct containing aliases and args
- * 
+ *
  * Description:
  * If 1 arg, prints all aliases
  * Else loops through args:
  * If '=' parses as alias definition
  * and calls set_alias()
  * Else prints matching alias
- * 
+ *
  * Return: 0 for success
-*/
+ */
 int handle_alias(shell_t *infro)
 {
 	int i = 0;

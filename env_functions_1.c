@@ -4,11 +4,11 @@
  * _getenv - Gets the value of an environment variable
  * @inforr: Info structure containing environment list
  * @nom: Name of the environment variable
- * 
+ *
  * Description:
  * Loops through the environment linked list
  * Calls starts_with() to check if variable matches name
- * 
+ *
  * Return: pointer to value if found, else NULL
 */
 char *_getenv(shell_t *inforr, const char *nom)
@@ -29,13 +29,13 @@ char *_getenv(shell_t *inforr, const char *nom)
 /**
  * check_setenv - Checks parameters and calls setenv
  * @infoe: Info structure containing arguments
- * 
+ *
  * Description:
  * Validates argc is exactly 3
  * Calls _setenv() to set the environment variable
  * Prints error if validation or setenv fails
  * Provides a wrapper to validate setenv call
- * 
+ *
  * Return: 0 on success, 1 on failure
 */
 int check_setenv(shell_t *infoe)
@@ -55,11 +55,11 @@ int check_setenv(shell_t *infoe)
 /**
  * _printenv - Prints the environment variables
  * @infro: Info structure containing environment list
- * 
+ *
  * Description:
  * Prints out each environment variable by calling print_list_ttr()
  * on the environment linked list.
- * 
+ *
  * Return: Always returns 0 to indicate success.
 */
 int _printenv(shell_t *infro)
@@ -72,13 +72,13 @@ int _printenv(shell_t *infro)
 /**
  * check_unsetenv - Validates and calls unsetenv for each argument
  * @infot: Info structure containing arguments
- * 
+ *
  * Description:
  * Checks for minimum of 1 argument
  * Loops through arguments and calls _unsetenv()
  * Prints error if not enough args
  * Provides validation wrapper for unsetenv calls
- * 
+ *
  * Return: 0 on success
 */
 int check_unsetenv(shell_t *infot)
@@ -101,12 +101,12 @@ int check_unsetenv(shell_t *infot)
 /**
  * gather_env - Populates the environment list from environ array
  * @inefo: Info struct to populate environment variable list into
- * 
+ *
  * Description:
  * Loops through the global environ array
  * Adds each entry as a new node to the linked list
  * Sets the info struct's env pointer to the list head
- * 
+ *
  * Return: 0 on success
 */
 int gather_env(shell_t *inefo)

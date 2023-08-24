@@ -133,6 +133,9 @@ int print_alias(list_t *);
 int change_alias(shell_t *);
 int handle_alias(shell_t *);
 
+/* builtins_3.c */
+int handle_builtin(shell_t *);
+
 /* builtins_input.c */
 ssize_t input_buf(shell_t *, char **, size_t *);
 ssize_t read_buf(shell_t *, char *, size_t *);
@@ -147,7 +150,6 @@ void check_chain(shell_t *, char *, size_t *, size_t, size_t);
 bool is_chain(shell_t *, char *, size_t *);
 
 /* command.c */
-int handle_builtin(shell_t *);
 void create_process(shell_t *);
 int shell_main(shell_t *, char **);
 void check_command(shell_t *);

@@ -21,13 +21,13 @@ void clear_info(shell_t *shell)
  * set_info - Sets argument info structure from argument array
  * @shell: Info structure pointer
  * @av: Argument array
- * 
+ *
  * Description:
  * Sets program name from first arg
  * Splits arg string into argv array
  * Counts argv elements into argc
  * Applies alias and environment substitutions
- * 
+ *
  * Return: Nothing.
  */
 void set_info(shell_t *shell, char **av)
@@ -61,7 +61,7 @@ void set_info(shell_t *shell, char **av)
  * free_info - Frees memory used by the info structure
  * @shell: Info structure to free
  * @free_all: Flag to fully free internal data
- * 
+ *
  * Description:
  * Frees argv vector and sets pointers to NULL.
  * If free_all, it additionally:
@@ -69,7 +69,7 @@ void set_info(shell_t *shell, char **av)
  * Frees linked lists
  * Frees environment vector
  * Closes file descriptors
- * 
+ *
  * Return: Nothing.
  */
 void free_info(shell_t *shell, int free_all)

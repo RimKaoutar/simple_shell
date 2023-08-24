@@ -45,7 +45,7 @@ extern char **environ;
  * @num: the number field
  * @str: a string
  * @next: points to the next node
- * 
+ *
  * Description:
  * Defines a struct for use as nodes in a doubly linked list.
  * Used to store environment variables, history etc. as lists.
@@ -77,7 +77,7 @@ typedef struct ListNode
  * @sep_buff_kind: the type ofcmdnd buffer (CMD_type ||, &&, ;)
  * @fd_read: the file descriptor used for reading line input
  * @hist_lines: the number of ls in the history
- * 
+ *
  * Description:
  * Main struct used to store and pass info between functions
  * Fields contain command info, environment details and flags
@@ -108,7 +108,7 @@ typedef struct InfoNode
  * struct builtin - struct b
  * @type: the type
  * @func: the function ptr
- * 
+ *
  * Description:
  * Used to store name and function pointer for each builtin command
  * Allows builtins to be easily added/removed from the builtin handler
@@ -167,7 +167,7 @@ int _setenv(shell_t *, char *, char *);
 /* errors_fonctions.c */
 void puts_err(char *);
 int putchar_err(char);
-int write_char(char , int);
+int write_char(char, int);
 int write_chars(char *, int);
 
 /* helpers.c */
@@ -198,11 +198,11 @@ ssize_t get_node_index(list_t *, list_t *);
 list_t *add_node_start(list_t **, const char *, int);
 list_t *add_node_end(list_t **, const char *, int);
 size_t print_list_ttr(const list_t *);
-int delete_node_at_index(list_t **, unsigned);
+int delete_node_at_index(list_t **, unsigned int);
 void free_list(list_t **);
 
 /* memory_utils.c */
-char *_memset(char *, char, unsigned);
+char *_memset(char *, char, unsigned int);
 void free_vector(char **);
 void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);

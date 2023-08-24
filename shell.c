@@ -4,14 +4,14 @@
  * main - Entry point of the shell program
  * @argc: Argument count
  * @argv: Argument vector
- * 
+ *
  * Description:
  * Initializes info struct and file descriptor
  * Opens file for reading if given as argv[1]
  * Sets up environment and history
  * Calls main shell loop
  * Exits cleanly
- * 
+ *
  * Return: EXIT_SUCCESS (1) or EXIT_FAILURE (0)
 */
 int main(int argc, char **argv)

@@ -3,12 +3,12 @@
 /**
  * get_environ - Returns environ array from environment list
  * @irnfo: Info structure containing environment
- * 
+ *
  * Description:
  * Checks if environ array needs updating from linked list
  * If so, calls list_to_vector() to convert list to array
  * Resets changed flag after conversion
- * 
+ *
  * Return: Pointer to environ array
 */
 char **get_environ(shell_t *irnfo)
@@ -26,13 +26,13 @@ char **get_environ(shell_t *irnfo)
  * _unsetenv - Unsets an environment variable from linked list
  * @info: Info structure containing environment list
  * @varibal: Variable name to unset
- * 
+ *
  * Description:
  * Loops linked list to find matching variable
  * Calls delete_node_at_index() to remove matched node
  * Sets changed flag if removed
- * 
- * Returns: Changed flag status
+ *
+ * Return: Changed flag status
 */
 int _unsetenv(shell_t *info, char *varibal)
 {
@@ -63,13 +63,13 @@ int _unsetenv(shell_t *info, char *varibal)
  * @info: Info structure containing environment list
  * @va: Variable name
  * @val: Variable value
- * 
+ *
  * Description:
  * Allocates a buffer with name=value
  * Loops list to find/update existing variable
  * Adds new node if not found
  * Frees buffer and sets changed flag
- * 
+ *
  * Return: 0 on success, else 1.
 */
 

@@ -47,7 +47,7 @@ int handle_builtin(shell_t *info)
  * Parent waits for child and stores exit status
  * Handles errors from execve() and permission denied
  *
- * Returns: Nothing
+ * Return: Nothing
  */
 
 void create_process(shell_t *informati)
@@ -161,7 +161,8 @@ void check_command(shell_t *informationes)
 
 	if (!words_nbr)
 		return;
-	pathh = check_file_in_path(informationes, _getenv(informationes, "PATH="), informationes->argv[0]);
+	pathh = check_file_in_path(informationes,
+			_getenv(informationes, "PATH="), informationes->argv[0]);
 	if (pathh)
 	{
 		informationes->path = pathh;
@@ -169,7 +170,9 @@ void check_command(shell_t *informationes)
 	}
 	else
 	{
-		if ((from_terminal(informationes) || _getenv(informationes, "PATH=") || informationes->argv[0][0] == '/') && is_executable(informationes, informationes->argv[0]))
+		if ((from_terminal(informationes) || _getenv(informationes, "PATH=") ||
+					informationes->argv[0][0] == '/') &&
+					is_executable(informationes, informationes->argv[0]))
 			create_process(informationes);
 		else if (*(informationes->arg) != '\n')
 		{

@@ -3,10 +3,10 @@
 /**
  * _strlen - Returns the length of a string.
  * @str: The input string
- * 
+ *
  * Description: Loops through string counting chars
  * until null terminator found.
- * 
+ *
  * Return: The length of the string.
 */
 int _strlen(char *str)
@@ -29,7 +29,7 @@ int _strlen(char *str)
  * Description: Loops through strings comparing characters
  * Until null terminator found or characters differ.
  * Returns difference of first mismatched characters.
- * 
+ *
  * Return: negative if s1 < s2, positive if s1 > s2, zero if s1 == s2
  */
 int _strcmp(char *s1, char *s2)
@@ -54,7 +54,7 @@ int _strcmp(char *s1, char *s2)
  *
  * Description: Loops through needle comparing chars to haystack.
  * Returns pointer to char after match or NULL if no match.
- * 
+ *
  * Return: address of next char of haystack or NULL
  */
 char *starts_with(const char *haystack, const char *needle)
@@ -73,7 +73,7 @@ char *starts_with(const char *haystack, const char *needle)
  * Description: Loops through destination string to find null
  * terminator. Then copies each character of source string to
  * destination string address until null terminator.
- * 
+ *
  * Return: pointer to destination buffer
  */
 char *_strcat(char *dest, char *src)

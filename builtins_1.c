@@ -89,7 +89,7 @@ int handle_history(shell_t *infto)
  * Calls chdir() and sets PWD/OLDPWD variables
  * Prints error if chdir fails
  *
- * Returns 0 on success
+ * Return: 0 on success
  */
 int handle_cd(shell_t *inefo)
 {

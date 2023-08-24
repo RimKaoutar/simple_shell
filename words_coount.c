@@ -16,33 +16,25 @@ int words_count(char *s, char *delim, unsigned int *ptr)
 
 	if (!s)
 		return (0);
-
 	while (!go)
 		while (delim[i])
-		{
-			if (*str == delim[i])
+			if (*str == delim[i++])
 				str++;
 			else
 				go = true;
-			i++;
-		}
-
 	if (!*(str + 1))
 	{
 		ptr[0] = 1;
 		return (1);
 	}
-
 	while (str[j])
 	{
 		delimiter = is_delimiter(str[j], delim);
-
 		if (delimiter && !(is_delimiter(str[j - 1], delim)))
 		{
 			ptr[cnt] = len;
 			cnt++;
 		}
-
 		if ((!str[j + 1]) && !delimiter)
 		{
 			len++;
@@ -50,13 +42,11 @@ int words_count(char *s, char *delim, unsigned int *ptr)
 			cnt++;
 			break;
 		}
-
 		if (!delimiter)
 			len++;
 		else
 			len = 0;
 		j++;
 	}
-
 	return (cnt);
 }

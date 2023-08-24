@@ -2,10 +2,10 @@
 /**
  * puts_err - Prints a string to stderr
  * @stringg: String to print
- * 
+ *
  * Description: Loops through the given string and prints each
  * character to stderr using putchar_err().
- * 
+ *
  * Return: Nothing.
 */
 
@@ -24,10 +24,10 @@ void puts_err(char *stringg)
 /**
  * putchar_err - Prints a character to stderr
  * @chhar: Character to print
- * 
+ *
  * Description: Uses a static buffer to collect characters
  * and flush to stderr when full or END is passed.
- * 
+ *
  * Return: 1 on success, -1 on error
 */
 int putchar_err(char chhar)
@@ -48,10 +48,10 @@ int putchar_err(char chhar)
  * write_char - Writes a character to a file descriptor
  * @chhar: Character to write
  * @file_desc: File descriptor
- * 
+ *
  * Description: Buffers characters in a static array and
  * flushes to the file descriptor when full or END passed.
- * 
+ *
  * Return: 1 on success, -1 on error
 */
 int write_char(char chhar, int file_desc)
@@ -73,12 +73,11 @@ int write_char(char chhar, int file_desc)
  * write_chars - Writes a string to a file descriptor
  * @sttring: String to write
  * @fd: File descriptor
- * 
+ *
  * Description: Loops through the string and writes each
  * character using write_char().
- * 
+ *
  * Return: Number of characters written
-
 */
 int write_chars(char *sttring, int fd)
 {

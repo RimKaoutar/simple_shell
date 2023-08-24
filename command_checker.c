@@ -4,11 +4,11 @@
  * change_string - Changes a string pointer to a new string
  * @django_unchaned: Pointer to existing string pointer
  * @the_wolf_of_wall_street: New string
- * 
+ *
  * Description:
  * Frees the memory of the existing string
  * Points the string pointer to the new string
- * 
+ *
  * Return: 1 to indicate success
 */
 int change_string(char **django_unchaned, char *the_wolf_of_wall_street)
@@ -23,14 +23,14 @@ int change_string(char **django_unchaned, char *the_wolf_of_wall_street)
 /**
  * change_v - Changes environment variable references in argv
  * @inforrrmation: Info struct
- * 
+ *
  * Description:
  * Loops through argv checking for $var references
  * Handles $?, $$ by returning status/pid values
  * Looks up env vars and substitutes value if found
  * Handles not found by substituting empty string
- * 
- * Returns: 0 on success
+ *
+ * Return: 0 on success
 */
 int change_v(shell_t *inforrrmation)
 {
@@ -73,36 +73,36 @@ int change_v(shell_t *inforrrmation)
 
 /**
  * check_chain - Checks logical chain of commands and truncates buffer
- * @information: Info struct
+ * @infor: Info struct
  * @bbuf: Buffer being filled
  * @pp: Pointer to buffer index
  * @i: Current buffer index
  * @legn: Buffer length
- * 
+ *
  * Description:
  * Checks the AND/OR flag on info struct
  * Truncates buffer by adding NULL at index if
  * condition is met based on flag
  * Updates buffer index pointer
- * 
+ *
  * Return: Nothing
 */
-void check_chain(shell_t *information, char *bbuf, size_t *pp, size_t i, size_t legn)
+void check_chain(shell_t *infor, char *bbuf, size_t *pp, size_t i, size_t legn)
 {
 	size_t jj = *pp;
 
-	if (information->sep_buff_kind == AND_FLAG)
+	if (infor->sep_buff_kind == AND_FLAG)
 	{
-		if (information->status)
+		if (infor->status)
 		{
 			bbuf[i] = 0;
 			jj = legn;
 		}
 	}
 
-	if (information->sep_buff_kind == OR_FLAG)
+	if (infor->sep_buff_kind == OR_FLAG)
 	{
-		if (!information->status)
+		if (!infor->status)
 		{
 			bbuf[i] = 0;
 			jj = legn;
@@ -116,13 +116,13 @@ void check_chain(shell_t *information, char *bbuf, size_t *pp, size_t i, size_t 
  * @information: Info struct
  * @bufferr: Command buffer
  * @p: Pointer to buffer index
- * 
+ *
  * Description:
  * Checks buffer character at index for chain separator
  * Handles ||, &&, ; separators
  * Sets flag on info struct and truncates buffer
  * Updates buffer index pointer
- * 
+ *
  * Return: True if separator found, false otherwise
 */
 bool is_chain(shell_t *information, char *bufferr, size_t *p)

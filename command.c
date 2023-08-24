@@ -3,17 +3,18 @@
 /**
  * handle_builtin - Handles built-in shell commands
  * @info: Info struct containing command details
- * 
+ *
  * Description:
  * Loops through struct of built-in commands
  * Compares argv[0] to command name
  * If match, calls corresponding function
+ *
  * Return: value from built-in function or -1
-*/
+ */
 int handle_builtin(shell_t *info)
 {
 	int i = 0;
-	int return_vlr = -1;
+	int ret_vlr = -1;
 
 	builtin_commands buits[] = {
 		{"cd", handle_cd},
@@ -30,35 +31,34 @@ int handle_builtin(shell_t *info)
 		if (_strcmp(info->argv[0], buits[i].type) == 0)
 		{
 			info->lines++;
-			return_vlr = buits[i].func(info);
+			ret_vlr = buits[i].func(info);
 			break;
 		}
-	return (return_vlr);
+	return (ret_vlr);
 }
 
 /**
  * create_process - Forks a new process and executes a command
  * @informati: Info struct containing command details
- * 
+ *
  * Description:
  * Forks using fork() to create a child process
  * Child process tries to execve() the command
  * Parent waits for child and stores exit status
  * Handles errors from execve() and permission denied
- * 
+ *
  * Returns: Nothing
-*/
+ */
+
 void create_process(shell_t *informati)
 {
-	pid_t son;
+	pid_t son = fork();
 
-	son = fork();
 	if (son == -1)
 	{
 		perror("Error:");
 		return;
 	}
-
 	if (son == 0)
 	{
 		if (execve(informati->path, informati->argv, get_environ(informati)) == -1)
@@ -85,15 +85,15 @@ void create_process(shell_t *informati)
  * shell_main - Main loop for the shell interpreter
  * @informations: Info struct
  * @av: Argument vector
- * 
+ *
  * Description:
  * Loops getting input and processing commands
  * Handles builtins or calls command checker
  * Cleans up after each loop iteration
  * Exits with appropriate status on error or quit
- * 
+ *
  * Return: exit status or -2 if quit
-*/
+ */
 int shell_main(shell_t *informations, char **av)
 {
 	ssize_t rd_res = 0;
@@ -134,15 +134,15 @@ int shell_main(shell_t *informations, char **av)
 /**
  * check_command - Checks and executes a non-builtin command
  * @informationes: Info struct containing command details
- * 
+ *
  * Description:
  * Checks if command is executable using PATH search
  * Sets command path and calls process creator
  * Prints error if command not found
  * Handles case of empty command and built-ins returning
- * 
+ *
  * Return: Nothing.
-*/
+ */
 void check_command(shell_t *informationes)
 {
 	char *pathh = NULL;
@@ -161,7 +161,7 @@ void check_command(shell_t *informationes)
 
 	if (!words_nbr)
 		return;
-	pathh= check_file_in_path(informationes, _getenv(informationes, "PATH="), informationes->argv[0]);
+	pathh = check_file_in_path(informationes, _getenv(informationes, "PATH="), informationes->argv[0]);
 	if (pathh)
 	{
 		informationes->path = pathh;

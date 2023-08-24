@@ -4,10 +4,10 @@
  * strtow - splts a string
  * @stringss: input str
  * @d: delimiter
- * 
+ *
  * Description: Counts words and allocates array. Loops through string
  * tokenizing on delimiters and copying words into new strings.
- * 
+ *
  * Return: array of strs , or NULL
 */
 char **strtow(char *stringss, char *d)
@@ -21,7 +21,8 @@ char **strtow(char *stringss, char *d)
 	if (!d)
 		d = " ";
 	for (i = 0; stringss[i] != '\0'; i++)
-		if (!is_delimiter(stringss[i], d) && (is_delimiter(stringss[i + 1], d) || !stringss[i + 1]))
+		if (!is_delimiter(stringss[i], d) &&
+				(is_delimiter(stringss[i + 1], d) || !stringss[i + 1]))
 			numwords++;
 	if (numwords == 0)
 		return (NULL);
@@ -56,10 +57,10 @@ char **strtow(char *stringss, char *d)
  * @str: str
  * @separatorss: the separators
  * @wrd_cnt: word count
- * 
+ *
  * Description: Counts words and allocates array. Loops through string
  * tokenizing on delimiters and copying words into new strings.
- * 
+ *
  * Return: array of wrds
 */
 
@@ -107,12 +108,12 @@ char **split_string(char *str, char *separatorss, size_t *wrd_cnt)
  * @destination: The destination string
  * @source: The source string
  * @n: The maximum number of characters to copy
- * 
+ *
  * Description: Copies up to n characters of source string
  * to destination. Pads remaining dest with null bytes.
- * 
+ *
  * Return: A pointer to the destination string
-*/ 
+*/
 char *_strncpy(char *destination, char *source, int n)
 {
 	int i, j;
@@ -141,11 +142,11 @@ char *_strncpy(char *destination, char *source, int n)
  * @destination: The destination string
  * @source: The source string to append
  * @n: The maximum number of chars to append
- * 
- * Description: Appends the source string to the dest string, 
+ *
+ * Description: Appends the source string to the dest string,
  * concatenating the two. Truncates or null pads
  * if source is longer than n.
- * 
+ *
  * Return: A pointer to the destination string
 */
 char *_strncat(char *destination, char *source, int n)
@@ -172,12 +173,12 @@ char *_strncat(char *destination, char *source, int n)
  * _strchr - Locates a character in a string
  * @str: The string to search
  * @c: The character to search for
- * 
+ *
  * Description: Searches string str for the first occurrence of
  * character c.
- * 
+ *
  * Return: A pointer to the occurrence of c in str, or NULL if c is
-not found.
+ * not found.
 */
 char *_strchr(char *str, char c)
 {

@@ -6,11 +6,11 @@
  * @destination: A pointer to the destination array where the
  * content is to be copied
  * @source: A pointer to the source of data to be copied
- * 
+ *
  * Description: The _strcpy function copies the string pointed
  * to by source (including the terminating null character) into
  * the array pointed to by destination.
- * 
+ *
  * Return: A pointer to the destination array
 */
 char *_strcpy(char *destination, char *source)
@@ -19,7 +19,7 @@ char *_strcpy(char *destination, char *source)
 
 	if (destination == source || source == 0)
 		return (destination);
-	for(; source[i]; i++)
+	for (; source[i]; i++)
 		destination[i] = source[i];
 	destination[i] = 0;
 	return (destination);
@@ -28,11 +28,11 @@ char *_strcpy(char *destination, char *source)
 /**
  * _strdup - Duplicates a string
  * @stringgg: Source string to duplicate
- * 
+ *
  * Description: Counts the length of the source string
  * and allocates memory for a copy. Copies the characters
  * backwards to maintain proper null-termination.
- * 
+ *
  * Return: Pointer to a new allocated string containing a copy
  * of the string, or NULL if insufficient memory
 */
@@ -57,10 +57,10 @@ char *_strdup(const char *stringgg)
 /**
  * _putchar - Outputs a character to stdout
  * @c: The character to output
- * 
+ *
  * Description: Uses a static buffer to collect characters
  * and flush to stdout when full or END is passed.
- * 
+ *
  * Return: 1 on success, -1 on error
 */
 int _putchar(char c)
@@ -81,10 +81,10 @@ int _putchar(char c)
 /**
  * _puts - Outputs a string to stdout
  * @stringggg: The string to output
- * 
+ *
  * Description: Loops through the input string and outputs
  * each character using _putchar().
- * 
+ *
  * Returns: Nothing.
 */
 void _puts(char *stringggg)
